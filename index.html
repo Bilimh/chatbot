@@ -5,643 +5,411 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Chatbot Orientation — Lycée Aimé Césaire</title>
+
   <style>
-    :root{
-      --bg: #0b1020;
-      --panel: rgba(255,255,255,.06);
-      --panel2: rgba(255,255,255,.08);
-      --text: rgba(255,255,255,.92);
-      --muted: rgba(255,255,255,.65);
-      --accent: #7c3aed;
-      --accent2:#22c55e;
-      --danger:#ef4444;
-      --shadow: 0 18px 60px rgba(0,0,0,.45);
-      --radius: 18px;
-    }
+  :root{
+    --bg:#0b1020;
+    --panel:rgba(255,255,255,.06);
+    --panel2:rgba(255,255,255,.08);
+    --text:rgba(255,255,255,.92);
+    --muted:rgba(255,255,255,.65);
+    --accent:#7c3aed;
+    --accent2:#22c55e;
+    --danger:#ef4444;
+    --shadow:0 18px 60px rgba(0,0,0,.45);
+    --radius:18px;
+  }
 
-    *{box-sizing:border-box}
-    html,body{
-      height:100vh; 
-      margin:0; 
-      padding:0;
-      overflow: hidden; /* Empêche le scroll global */
-    }
-    
-    body{
-      margin:0;
-      color:var(--text);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      background:
-        radial-gradient(1200px 800px at 20% 10%, rgba(124,58,237,.35), transparent 60%),
-        radial-gradient(900px 600px at 90% 30%, rgba(34,197,94,.25), transparent 55%),
-        radial-gradient(800px 700px at 40% 90%, rgba(59,130,246,.20), transparent 55%),
-        linear-gradient(180deg, #070a14, #0b1020 60%, #070a14);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:20px;
-    }
+  *{box-sizing:border-box}
+  html,body{height:100%}
 
-    .app{
-      width:min(980px, 100%);
-      height:min(760px, 95vh);
-      border:1px solid rgba(255,255,255,.10);
-      background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
-      border-radius:26px;
-      box-shadow: var(--shadow);
-      overflow:hidden;
-      display:flex;
-      flex-direction:column;
-      position: relative;
-    }
+  body{
+    margin:0;
+    color:var(--text);
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    background:
+      radial-gradient(1200px 800px at 20% 10%, rgba(124,58,237,.35), transparent 60%),
+      radial-gradient(900px 600px at 90% 30%, rgba(34,197,94,.25), transparent 55%),
+      radial-gradient(800px 700px at 40% 90%, rgba(59,130,246,.20), transparent 55%),
+      linear-gradient(180deg, #070a14, #0b1020 60%, #070a14);
+    display:block; /* important mobile */
+    padding:0;
+  }
 
-    header{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:16px 18px;
-      border-bottom:1px solid rgba(255,255,255,.10);
-      backdrop-filter: blur(10px);
-      background: rgba(10,14,28,.55);
-      flex-shrink: 0;
-      z-index: 10;
-    }
-    
-    .brand{
-      display:flex; gap:12px; align-items:center;
-      min-width: 0;
-    }
-    
-    .logo{
-      width:40px; height:40px; border-radius:14px;
-      background:
-        radial-gradient(18px 18px at 30% 30%, rgba(255,255,255,.45), transparent 60%),
-        linear-gradient(135deg, rgba(124,58,237,.95), rgba(34,197,94,.8));
-      box-shadow: 0 10px 30px rgba(124,58,237,.22);
-      flex:0 0 auto;
-    }
-    
-    .title{
-      display:flex; flex-direction:column; line-height:1.1;
-      min-width:0;
-    }
-    
-    .title strong{
-      font-size:14px;
-      letter-spacing:.2px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-    
-    .title span{
-      font-size:12px;
-      color:var(--muted);
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
+  /* App full screen (mobile like ChatGPT) */
+  .app{
+    width:100%;
+    height:100dvh;
+    overflow:hidden;
+    display:grid;
+    grid-template-rows: 64px 1fr auto;
+    border:0;
+    border-radius:0;
+    box-shadow:none;
+    background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
+  }
 
-    .header-actions{
-      display:flex; gap:10px; align-items:center;
-    }
-    
-    .chip{
-      font-size:12px;
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.05);
-      color: var(--muted);
-    }
-    
-    .btn{
-      cursor:pointer;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      color:var(--text);
-      padding:10px 12px;
-      border-radius: 12px;
-      font-weight:600;
-      transition: transform .06s ease, background .2s ease, border-color .2s ease;
-      user-select:none;
-    }
-    
-    .btn:hover{ background: rgba(255,255,255,.09); border-color: rgba(255,255,255,.20); }
-    .btn:active{ transform: translateY(1px); }
-    
-    .btn.primary{
-      border-color: rgba(124,58,237,.55);
-      background: rgba(124,58,237,.20);
-    }
+  /* Header sticky */
+  header{
+    position:sticky;
+    top:0;
+    z-index:200;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:14px 16px;
+    border-bottom:1px solid rgba(255,255,255,.10);
+    backdrop-filter: blur(10px);
+    background: rgba(10,14,28,.55);
+  }
 
-    main{
-      flex: 1 1 auto;
-      overflow-y: auto;
-      overflow-x: hidden;
-      scroll-behavior:smooth;
-      padding:18px;
-      -webkit-overflow-scrolling: touch; /* Scroll fluide sur iOS */
-    }
+  .brand{display:flex; gap:12px; align-items:center; min-width:0;}
+  .logo{
+    width:40px; height:40px; border-radius:14px;
+    background:
+      radial-gradient(18px 18px at 30% 30%, rgba(255,255,255,.45), transparent 60%),
+      linear-gradient(135deg, rgba(124,58,237,.95), rgba(34,197,94,.8));
+    box-shadow: 0 10px 30px rgba(124,58,237,.22);
+    flex:0 0 auto;
+  }
 
+  .title{display:flex; flex-direction:column; line-height:1.1; min-width:0;}
+  .title strong{
+    font-size:14px;
+    letter-spacing:.2px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .title span{
+    font-size:12px;
+    color:var(--muted);
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+
+  .header-actions{display:flex; gap:10px; align-items:center;}
+  .chip{
+    font-size:12px;
+    padding:8px 10px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,.14);
+    background: rgba(255,255,255,.05);
+    color: var(--muted);
+  }
+
+  /* Main scroll area */
+  main{
+    padding:16px;
+    overflow-y:auto;
+    overflow-x:hidden;
+    scroll-behavior:smooth;
+    height:100%;
+    /* espace pour quick replies + input sticky */
+    padding-bottom: 140px;
+  }
+
+  /* Messages container */
+  .messages{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    width:100%;
+    margin:0;
+    max-width:none;
+  }
+
+  .row{
+    display:flex;
+    gap:10px;
+    align-items:flex-end;
+    width:100%;
+    animation: fadeIn .25s ease;
+  }
+  @keyframes fadeIn{
+    from{opacity:0; transform:translateY(10px)}
+    to{opacity:1; transform:translateY(0)}
+  }
+  .row.bot{justify-content:flex-start;}
+  .row.user{justify-content:flex-end;}
+
+  /* Avatar hidden on mobile (optionnel) */
+  .avatar{
+    width:34px;height:34px;border-radius:12px;
+    background: rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.12);
+    display:none;
+    align-items:center; justify-content:center;
+    font-size:16px;
+    flex:0 0 auto;
+  }
+
+  /* Bubble: full width on mobile */
+  .bubble{
+    width:100%;
+    max-width:100%;
+    padding:12px 14px;
+    border-radius: var(--radius);
+    border:1px solid rgba(255,255,255,.12);
+    background: rgba(255,255,255,.06);
+    box-shadow: 0 10px 26px rgba(0,0,0,.16);
+    line-height:1.45;
+    font-size:14px;
+    white-space:pre-wrap;
+    word-break: break-word;
+  }
+  .row.user .bubble{
+    background: linear-gradient(135deg, rgba(124,58,237,.30), rgba(124,58,237,.16));
+    border-color: rgba(124,58,237,.45);
+  }
+
+  .meta{
+    font-size:11px;
+    color: rgba(255,255,255,.55);
+    margin: 0 6px;
+    white-space: nowrap;
+    display:none;
+  }
+
+  /* Cards */
+  .cards{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:12px;
+    margin-top:10px;
+  }
+  @media (min-width:640px){
+    .cards{ grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+  }
+
+  .card{
+    border:1px solid rgba(255,255,255,.12);
+    background: rgba(255,255,255,.05);
+    border-radius:18px;
+    padding:16px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    transition: transform .2s ease, border-color .2s ease;
+  }
+  .card:hover{
+    border-color: rgba(124,58,237,.4);
+    transform: translateY(-2px);
+  }
+  .card h3{margin:0; font-size:15px; letter-spacing:.2px; font-weight:700;}
+  .badge{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-size:11px;
+    padding:6px 10px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,.14);
+    background: rgba(255,255,255,.06);
+    width: fit-content;
+    color: var(--muted);
+  }
+  .card p{margin:0; color:var(--muted); font-size:13px; line-height:1.45;}
+  .card .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:4px;}
+
+  .link{
+    text-decoration:none;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:10px 12px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,.14);
+    background: rgba(255,255,255,.06);
+    color: var(--text);
+    font-weight:600;
+    font-size:12px;
+    transition: all .2s ease;
+  }
+  .link:hover{
+    background: rgba(255,255,255,.12);
+    border-color: rgba(255,255,255,.25);
+  }
+
+  /* Quick replies + composer host (bottom area) */
+  #composerHost{
+    position: sticky;
+    bottom: 0;
+    z-index: 250;
+    background: rgba(10,14,28,.75);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255,255,255,.10);
+  }
+
+  .quick-replies{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    justify-content:center;
+    padding:10px 14px 0 14px;
+    max-width: 980px;
+    margin:0 auto;
+  }
+
+  .qr{
+    cursor:pointer;
+    border:1px solid rgba(255,255,255,.14);
+    background: rgba(255,255,255,.06);
+    color: var(--text);
+    padding:10px 14px;
+    border-radius:999px;
+    font-weight:600;
+    font-size:13px;
+    transition: all .15s ease;
+    user-select:none;
+  }
+  .qr:hover{
+    background: rgba(255,255,255,.12);
+    border-color: rgba(255,255,255,.25);
+    transform: translateY(-1px);
+  }
+  .qr:active{ transform: translateY(1px); }
+  .qr.accent{ border-color: rgba(124,58,237,.55); background: rgba(124,58,237,.2); }
+  .qr.good{ border-color: rgba(34,197,94,.55); background: rgba(34,197,94,.14); }
+  .qr.warn{ border-color: rgba(239,68,68,.55); background: rgba(239,68,68,.12); }
+
+  /* Composer (text input) */
+  .text-input-container{
+    display:flex;
+    gap:10px;
+    padding:10px 14px 14px 14px;
+    width:100%;
+    max-width: 980px;
+    margin:0 auto;
+    box-sizing:border-box;
+  }
+
+  .text-input-container input{
+    flex:1;
+    padding:12px 18px;
+    border-radius:30px;
+    border:1px solid rgba(255,255,255,.15);
+    background: rgba(255,255,255,.07);
+    color:white;
+    font-size:14px;
+    outline:none;
+    transition: all .2s ease;
+  }
+  .text-input-container input:focus{
+    border-color: var(--accent);
+    background: rgba(255,255,255,.10);
+    box-shadow: 0 0 0 3px rgba(124,58,237,.2);
+  }
+  .text-input-container input::placeholder{
+    color: rgba(255,255,255,.5);
+  }
+
+  .text-input-container button{
+    padding:12px 18px;
+    border-radius:30px;
+    border:none;
+    background: linear-gradient(135deg, var(--accent), #9f67ff);
+    color:white;
+    font-weight:600;
+    font-size:14px;
+    cursor:pointer;
+    transition: all .2s ease;
+    white-space:nowrap;
+    box-shadow: 0 4px 12px rgba(124,58,237,.3);
+  }
+  .text-input-container button:hover{
+    transform: translateY(-1px);
+    box-shadow: 0 8px 16px rgba(124,58,237,.4);
+  }
+  .text-input-container button:active{
+    transform: translateY(1px);
+  }
+
+  /* Typing indicator */
+  .typing{display:inline-flex; gap:6px; align-items:center;}
+  .dot{
+    width:7px;height:7px;border-radius:50%;
+    background: rgba(255,255,255,.65);
+    animation: bounce 1s infinite ease-in-out;
+  }
+  .dot:nth-child(2){ animation-delay:.15s; }
+  .dot:nth-child(3){ animation-delay:.30s; }
+  @keyframes bounce{
+    0%,80%,100%{ transform: translateY(0); opacity:.6;}
+    40%{ transform: translateY(-6px); opacity:1;}
+  }
+
+  /* Links in header title */
+  a{
+    text-decoration:none;
+    color:white;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar{ width:6px; }
+  ::-webkit-scrollbar-track{ background: rgba(255,255,255,.03); }
+  ::-webkit-scrollbar-thumb{ background: rgba(255,255,255,.15); border-radius:10px; }
+  ::-webkit-scrollbar-thumb:hover{ background: rgba(255,255,255,.25); }
+
+  /* Desktop refinements */
+  @media (min-width: 768px){
     .messages{
-      display:flex;
-      flex-direction:column;
-      gap:12px;
       max-width: 820px;
-      margin:0 auto;
-      padding-bottom: 10px;
+      margin: 0 auto;
     }
-
-    .row{
-      display:flex;
-      gap:10px;
-      align-items:flex-end;
-      animation: fadeIn 0.3s ease;
-    }
-    
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    .row.bot{ justify-content:flex-start; }
-    .row.user{ justify-content:flex-end; }
-
-    .avatar{
-      width:34px; height:34px; border-radius: 12px;
-      background: rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.12);
-      display:flex; align-items:center; justify-content:center;
-      font-size:16px;
-      flex:0 0 auto;
-    }
-    
     .bubble{
-      max-width: 92vw;
-      padding:12px 14px;
-      border-radius: var(--radius);
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      box-shadow: 0 10px 26px rgba(0,0,0,.16);
-      line-height:1.45;
-      font-size:14px;
-      white-space:pre-wrap;
-      word-break: break-word;
+      width:auto;
+      max-width: 75%;
     }
-    
     .row.user .bubble{
-      background: linear-gradient(135deg, rgba(124,58,237,.30), rgba(124,58,237,.16));
-      border-color: rgba(124,58,237,.45);
-    }
-    
-    .meta{
-      font-size:11px;
-      color: rgba(255,255,255,.55);
-      margin: 0 6px;
-      white-space: nowrap;
-    }
-
-    .cards{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap:12px;
-      margin-top:10px;
-    }
-    
-    @media (min-width:640px){
-      .cards{ grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-    }
-
-    .card{
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.05);
-      border-radius: 18px;
-      padding:16px;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      transition: transform 0.2s ease, border-color 0.2s ease;
-    }
-    
-    .card:hover {
-      border-color: rgba(124,58,237,.4);
-      transform: translateY(-2px);
-    }
-    
-    .card h3{
-      margin:0;
-      font-size:15px;
-      letter-spacing:.2px;
-      font-weight:700;
-    }
-    
-    .badge{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      font-size:11px;
-      padding:6px 10px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      width: fit-content;
-      color: var(--muted);
-    }
-    
-    .card p{
-      margin:0;
-      color: var(--muted);
-      font-size:13px;
-      line-height:1.45;
-    }
-    
-    .card .actions{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:4px;
-    }
-    
-    .link{
-      text-decoration:none;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:10px 12px;
-      border-radius: 12px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      color: var(--text);
-      font-weight:600;
-      font-size:12px;
-      transition: all 0.2s ease;
-    }
-    
-    .link:hover{
-      background: rgba(255,255,255,.12);
-      border-color: rgba(255,255,255,.25);
-    }
-    
-    .link.green{
-      border-color: rgba(34,197,94,.5);
-      background: rgba(34,197,94,.14);
-    }
-    
-    .link.green:hover {
-      background: rgba(34,197,94,.25);
-    }
-
-    footer{
-      border-top:1px solid rgba(255,255,255,.10);
-      background: rgba(10,14,28,.85);
-      backdrop-filter: blur(10px);
-      padding:14px 16px;
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      flex-shrink: 0;
-      position: relative;
-      z-index: 10;
-    }
-
-    .quick-replies{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      max-width: 860px;
-      margin:0 auto;
-      justify-content:center;
-    }
-    
-    .qr{
-      cursor:pointer;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      color: var(--text);
-      padding:10px 14px;
-      border-radius: 999px;
-      font-weight:600;
-      font-size:13px;
-      transition: all .15s ease;
-      user-select:none;
-    }
-    
-    .qr:hover{ 
-      background: rgba(255,255,255,.12); 
-      border-color: rgba(255,255,255,.25);
-      transform: translateY(-1px);
-    }
-    
-    .qr:active{ transform: translateY(1px); }
-    
-    .qr.accent{ 
-      border-color: rgba(124,58,237,.55); 
-      background: rgba(124,58,237,.2); 
-    }
-    
-    .qr.accent:hover {
-      background: rgba(124,58,237,.3);
-    }
-    
-    .qr.good{ 
-      border-color: rgba(34,197,94,.55); 
-      background: rgba(34,197,94,.14); 
-    }
-    
-    .qr.good:hover {
-      background: rgba(34,197,94,.25);
-    }
-    
-    .qr.warn{ 
-      border-color: rgba(239,68,68,.55); 
-      background: rgba(239,68,68,.12); 
-    }
-    
-    .qr.warn:hover {
-      background: rgba(239,68,68,.22);
-    }
-
-    /* ✅ STYLE POUR LE CHAMP DE TEXTE - TOUJOURS VISIBLE */
-    .text-input-container {
-      display: flex;
-      padding: 8px 0 4px 0;
-      gap: 10px;
-      width: 100%;
-      box-sizing: border-box;
-      flex-shrink: 0;
-      background: transparent;
-    }
-
-    .text-input-container input {
-      flex: 1;
-      padding: 14px 18px;
-      border-radius: 30px;
-      border: 1px solid rgba(255,255,255,.2);
-      background: rgba(20,25,35,.95);
-      color: white;
-      font-size: 16px; /* Évite le zoom automatique sur iOS */
-      outline: none;
-      transition: all 0.2s ease;
-      -webkit-appearance: none;
-    }
-
-    .text-input-container input:focus {
-      border-color: var(--accent);
-      background: rgba(30,35,45,.98);
-      box-shadow: 0 0 0 3px rgba(124,58,237,.2);
-    }
-
-    .text-input-container input::placeholder {
-      color: rgba(255,255,255,.5);
-      font-size: 14px;
-    }
-
-    .text-input-container button {
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      border: none;
-      background: linear-gradient(135deg, var(--accent), #9f67ff);
-      color: white;
-      font-size: 22px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      box-shadow: 0 4px 12px rgba(124,58,237,.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      padding: 0;
-    }
-
-    .text-input-container button:hover {
-      background: linear-gradient(135deg, #8b5cf6, #a78bfa);
-      transform: translateY(-1px);
-      box-shadow: 0 8px 18px rgba(124,58,237,.4);
-    }
-
-    .text-input-container button:active {
-      transform: translateY(1px);
-      box-shadow: 0 2px 8px rgba(124,58,237,.3);
-    }
-
-    .small{
-      text-align:center;
-      color: rgba(255,255,255,.60);
-      font-size:11px;
-      letter-spacing: 0.3px;
-    }
-
-    /* typing indicator */
-    .typing{
-      display:inline-flex;
-      gap:6px;
-      align-items:center;
-    }
-    
-    .dot{
-      width:7px;height:7px;border-radius:50%;
-      background: rgba(255,255,255,.65);
-      animation: bounce 1s infinite ease-in-out;
-    }
-    
-    .dot:nth-child(2){ animation-delay: .15s; }
-    .dot:nth-child(3){ animation-delay: .30s; }
-    
-    @keyframes bounce{
-      0%,80%,100%{ transform: translateY(0); opacity:.6;}
-      40%{ transform: translateY(-6px); opacity:1;}
-    }
-    
-    a {
-      text-decoration: none;
-      display: inline-block;
-      color: white;
-      margin-bottom: 5px;
-      font-size: 18px;
-    }
-
-    /* Scrollbar personnalisée */
-    ::-webkit-scrollbar {
-      width: 6px;
-    }
-    
-    ::-webkit-scrollbar-track {
-      background: rgba(255,255,255,.03);
-    }
-    
-    ::-webkit-scrollbar-thumb {
-      background: rgba(255,255,255,.15);
-      border-radius: 10px;
-    }
-    
-    ::-webkit-scrollbar-thumb:hover {
-      background: rgba(255,255,255,.25);
-    }
-
-    /* ✅ RESPONSIVE SPÉCIAL TÉLÉPHONE */
-    @media (max-width: 600px) {
-      body { 
-        padding: 0; 
-      }
-      
-      .app {
-        height: 100vh; /* Pleine hauteur */
-        width: 100%;
-        border-radius: 0;
-        max-height: 100vh;
-      }
-      
-      .bubble {
-        max-width: 85%;
-        font-size: 15px;
-      }
-      
-      .quick-replies {
-        gap: 8px;
-      }
-      
-      .qr {
-        padding: 8px 14px;
-        font-size: 12px;
-      }
-      
-      .text-input-container {
-        padding: 8px 0 4px 0;
-      }
-      
-      .text-input-container input {
-        padding: 12px 16px;
-        font-size: 16px; /* Empêche le zoom sur iPhone */
-      }
-      
-      .text-input-container button {
-        width: 48px;
-        height: 48px;
-        font-size: 20px;
-      }
-      
-      header {
-        padding: 12px 16px;
-      }
-      
-      main {
-        padding: 16px;
-      }
-      
-      .chip { 
-        display: none; 
-      }
-    }
-    /* ✅ SOLUTION FINALE RECOMMANDÉE */
-html {
-  scroll-padding-top: 70px; /* ← Décale le scroll pour éviter que les messages soient cachés */
+  width: fit-content;
+  max-width: 80%;
+  margin-left: auto;      /* pousse à droite */
 }
+  }
 
-main{
-  flex: 1 1 auto;
-  overflow-y: auto;
-  overflow-x: hidden;
-  scroll-behavior:smooth;
-  padding: 18px;
-  -webkit-overflow-scrolling: touch;
-  /* Pas de padding-top fixe, on utilise scroll-padding à la place */
+  /* Small screens tweaks */
+  @media (max-width: 600px){
+    .chip{ display:none; }
+    main{ padding:14px; padding-bottom:150px; }
+    .text-input-container button{ padding:12px 16px; }
+.row.user .bubble{
+  width: fit-content;
+  max-width: 80%;
+  margin-left: auto;      /* pousse à droite */
 }
-
-header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:16px 18px;
-  border-bottom:1px solid rgba(255,255,255,.10);
-  backdrop-filter: blur(10px);
-  background: rgba(10,14,28,.55);
-  flex-shrink: 0;
-  z-index: 10;
-  position: sticky; /* ← Header sticky */
-  top: 0;
-}
-
-footer{
-  border-top:1px solid rgba(255,255,255,.10);
-  background: rgba(10,14,28,.85);
-  backdrop-filter: blur(10px);
-  padding:14px 16px;
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-  flex-shrink: 0;
-  position: sticky; /* ← Footer sticky en bas */
-  bottom: 0;
-  z-index: 10;
-}
-
-@media (max-width: 600px) {
-  body { padding: 0; }
-  
-  .app {
-    height: 100vh;
-    width: 100%;
-    border-radius: 0;
-    max-height: 100vh;
   }
-  
-  /* Ajuster scroll-padding pour mobile */
-  html {
-    scroll-padding-top: 60px;
-  }
-  
-  header {
-    padding: 12px 16px;
-  }
-  
-  .bubble {
-    max-width: 85%;
-    font-size: 15px;
-  }
-  
-  .text-input-container input {
-    padding: 12px 16px;
-    font-size: 16px;
-  }
-  
-  .text-input-container button {
-    width: 48px;
-    height: 48px;
-    font-size: 20px;
-  }
-  
-  .chip { display: none; }
-}
-  </style>
+</style>
 </head>
 <body>
-  <div class="app" role="application" aria-label="Chatbot orientation">
-    <header>
-      <div class="brand">
-        <div class="logo" aria-hidden="true"></div>
-        <div class="title">
-          <strong> <a href="./index.html">Chatbot Orientation — Lycée Pro Aimé Césaire</a> </strong>
-          <span>Découvrir les métiers et formations en 2 minutes</span>
-        </div>
+<div class="app" role="application" aria-label="Chatbot orientation">
+  <header>
+    <div class="brand">
+      <div class="logo" aria-hidden="true"></div>
+      <div class="title">
+        <strong><a href="./index.html">CésaireGPT</a></strong>
+        <span>Découvrir les métiers et formations en 2 minutes</span>
       </div>
-      <div class="header-actions">
-        <span class="chip" id="statusChip">Prêt</span>
-        <button class="btn" id="btnRestart" title="Recommencer">↺ Recommencer</button>
-        <button class="btn primary" id="btnDemo" title="Mode démo (auto)">▶ Démo</button>
-      </div>
-    </header>
+    </div>
 
-    <main id="main">
-      <div class="messages" id="messages"></div>
-    </main>
+    <div class="header-actions">
+      <span class="chip" id="statusChip">Prêt</span>
+      <span  id="btnDemo" type="button" title="Mode démo (auto)"></span>
+    </div>
+  </header>
 
-    <footer>
-      <div class="quick-replies" id="quickReplies"></div>
-      <!-- L'input sera ajouté ici automatiquement par JavaScript -->
-    </footer>
+  <!-- ✅ Zone scroll UNIQUEMENT pour les messages -->
+  <main id="main">
+    <div class="messages" id="messages"></div>
+  </main>
+
+  <!-- ✅ Zone fixe en bas : quick replies + input -->
+  <div id="composerHost">
+    <div id="quickReplies" class="quick-replies"></div>
+    <!-- addTextInput() viendra ajouter .text-input-container ici -->
   </div>
+</div>
 <script>
     /* =========================
    0) Sélecteurs DOM attendus
@@ -666,128 +434,247 @@ const btnDemo = document.getElementById("btnDemo");
    ========================= */
 const PROGRAMS = {
   // ===== Initiale =====
-  cap_elec: {
-    title: "CAP Électricien / Électricienne",
-    badge: "⚡ Initiale — Électricité",
-    pitch: "Installer, mettre en service, entretenir et dépanner des installations électriques (bâtiment, industrie, services…).",
-    jobs: ["Électricien(ne) installateur(trice)"],
-    next: "Poursuite possible : Bac Pro MELEC, BP…",
-    pageUrl: "https://example.com/page-cap-electricien",
-    mode: "initiale",
-    family: "elec",
-  },
-  bac_melec: {
-    title: "Bac Pro MELEC (Métiers de l'électricité et de ses environnements connectés)",
-    badge: "🔌 Initiale — MELEC",
-    pitch: "Réaliser et maintenir des équipements électriques, parfois connectés (domotique, réseaux, bâtiment…).",
-    jobs: ["Technicien(ne) électricien(ne)", "Installateur(trice) domotique (selon parcours)"],
-    next: "BTS / spécialisation selon projet.",
-    pageUrl: "https://example.com/page-bac-melec",
-    mode: "initiale",
-    family: "elec",
-  },
-  cap_metallier: {
-    title: "CAP Métallier / Métallière",
-    badge: "🧱 Initiale — Métallerie",
-    pitch: "Fabriquer et poser des éléments métalliques : garde-corps, portails, structures (atelier + chantier).",
-    jobs: ["Métallier(ère)", "Serrurier(ère)"],
-    next: "Poursuite possible : Bac Pro Métallerie, BP…",
-    pageUrl: "https://example.com/page-cap-metallier",
-    mode: "initiale",
-    family: "metal",
-  },
-  bac_metallerie: {
-    title: "Bac Pro Ouvrages du Bâtiment : Métallerie",
-    badge: "🏗️ Initiale — Bâtiment & Métal",
-    pitch: "Préparer, réaliser et poser des ouvrages métalliques plus complexes (plans, mesures, assemblage).",
-    jobs: ["Métallier(ère)", "Monteur(se) en ouvrages métalliques"],
-    next: "BTS / insertion pro.",
-    pageUrl: "https://example.com/page-bac-metallerie",
-    mode: "initiale",
-    family: "metal",
-  },
-  cap_epc: {
-    title: "CAP Équipier / Équipière Polyvalent(e) du Commerce",
-    badge: "🛍️ Initiale — Commerce",
-    pitch: "Mettre en rayon, gérer les stocks, accueillir et renseigner les clients en magasin.",
-    jobs: ["Employé(e) de commerce", "Équipier(ère) polyvalent(e)"],
-    next: "Poursuite possible : Bac Pro Métiers du Commerce et de la Vente…",
-    pageUrl: "https://example.com/page-cap-epc",
-    mode: "initiale",
-    family: "commerce",
-  },
-  seconde_mrc: {
-    title: "2nde Bac Pro Métiers de la Relation Clientèle (MRC)",
-    badge: "🧭 Initiale — Seconde MRC",
-    pitch: "Année de découverte et consolidation autour de la relation client (accueil, vente, communication).",
-    jobs: ["— (année d'orientation vers Bac Pro)"],
-    next: "Bac Pro Commerce/Vente / Métiers de l'accueil (selon établissement).",
-    pageUrl: "https://example.com/page-2nde-mrc",
-    mode: "initiale",
-    family: "commerce",
-  },
+cap_elec: {
+  title: "CAP Électricien / Électricienne",
+  pitch: "Installer, entretenir et dépanner des systèmes électriques pour assurer l’énergie et la sécurité des bâtiments.",
+  duration: "2 ans",
+  learn: [
+    "Lire et interpréter des plans électriques",
+    "Installer des circuits et appareils électriques",
+    "Assurer la sécurité des installations",
+    "Diagnostiquer et réparer des pannes simples"
+  ],
+  jobs: [
+    "Électricien(ne) du bâtiment",
+    "Technicien(ne) électricien(ne)",
+    "Monteur(se) en installations électriques"
+  ],
+  next: "Après le CAP : poursuivre vers une Mention Complémentaire ou un Bac Pro en électricité pour aller plus loin.",
+  pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/cap-electricien/",
+  mode: "initiale",
+  family: "électricité",
+},
+bac_melec: {
+  title: "Bac Pro Métiers de l'Électricité et de ses Environnements Connectés (MELEC)",
+  pitch: "Concevoir, installer et maintenir des systèmes électriques performants pour les bâtiments et les environnements connectés.",
+  duration: "3 ans après la 3ᵉ (ou 2 ans après certains CAP)",
+  learn: [
+    "Analyser et définir des installations électriques",
+    "Installer et raccorder des circuits et équipements",
+    "Paramétrer et contrôler le bon fonctionnement",
+    "Assurer la maintenance et la sécurité énergétique",
+    "Travailler avec des technologies connectées"
+  ],
+  jobs: [
+    "Électricien(ne) qualifié(e)",
+    "Technicien(ne) électrotechnicien(ne)",
+    "Installateur(trice) domotique"
+  ],
+  next: "Après le Bac Pro : BTS ou spécialisations techniques pour aller encore plus loin.",
+  pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/bac-pro-metier-de-lelectricite-et-de-ses-environnements-connectes/",
+  mode: "initiale",
+  family: "électricité",
+},
+cap_metallier: {
+  title: "CAP Serrurier / Métallier",
+  pitch: "Concevoir, fabriquer et poser des éléments métalliques pour les bâtiments et aménagements.",
+  duration: "2 ans",
+  learn: [
+    "Lire des plans et tracer les pièces",
+    "Découper et façonner des métaux",
+    "Assembler et souder des éléments métalliques",
+    "Installer des ouvrages sur chantier",
+    "Vérifier la qualité et la sécurité des réalisations"
+  ],
+  jobs: [
+    "Métallier(ère)",
+    "Serrurier(ère) métallier",
+    "Monteur(se) en ouvrages métalliques"
+  ],
+  next: "Après le CAP : poursuite possible vers un Bac Pro Ouvrages du Bâtiment – Métallerie ou des mentions complémentaires pour aller plus loin.",
+  pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/cap-serrurier-metallier/",
+  mode: "initiale",
+  family: "bâtiment",
+},
+bac_metallerie: {
+  title: "Bac Pro Ouvrages du Bâtiment : Métallerie",
+  pitch: "Fabriquer, assembler et poser des structures métalliques pour le bâtiment (portes, garde-corps, escaliers…) en atelier et sur chantier.",
+  duration: "3 ans après la 3e",
+  learn: [
+    "Lire et préparer des plans techniques",
+    "Découper, façonner et assembler des pièces métalliques",
+    "Installer des ouvrages sur chantier",
+    "Travailler avec des outils et machines professionnelles",
+    "Respecter les normes de sécurité et qualité"
+  ],
+  jobs: [
+    "Métallier(ère)",
+    "Serrurier(ère) métallier(ère)",
+    "Charpentier(ère) métallique"
+  ],
+  next: "Après le Bac Pro : BTS ou spécialisations techniques pour aller plus loin.",
+  pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/bac-pro-ouvrages-du-batiment-metallerie/",
+  mode: "initiale",
+  family: "bâtiment",
+},
+cap_epc: {
+  title: "CAP Équipier / Équipière Polyvalent(e) du Commerce",
+  pitch: "Accueillir les clients, participer aux ventes et mettre en valeur les produits en magasin.",
+  duration: "2 ans",
+  learn: [
+    "Mettre en valeur les produits",
+    "Organiser un rayon",
+    "Accueillir et conseiller les clients",
+    "Encaisser et gérer les stocks"
+  ],
+  jobs: [
+    "Employé(e) de commerce",
+    "Équipier(ère) polyvalent(e)",
+    "Vendeur(se) en magasin"
+  ],
+  next: "Après le CAP : poursuite possible en Bac Pro Métiers du Commerce et de la Vente.",
+  pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/cap-equipier-polyvalent-du-commerce/",
+  mode: "initiale",
+  family: "commerce",
+},
+seconde_mrc: {
+  title: "2nde Professionnelle Métiers de la Relation Clientèle (MRC)",
+  pitch: "Découvrir et apprendre les compétences clés du contact client, de la communication et du conseil en vente.",
+  duration: "1 an après la 3e",
+  learn: [
+    "Accueillir des clients en face-à-face et par téléphone",
+    "Communiquer et comprendre les besoins des clients",
+    "Analyser des informations pour mieux conseiller",
+    "Conseiller et fidéliser une clientèle",
+    "Suivre la relation client et le service après-vente"
+  ],
+  jobs: [
+    "Conseiller(ère) clientèle",
+    "Assistant(e) commercial(e)",
+    "Vendeur(se) polyvalent(e)"
+  ],
+  next: "Après cette 2nde : entrée en 1re pro Métiers de l’Accueil, ou Métiers du Commerce et de la Vente.",
+  pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/2nde-bac-pro-metiers-de-ma-relation-clientele-mrc/",
+  mode: "initiale",
+  family: "commerce",
+},
   bac_commerce_vente: {
     title: "Bac Pro Métiers du Commerce et de la Vente",
     badge: "💬 Initiale — Vente & Conseil",
     pitch: "Conseiller, vendre, fidéliser, organiser un espace de vente et suivre des objectifs.",
     jobs: ["Vendeur(se) conseil", "Conseiller(ère) clientèle"],
-    next: "BTS MCO / NDRC (selon projet).",
+    next: "Après : BTS MCO / NDRC (selon projet).",
     pageUrl: "https://example.com/page-bac-commerce-vente",
     mode: "initiale",
     family: "commerce",
   },
-  bac_agora: {
-    title: "Bac Pro AGOrA (Assistance à la Gestion des Organisations et de leurs Activités)",
-    badge: "📁 Initiale — Gestion",
-    pitch: "En 2nde GATL (Gestion, Administration, Transport, Logistique), tu apprends les bases de la gestion administrative avant de te spécialiser en Bac Pro AGOrA.",
-    jobs: ["Assistant(e) de gestion", "Employé(e) administratif(ve)"],
-    next: "BTS GPME / insertion pro.",
-    pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/bac-pro-gestion-administration-transport-logistique/",
-    mode: "initiale",
-    family: "tertiaire",
-  },
-  bac_accueil: {
-    title: "Bac Pro Métiers de l'Accueil",
-    badge: "🙂 Initiale — Accueil",
-    pitch: "Accueillir, informer, orienter et gérer des situations usagers/clients en face à face ou à distance.",
-    jobs: ["Agent d'accueil", "Chargé(e) d'accueil"],
-    next: "BTS / insertion pro.",
-    pageUrl: "https://example.com/page-bac-accueil",
-    mode: "initiale",
-    family: "tertiaire",
-  },
+bac_agora: {
+  title: "2nde GATL → Bac Pro AGOrA",
+  pitch: "En 2nde, tu découvres la Gestion, l’Administration, le Transport et la Logistique (GATL). Ensuite, tu te spécialises en AGOrA (Assistance à la Gestion des Organisations et de leurs Activités).",
+  duration: "3 ans après la 3e",
+  learn: [
+    "En 2nde GATL : comprendre le fonctionnement d’une entreprise",
+    "Organiser des dossiers administratifs",
+    "Découvrir le transport et la logistique",
+    "Utiliser des outils numériques professionnels",
+    "En 1re et Terminale AGOrA : gérer des activités administratives et accompagner une organisation au quotidien"
+  ],
+  jobs: [
+    "Assistant(e) administratif(ve)",
+    "Agent de gestion",
+    "Employé(e) en transport ou logistique"
+  ],
+  next: "Après la 2nde GATL, poursuite en : AGOrA (au lycée A. Césaire), Organisation de Transport de Marchandises ou Logistique (LP Antoine de Saint-Exupéry à Halluin).",
+  pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/bac-pro-gestion-administration-transport-logistique/",
+  mode: "initiale",
+  family: "gestion-administration",
+},
+bac_accueil: {
+  title: "Bac Pro Métiers de l’Accueil (MAC)",
+  pitch: "Apprendre à accueillir, informer et accompagner les personnes dans différents lieux (entreprises, services publics, événements…).",
+  duration: "3 ans après la 3e (entrée possible en 1re après une 2nde MRC ou GATL)",
+  learn: [
+    "Accueillir les visiteurs en face-à-face, par téléphone ou en ligne",
+    "Informer et orienter avec clarté",
+    "Gérer des rendez-vous et des informations",
+    "Utiliser des outils numériques d’accueil",
+    "Assurer un service professionnel et convivial"
+  ],
+  jobs: [
+    "Hôte / Hôtesse d’accueil",
+    "Agent(e) d’accueil et d’information",
+    "Réceptionniste en entreprise ou en événementiel"
+  ],
+  next: "Après le Bac Pro : BTS ou spécialisation dans la communication, l’événementiel ou le service client.",
+  pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/bac-pro-metiers-de-laccueil/",
+  mode: "initiale",
+  family: "service-accueil",
+},
 
   // ===== Alternance =====
-  alt_commerce: {
-    title: "Les métiers du Commerce (Alternance)",
-    badge: "🔄 Alternance — Commerce",
-    pitch: "Tu apprends en alternant lycée et entreprise : pratique en magasin + cours au lycée.",
-    jobs: ["Employé(e) de commerce", "Vendeur(se) (selon parcours)"],
-    next: "Objectif : expérience + compétences + insertion.",
-    pageUrl: "https://example.com/page-alt-commerce",
-    mode: "alternance",
-    family: "commerce",
-  },
-  alt_elec: {
-    title: "Les métiers de l'Électricité (Alternance)",
-    badge: "🔄 Alternance — Électricité",
-    pitch: "Tu apprends en alternant lycée et entreprise : chantiers/ateliers + cours au lycée.",
-    jobs: ["Électricien(ne) installateur(trice)", "Technicien(ne) électricien(ne)"],
-    next: "Objectif : expérience + compétences + insertion.",
-    pageUrl: "https://example.com/page-alt-elec",
-    mode: "alternance",
-    family: "elec",
-  },
-  alt_metallerie: {
-    title: "Les métiers de la Métallerie (Alternance)",
-    badge: "🔄 Alternance — Métallerie",
-    pitch: "Tu apprends en alternant lycée et entreprise : atelier/chantier + cours au lycée.",
-    jobs: ["Métallier(ère)", "Serrurier(ère)"],
-    next: "Objectif : expérience + compétences + insertion.",
-    pageUrl: "https://example.com/page-alt-metallerie",
-    mode: "alternance",
-    family: "metal",
-  },
+alt_commerce: {
+  title: "Métiers du Commerce en alternance",
+  pitch: "Suivre une formation commerciale en alternance entre l’école et l’entreprise pour apprendre en pratiquant.",
+  duration: "Variable selon la formation et le contrat en entreprise",
+  learn: [
+    "Découvrir les techniques de vente directement en entreprise",
+    "Appliquer ce que tu apprends en cours au sein d’une équipe professionnelle",
+    "Accompagner les clients et gérer des missions concrètes",
+    "Développer des compétences commerciales et relationnelles"
+  ],
+  jobs: [
+    "Vendeur(se) en commerce",
+    "Assistant(e) commercial(e)",
+    "Conseiller(ère) de clientèle"
+  ],
+  next: "L’alternance peut se faire dès la 1re ou au cours d’une formation commerciale (CAP, Bac Pro ou autre diplôme), en fonction des accords avec une entreprise.",
+  pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/metiers-du-commerce-en-alternance/",
+  mode: "alternance",
+  family: "commerce",
+},
+alt_elec: {
+  title: "Métiers de l’Électricité en alternance",
+  pitch: "Apprendre le métier d’électricien en alternant cours au lycée et travail dans une entreprise.",
+  duration: "Variable selon contrat et formation",
+  learn: [
+    "Découvrir et pratiquer l’installation électrique dans des situations réelles",
+    "Appliquer directement en entreprise ce qui est appris en cours",
+    "Travailler sur des circuits, installations et équipements électriques",
+    "Développer des compétences techniques recherchées",
+    "Comprendre les normes de sécurité et qualité"
+  ],
+  jobs: [
+    "Électricien(ne) du bâtiment",
+    "Technicien(ne) électricien(ne)",
+    "Monteur(se) en installations électriques"
+  ],
+  next: "L’alternance peut se faire à différents niveaux de formation (CAP, Bac Pro…) en accord avec une entreprise.",
+  pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/les-metiers-de-lelectricite/",
+  mode: "alternance",
+  family: "électricité",
+},
+
+alt_metallerie: {
+  title: "Métiers de la Métallerie en alternance",
+  pitch: "Découvrir les métiers de la métallerie en alternant formation au lycée et missions en entreprise.",
+  duration: "Variable selon contrat et niveau de formation",
+  learn: [
+    "Appliquer les techniques de fabrication métallique en atelier",
+    "Participer à des projets concrets en entreprise",
+    "Assembler, souder et façonner des pièces métalliques",
+    "Travailler la métallerie pour le bâtiment et l’industrie",
+    "Développer des compétences techniques professionnelles"
+  ],
+  jobs: [
+    "Métallier(ère)",
+    "Serrurier(ère) métallier(ère)",
+    "Ouvrier(ère) en ouvrages métalliques"
+  ],
+  next: "L’alternance peut être organisée à différents moments de la formation (CAP ou Bac Pro) avec une entreprise partenaire.",
+  pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/les-metiers-de-la-metallerie/",
+  mode: "alternance",
+  family: "bâtiment",
+}
 };
 
 /* =========================
@@ -1040,7 +927,7 @@ const FLOW = {
     bot: [
       "Salut 👋 Je suis le chatbot d'orientation du lycée Aimé Césaire.\nJe suis conçu par les élèves du lycée, pour les futurs élèves du lycée.\n\nEn quelques clics, je t'aide à découvrir une formation et un métier.\nPrêt(e) ? 🚀\n\nTu t'intéresses plutôt à :",
       "Bonjour ! 👋 Je suis le chatbot du lycée Aimé Césaire.\nJe suis là pour t'aider à trouver la formation qui te correspond.\n\nTu veux découvrir l'électricité, la métallerie, le commerce, la gestion ou l'accueil ?",
-      "Salut ! 🤖\nBienvenue au lycée Aimé Césaire.\n\nDis-moi ce qui t'intéresse : électricité, métallerie, commerce, gestion, accueil...\nOu pose-moi une question !",
+      "Salut ! 🤖\nBienvenue au lycée Aimé Césaire.\n\nDis-moi ce qui t'intéresse : électricité, métallerie, commerce, gestion, accueil...",
       "Hé ! 👋\nJe suis le chatbot d'orientation du lycée.\nConçu par des élèves, pour des élèves.\n\nTu cherches une formation dans quel domaine ?"
     ],
     replies: [] // Pas de boutons au début
@@ -1086,7 +973,7 @@ const FLOW = {
     replies: [
       { label: "🎓 CAP Équipier Polyvalent", value: "cap_commerce" },
       { label: "🧭 2nde MRC (découverte)", value: "seconde_mrc" },
-      //{ label: "📈 Bac Pro Commerce/Vente", value: "bac_commerce" },
+      { label: "📈 Bac Pro Commerce/Vente", value: "bac_commerce" },
       { label: "🔄 Alternance", value: "alt_commerce" },
       //{ label: "🔙 Retour", value: "back" },
     ],
@@ -1248,7 +1135,7 @@ function removeTyping() {
 }
 
 /* =========================
-   7) Effet ChatGPT : mot par mot (VERSION CORRIGÉE)
+   7) Effet ChatGPT : mot par mot
    ========================= */
 function escapeHtml(str) {
   return str
@@ -1259,7 +1146,7 @@ function escapeHtml(str) {
     .replaceAll("'", "&#039;");
 }
 
-function typewriterMessage(text, { speed = 45, onComplete } = {}) {
+function typewriterMessage(text, { speed = 60, onComplete } = {}) {
   setStatus("Écrit…");
   quickRepliesEl.style.display = "none";
 
@@ -1272,7 +1159,7 @@ function typewriterMessage(text, { speed = 45, onComplete } = {}) {
 
   const bubble = document.createElement("div");
   bubble.className = "bubble";
-  bubble.innerHTML = "";
+  bubble.textContent = "";
 
   const meta = document.createElement("div");
   meta.className = "meta";
@@ -1284,14 +1171,15 @@ function typewriterMessage(text, { speed = 45, onComplete } = {}) {
   messagesEl.appendChild(row);
   scrollToBottom();
 
-  // Pour le texte simple : effet caractère par caractère
+  const safe = escapeHtml(text);
+  const parts = safe.split(/(\s+)/);
   let i = 0;
+
   const timer = setInterval(() => {
-    bubble.innerHTML += text.charAt(i);
+    bubble.innerHTML += parts[i] ?? "";
     i++;
     scrollToBottom();
-    
-    if (i >= text.length) {
+    if (i >= parts.length) {
       clearInterval(timer);
       setStatus("Prêt");
       quickRepliesEl.style.display = "flex";
@@ -1300,56 +1188,30 @@ function typewriterMessage(text, { speed = 45, onComplete } = {}) {
   }, speed);
 }
 
-function typewriterHTML(html, { speed = 18, onComplete } = {}) {
-  setStatus("Écrit…");
-  quickRepliesEl.style.display = "none";
+function botSay(textOrHtml, { html = false, speed = 60, onComplete } = {}) {
+  if (html) {
+    setStatus("Répond…");
+    quickRepliesEl.style.display = "none";
+    addTyping();
+    
+    const delay = 300 + Math.random() * 200;
+    window.setTimeout(() => {
+      removeTyping();
+      addMessage({ from: "bot", html: textOrHtml });
+      setStatus("Prêt");
+      quickRepliesEl.style.display = "flex";
+      if (onComplete) onComplete();
+    }, delay);
+    return;
+  }
 
-  const row = document.createElement("div");
-  row.className = "row bot";
-
-  const av = document.createElement("div");
-  av.className = "avatar";
-  av.textContent = "🤖";
-
-  const bubble = document.createElement("div");
-  bubble.className = "bubble";
-  bubble.innerHTML = "";
-
-  const meta = document.createElement("div");
-  meta.className = "meta";
-  meta.textContent = nowTime();
-
-  row.appendChild(av);
-  row.appendChild(bubble);
-  row.appendChild(meta);
-  messagesEl.appendChild(row);
-  scrollToBottom();
-
-  // Pour le HTML : on l'injecte directement (pas d'effet caractère)
-  setTimeout(() => {
-    bubble.innerHTML = html;
-    scrollToBottom();
-    setStatus("Prêt");
-    quickRepliesEl.style.display = "flex";
-    if (onComplete) onComplete();
-  }, 300); // Petit délai pour l'effet "réflexion"
-}
-
-function botSay(textOrHtml, { html = false, speed = 45, onComplete } = {}) {
   quickRepliesEl.style.display = "none";
   addTyping();
   
   const delay = 200 + Math.random() * 150;
   window.setTimeout(() => {
     removeTyping();
-    
-    if (html) {
-      // C'est du HTML → on l'affiche directement (pas d'effet caractère)
-      typewriterHTML(textOrHtml, { speed, onComplete });
-    } else {
-      // C'est du texte → effet caractère par caractère
-      typewriterMessage(textOrHtml, { speed, onComplete });
-    }
+    typewriterMessage(textOrHtml, { speed, onComplete });
   }, delay);
 }
 
@@ -1392,50 +1254,8 @@ function handleUserInput(inputText) {
   }
 
   // === GESTION DU CONTEXTE ===
+  // Si on est dans un choix spécifique, priorité au contexte
   const currentNode = state.nodeId;
-  
-  // 💡 CAS SPÉCIAL: Si on vient juste de demander un domaine après un "CAP" ou "Bac Pro" générique
-  // Exemple: utilisateur a dit "cap" puis "électricité" → on va directement au CAP élec
-  const lastUserMessage = state.history.length > 0 ? state.history[state.history.length - 1] : null;
-  const justAskedForDomain = lastUserMessage && 
-    (lastUserMessage.answer === "cap" || 
-     lastUserMessage.answer === "bacpro" || 
-     lastUserMessage.answer?.includes("cap") ||
-     lastUserMessage.answer?.includes("bac"));
-  
-  if (justAskedForDomain) {
-    // Si l'utilisateur avait demandé "cap" juste avant et maintenant donne un domaine
-    if (lastUserMessage.answer?.includes("cap") || lastUserMessage.answer === "cap") {
-      if (text.includes("elec") || text.includes("électricité") || text.includes("electricite")) {
-        return { type: "flow", keyword: "cap_elec" };
-      }
-      if (text.includes("metal") || text.includes("métal") || text.includes("metallerie")) {
-        return { type: "flow", keyword: "cap_metal" };
-      }
-      if (text.includes("commerce") || text.includes("vente")) {
-        return { type: "flow", keyword: "cap_commerce" };
-      }
-    }
-    
-    // Si l'utilisateur avait demandé "bac" juste avant et maintenant donne un domaine
-    if (lastUserMessage.answer?.includes("bac") || lastUserMessage.answer === "bacpro") {
-      if (text.includes("elec") || text.includes("électricité") || text.includes("electricite")) {
-        return { type: "flow", keyword: "bac_elec" };
-      }
-      if (text.includes("metal") || text.includes("métal") || text.includes("metallerie")) {
-        return { type: "flow", keyword: "bac_metal" };
-      }
-      if (text.includes("commerce") || text.includes("vente")) {
-        return { type: "flow", keyword: "bac_commerce" };
-      }
-      if (text.includes("gestion") || text.includes("agora")) {
-        return { type: "flow", keyword: "gestion" };
-      }
-      if (text.includes("accueil")) {
-        return { type: "flow", keyword: "accueil" };
-      }
-    }
-  }
   
   // Si on est dans le choix électricité
   if (currentNode === "elec_choice") {
@@ -1535,10 +1355,8 @@ function handleUserInput(inputText) {
   
   // 3. CAP et Bac Pro sans contexte → demander le domaine
   if (text.includes("cap") && !text.includes("bac")) {
-    // On garde en mémoire que l'utilisateur a demandé un CAP
     return { 
       type: "unknown", 
-      keyword: "cap",
       text: "🎓 CAP dans quel domaine ? On propose :\n• Électricité\n• Métallerie\n• Commerce" 
     };
   }
@@ -1546,7 +1364,6 @@ function handleUserInput(inputText) {
   if ((text.includes("bac") || text.includes("bacpro")) && !text.includes("cap")) {
     return { 
       type: "unknown", 
-      keyword: "bacpro",
       text: "📈 Bac Pro dans quel domaine ? On propose :\n• Électricité (MELEC)\n• Métallerie\n• Commerce/Vente\n• Gestion (AGOrA)\n• Accueil" 
     };
   }
@@ -1582,31 +1399,52 @@ function setReplies(replies) {
   }
 
   // Bouton restart
-  const restart = document.createElement("button");
+  /*const restart = document.createElement("button");
   restart.className = "qr warn";
   restart.textContent = "↺ Recommencer";
   restart.onclick = restartFlow;
-  quickRepliesEl.appendChild(restart);
+  quickRepliesEl.appendChild(restart);*/
 }
 
 /* =========================
-   11) Cartes résultats (version HTML)
+   11) Cartes résultats
    ========================= */
 function renderResultCards(keys) {
   const cards = keys
     .map((k) => {
       const p = PROGRAMS[k];
-      const jobs = (p.jobs || []).map((j) => `• ${escapeHtml(j)}`).join("<br>");
+
+      const jobs = (p.jobs || [])
+        .map((j) => `• ${escapeHtml(j)}`)
+        .join("<br>");
+
+      const learn = (p.learn || [])
+        .map((l) => `• ${escapeHtml(l)}`)
+        .join("<br>");
+
       return `
       <div class="card">
-        <div class="badge">${escapeHtml(p.badge)}</div>
+        ${p.badge ? `<div class="badge">${escapeHtml(p.badge)}</div>` : ""}
+        
         <h3>${escapeHtml(p.title)}</h3>
+        
         <p>${escapeHtml(p.pitch)}</p>
+        
+        ${p.duration ? `<p><strong>Durée :</strong> ${escapeHtml(p.duration)}</p>` : ""}
+        
+        ${learn ? `<p><strong>Tu apprendras à :</strong><br>${learn}</p>` : ""}
+        
         <p><strong>Exemples de métiers :</strong><br>${jobs}</p>
-        <p><strong>Et après :</strong> ${escapeHtml(p.next)}</p>
-        <div class="actions">
-          <a class="link" href="${p.pageUrl}" target="_blank" rel="noopener">📄 Page formation</a>
-        </div>
+        
+        <p>${escapeHtml(p.next)}</p>
+        
+        ${
+          p.pageUrl
+            ? `<div class="actions">
+                <a class="link" href="${p.pageUrl}" target="_blank" rel="noopener">📄 Page formation </a>
+              </div>`
+            : ""
+        }
       </div>
     `;
     })
@@ -1625,25 +1463,24 @@ function renderResultCards(keys) {
 
 
 /* =========================
-   12) Navigation
+   12) Navigation (CORRIGÉ)
    ========================= */
 function goTo(nodeId) {
   state.nodeId = nodeId;
   const node = FLOW[nodeId];
 
-  // Résultat ? -> Affiche les cartes de formation en HTML
+  // Résultat ? -> Affiche les cartes de formation
   if (node.result) {
     botSay("Je réfléchis à la meilleure formation pour toi…", {
-      speed: 30,
+      speed: 40,
       onComplete: () => {
         const html = renderResultCards(node.result);
         botSay(html, { 
-          html: true,  // ← IMPORTANT : c'est du HTML !
-          speed: 18,
+          html: true,
           onComplete: () => {
             setReplies([
               { label: "🔁 Refaire le test", value: "__restart__" },
-              { label: "🧭 Voir toutes les formations", value: "__all__" },
+              //{ label: "🧭 Voir toutes les formations", value: "__all__" },
             ]);
           }
         });
@@ -1652,23 +1489,26 @@ function goTo(nodeId) {
     return;
   }
 
-  // Question normale (texte)
+  // Question normale - avec effet d'écriture
   const botMessage = Array.isArray(node.bot) ? getRandomArrayItem(node.bot) : node.bot;
   
   if (node.replies && node.replies.length > 0) {
+    // S'il y a des boutons, on les affiche après l'effet d'écriture
     botSay(botMessage, {
-      speed: 35,
+      speed: 50,
       onComplete: () => {
         setReplies(node.replies);
       }
     });
   } else {
+    // Pas de boutons (ex: start)
     botSay(botMessage, {
-      speed: 35,
+      speed: 50,
       onComplete: () => {}
     });
   }
 }
+
 
 /* =========================
    13) Gestion des réponses utilisateur (CORRIGÉ)
@@ -1739,34 +1579,21 @@ function onUserAnswer(reply) {
       botSay(replyText, { speed: 50, onComplete: () => goTo(nextNode) });
     }
     else {
-      // 🔥 CORRECTION ICI : Sauvegarder le contexte CAP/Bac Pro
-      if (result.keyword === "cap" || result.keyword === "bacpro") {
-        // Sauvegarde dans l'historique pour le prochain message
-        state.history.push({ 
-          nodeId: state.nodeId, 
-          answer: result.keyword 
-        });
-      }
-      
-      botSay(result.text, { 
-        speed: 50, 
-        onComplete: () => {
-          // Pas de navigation, on reste sur le même node
-        } 
-      });
+      botSay(result.text, { speed: 50, onComplete: () => {} });
     }
   }
 }
 
+
 /* =========================
-   14) Actions spéciales (avec effet d'écriture)
+   14) Actions spéciales
    ========================= */
 function showAlternanceInfo() {
   quickRepliesEl.style.display = "none";
   addMessage({ from: "user", text: "ℹ️ C'est quoi l'alternance ?" });
   botSay(ALTERNANCE_EXPLAIN, {
-    speed: 30,
     onComplete: () => {
+      // Après l'explication, remettre les boutons de résultat
       const node = FLOW[state.nodeId];
       if (node && node.result) {
         setReplies([
@@ -1783,20 +1610,33 @@ function showAllPrograms() {
   addMessage({ from: "user", text: "🧭 Voir toutes les formations" });
 
   botSay("Voici toutes les formations proposées au lycée Aimé Césaire.", {
-    speed: 30,
     onComplete: () => {
       const keys = Object.keys(PROGRAMS);
-      let text = "Toutes les formations 👇\n\n";
-      
-      keys.forEach((k) => {
-        const p = PROGRAMS[k];
-        text += `[${p.badge}] ${p.title}\n${p.pitch}\n\n`;
-      });
-      
-      text += "\nTu peux revenir au test quand tu veux.";
-      
-      botSay(text, { 
-        speed: 25,
+      const html = `
+        <div>
+          <div style="margin-bottom:10px; font-weight:800;">Toutes les formations 👇</div>
+          <div class="cards">
+            ${keys
+              .map((k) => {
+                const p = PROGRAMS[k];
+                return `
+                <div class="card">
+                  <div class="badge">${escapeHtml(p.badge)}</div>
+                  <h3>${escapeHtml(p.title)}</h3>
+                  <p>${escapeHtml(p.pitch)}</p>
+                  <div class="actions">
+                    <a class="link" href="${p.pageUrl}" target="_blank" rel="noopener">📄 Page formation</a>
+                  </div>
+                </div>
+              `;
+              })
+              .join("")}
+          </div>
+        </div>
+      `;
+
+      botSay(html, { 
+        html: true,
         onComplete: () => {
           setReplies([{ label: "🔁 Refaire le test", value: "__restart__" }]);
         }
@@ -1804,8 +1644,10 @@ function showAllPrograms() {
     }
   });
 }
+
+
 /* =========================
-   15) Restart + Intro
+   15) Restart + Intro (CORRIGÉ)
    ========================= */
 function restartFlow() {
   stopDemo();
@@ -1814,14 +1656,15 @@ function restartFlow() {
   state = { nodeId: "start", history: [] };
   setStatus("Prêt");
   
-  // Message d'intro aléatoire - avec effet d'écriture
+  // Message d'intro aléatoire - AVEC EFFET D'ÉCRITURE
   const startMessages = FLOW["start"].bot;
   const randomMessage = Array.isArray(startMessages) 
     ? startMessages[Math.floor(Math.random() * startMessages.length)]
     : startMessages;
   
+  // Utiliser botSay pour l'effet d'écriture
   botSay(randomMessage, {
-    speed: 40,
+    speed: 45,
     onComplete: () => {
       // PAS de boutons au démarrage
       quickRepliesEl.innerHTML = "";
@@ -1845,95 +1688,72 @@ function getRandomArrayItem(arr) {
 }
 
 /* =========================
-   16) INPUT TEXTE LIBRE
+   16) INPUT TEXTE LIBRE (NOUVEAU)
    ========================= */
+
 function addTextInput() {
-  // Vérifier si l'input existe déjà
-  if (document.querySelector('.text-input-container')) return;
-  
+  // éviter doublon
+  if (document.querySelector(".text-input-container")) return;
+
+  // hôte fixe pour le composer
+  const host = document.getElementById("composerHost");
+  if (!host) return;
+
   const container = document.createElement("div");
   container.className = "text-input-container";
+  // ⚠️ plus besoin de style inline : tu as déjà le CSS .text-input-container
+  // (si tu veux garder un fallback, décommente ci-dessous)
+  /*
   container.style.cssText = `
-    display: flex;
-    padding: 12px 16px;
-    background: #1a1e24;
-    border-top: 1px solid #333;
+    display:flex;
+    gap:10px;
+    padding: 8px 16px 12px 16px;
+    width:100%;
+    box-sizing:border-box;
     position: sticky;
     bottom: 0;
-    width: 100%;
-    box-sizing: border-box;
-    z-index: 100;
+    z-index: 300;
+    background: rgba(10,14,28,.75);
+    border-top: 1px solid rgba(255,255,255,.08);
+    backdrop-filter: blur(10px);
   `;
-  
+  */
+
   const input = document.createElement("input");
   input.type = "text";
   input.placeholder = "Écris ta question ici... (électricité, commerce, CAP...)";
-  input.style.cssText = `
-    flex: 1;
-    padding: 12px 16px;
-    border-radius: 24px;
-    border: 1px solid #444;
-    background: #2a2f38;
-    color: white;
-    font-size: 15px;
-    outline: none;
-    transition: all 0.2s;
-  `;
-  
-  input.onfocus = () => {
-    input.style.borderColor = "#4f9eff";
-    input.style.background = "#2f3540";
-  };
-  
-  input.onblur = () => {
-    input.style.borderColor = "#444";
-    input.style.background = "#2a2f38";
-  };
-  
+  input.autocomplete = "off";
+  input.spellcheck = false;
+  input.setAttribute("aria-label", "Message");
+
   const sendBtn = document.createElement("button");
-  sendBtn.innerHTML = `➤`;
-  sendBtn.style.cssText = `
-    margin-left: 10px;
-    padding: 12px 20px;
-    border-radius: 24px;
-    border: none;
-    background: #4f9eff;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.2s;
-  `;
-  
-  sendBtn.onmouseover = () => {
-    sendBtn.style.background = "#3a8eef";
-  };
-  
-  sendBtn.onmouseout = () => {
-    sendBtn.style.background = "#4f9eff";
-  };
-  
-  sendBtn.onclick = () => {
-    if (input.value.trim()) {
-      onUserAnswer({ label: input.value, value: null, isText: true });
-      input.value = "";
+  sendBtn.type = "button";
+  sendBtn.textContent = "Envoyer";
+
+  function send() {
+    const v = input.value.trim();
+    if (!v) return;
+    onUserAnswer({ label: v, value: null, isText: true });
+    input.value = "";
+    input.focus();
+  }
+
+  sendBtn.onclick = send;
+
+  // ✅ Enter = envoyer (Shift+Enter = nouvelle ligne si tu passes l'input en textarea plus tard)
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      send();
     }
-  };
-  
-  input.onkeypress = (e) => {
-    if (e.key === "Enter" && input.value.trim()) {
-      onUserAnswer({ label: input.value, value: null, isText: true });
-      input.value = "";
-    }
-  };
-  
+  });
+
   container.appendChild(input);
   container.appendChild(sendBtn);
-  
-  // Insérer après quickReplies
-  const parent = quickRepliesEl.parentNode;
-  parent.insertBefore(container, quickRepliesEl.nextSibling);
-}
 
+  // ✅ insertion stable tout en bas
+  host.appendChild(container);
+}
 /* =========================
    17) Mode Démo
    ========================= */
@@ -1974,7 +1794,7 @@ function startDemo() {
 function stopDemo() {
   if (demoTimer) clearTimeout(demoTimer);
   demoTimer = null;
-  btnDemo.textContent = "▶ Démo";
+  //btnDemo.textContent = "▶ Démo";
   btnDemo.removeAttribute("data-on");
 }
 
