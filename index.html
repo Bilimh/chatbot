@@ -573,254 +573,156 @@
     const btnRestart = document.getElementById("btnRestart");
     const btnDemo = document.getElementById("btnDemo");
 
-    /* =========================
-       1) CONTENU : formations
-       ========================= */
     const PROGRAMS = {
-      // ===== Initiale =====
-      cap_elec: {
-        title: "CAP Électricien / Électricienne",
-        pitch: "Installer, entretenir et dépanner des systèmes électriques pour assurer l’énergie et la sécurité des bâtiments.",
-        duration: "2 ans",
-        learn: [
-          "Lire et interpréter des plans électriques",
-          "Installer des circuits et appareils électriques",
-          "Assurer la sécurité des installations",
-          "Diagnostiquer et réparer des pannes simples"
-        ],
-        jobs: [
-          "Électricien(ne) du bâtiment",
-          "Technicien(ne) électricien(ne)",
-          "Monteur(se) en installations électriques"
-        ],
-        next: "Après le CAP : poursuivre vers une Mention Complémentaire ou un Bac Pro en électricité pour aller plus loin.",
-        pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/cap-electricien/",
-        mode: "initiale",
-        family: "électricité",
-      },
-      bac_melec: {
-        title: "Bac Pro Métiers de l'Électricité et de ses Environnements Connectés (MELEC)",
-        pitch: "Concevoir, installer et maintenir des systèmes électriques performants pour les bâtiments et les environnements connectés.",
-        duration: "3 ans après la 3ᵉ (ou 2 ans après certains CAP)",
-        learn: [
-          "Analyser et définir des installations électriques",
-          "Installer et raccorder des circuits et équipements",
-          "Paramétrer et contrôler le bon fonctionnement",
-          "Assurer la maintenance et la sécurité énergétique",
-          "Travailler avec des technologies connectées"
-        ],
-        jobs: [
-          "Électricien(ne) qualifié(e)",
-          "Technicien(ne) électrotechnicien(ne)",
-          "Installateur(trice) domotique"
-        ],
-        next: "Après le Bac Pro : BTS ou spécialisations techniques pour aller encore plus loin.",
-        pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/bac-pro-metier-de-lelectricite-et-de-ses-environnements-connectes/",
-        mode: "initiale",
-        family: "électricité",
-      },
-      cap_metallier: {
-        title: "CAP Serrurier / Métallier",
-        pitch: "Concevoir, fabriquer et poser des éléments métalliques pour les bâtiments et aménagements.",
-        duration: "2 ans",
-        learn: [
-          "Lire des plans et tracer les pièces",
-          "Découper et façonner des métaux",
-          "Assembler et souder des éléments métalliques",
-          "Installer des ouvrages sur chantier",
-          "Vérifier la qualité et la sécurité des réalisations"
-        ],
-        jobs: [
-          "Métallier(ère)",
-          "Serrurier(ère) métallier",
-          "Monteur(se) en ouvrages métalliques"
-        ],
-        next: "Après le CAP : poursuite possible vers un Bac Pro Ouvrages du Bâtiment – Métallerie ou des mentions complémentaires pour aller plus loin.",
-        pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/cap-serrurier-metallier/",
-        mode: "initiale",
-        family: "bâtiment",
-      },
-      bac_metallerie: {
-        title: "Bac Pro Ouvrages du Bâtiment : Métallerie",
-        pitch: "Fabriquer, assembler et poser des structures métalliques pour le bâtiment (portes, garde-corps, escaliers…) en atelier et sur chantier.",
-        duration: "3 ans après la 3e",
-        learn: [
-          "Lire et préparer des plans techniques",
-          "Découper, façonner et assembler des pièces métalliques",
-          "Installer des ouvrages sur chantier",
-          "Travailler avec des outils et machines professionnelles",
-          "Respecter les normes de sécurité et qualité"
-        ],
-        jobs: [
-          "Métallier(ère)",
-          "Serrurier(ère) métallier(ère)",
-          "Charpentier(ère) métallique"
-        ],
-        next: "Après le Bac Pro : BTS ou spécialisations techniques pour aller plus loin.",
-        pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/bac-pro-ouvrages-du-batiment-metallerie/",
-        mode: "initiale",
-        family: "bâtiment",
-      },
-      cap_epc: {
-        title: "CAP Équipier / Équipière Polyvalent(e) du Commerce",
-        pitch: "Accueillir les clients, participer aux ventes et mettre en valeur les produits en magasin.",
-        duration: "2 ans",
-        learn: [
-          "Mettre en valeur les produits",
-          "Organiser un rayon",
-          "Accueillir et conseiller les clients",
-          "Encaisser et gérer les stocks"
-        ],
-        jobs: [
-          "Employé(e) de commerce",
-          "Équipier(ère) polyvalent(e)",
-          "Vendeur(se) en magasin"
-        ],
-        next: "Après le CAP : poursuite possible en Bac Pro Métiers du Commerce et de la Vente.",
-        pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/cap-equipier-polyvalent-du-commerce/",
-        mode: "initiale",
-        family: "commerce",
-      },
-      seconde_mrc: {
-        title: "2nde Professionnelle Métiers de la Relation Clientèle (MRC)",
-        pitch: "Découvrir et apprendre les compétences clés du contact client, de la communication et du conseil en vente.",
-        duration: "1 an après la 3e",
-        learn: [
-          "Accueillir des clients en face-à-face et par téléphone",
-          "Communiquer et comprendre les besoins des clients",
-          "Analyser des informations pour mieux conseiller",
-          "Conseiller et fidéliser une clientèle",
-          "Suivre la relation client et le service après-vente"
-        ],
-        jobs: [
-          "Conseiller(ère) clientèle",
-          "Assistant(e) commercial(e)",
-          "Vendeur(se) polyvalent(e)"
-        ],
-        next: "Après cette 2nde : entrée en 1re pro Métiers de l’Accueil, ou Métiers du Commerce et de la Vente.",
-        pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/2nde-bac-pro-metiers-de-ma-relation-clientele-mrc/",
-        mode: "initiale",
-        family: "commerce",
-      },
-      bac_commerce_vente: {
-        title: "Bac Pro Métiers du Commerce et de la Vente",
-        badge: "💬 Initiale — Vente & Conseil",
-        pitch: "Conseiller, vendre, fidéliser, organiser un espace de vente et suivre des objectifs.",
-        jobs: ["Vendeur(se) conseil", "Conseiller(ère) clientèle"],
-        next: "Après : BTS MCO / NDRC (selon projet).",
-        pageUrl: "https://example.com/page-bac-commerce-vente",
-        mode: "initiale",
-        family: "commerce",
-      },
-      bac_agora: {
-        title: "2nde GATL → Bac Pro AGOrA",
-        pitch: "En 2nde, tu découvres la Gestion, l’Administration, le Transport et la Logistique (GATL). Ensuite, tu te spécialises en AGOrA (Assistance à la Gestion des Organisations et de leurs Activités).",
-        duration: "3 ans après la 3e",
-        learn: [
-          "En 2nde GATL : comprendre le fonctionnement d’une entreprise",
-          "Organiser des dossiers administratifs",
-          "Découvrir le transport et la logistique",
-          "Utiliser des outils numériques professionnels",
-          "En 1re et Terminale AGOrA : gérer des activités administratives et accompagner une organisation au quotidien"
-        ],
-        jobs: [
-          "Assistant(e) administratif(ve)",
-          "Agent de gestion",
-          "Employé(e) en transport ou logistique"
-        ],
-        next: "Après la 2nde GATL, poursuite en : AGOrA (au lycée A. Césaire), Organisation de Transport de Marchandises ou Logistique (LP Antoine de Saint-Exupéry à Halluin).",
-        pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/bac-pro-gestion-administration-transport-logistique/",
-        mode: "initiale",
-        family: "gestion-administration",
-      },
-      bac_accueil: {
-        title: "Bac Pro Métiers de l’Accueil (MAC)",
-        pitch: "Apprendre à accueillir, informer et accompagner les personnes dans différents lieux (entreprises, services publics, événements…).",
-        duration: "3 ans après la 3e (entrée possible en 1re après une 2nde MRC ou GATL)",
-        learn: [
-          "Accueillir les visiteurs en face-à-face, par téléphone ou en ligne",
-          "Informer et orienter avec clarté",
-          "Gérer des rendez-vous et des informations",
-          "Utiliser des outils numériques d’accueil",
-          "Assurer un service professionnel et convivial"
-        ],
-        jobs: [
-          "Hôte / Hôtesse d’accueil",
-          "Agent(e) d’accueil et d’information",
-          "Réceptionniste en entreprise ou en événementiel"
-        ],
-        next: "Après le Bac Pro : BTS ou spécialisation dans la communication, l’événementiel ou le service client.",
-        pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/bac-pro-metiers-de-laccueil/",
-        mode: "initiale",
-        family: "service-accueil",
-      },
+  cap_elec: {
+    title: "CAP Électricien / Électricienne",
+    pitch: "Installer, entretenir et dépanner des systèmes électriques pour assurer l’énergie et la sécurité des bâtiments.",
+    duration: "2 ans",
+    learn: [
+      "Lire un plan",
+      "Poser des câbles",
+      "Brancher des appareils",
+      "Réparer une panne"
+    ],
+    jobs: [
+      "Électricien(ne)",
+      "Monteur(se) électricien(ne)",
+      "Technicien(ne)"
+    ],
+    next: "Après : Bac Pro MELEC possible.",
+    pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/cap-electricien/",
+    mode: "initiale",
+    family: "électricité",
+  },
 
-      // ===== Alternance =====
-      alt_commerce: {
-        title: "Métiers du Commerce en alternance",
-        pitch: "Suivre une formation commerciale en alternance entre l’école et l’entreprise pour apprendre en pratiquant.",
-        duration: "Variable selon la formation et le contrat en entreprise",
-        learn: [
-          "Découvrir les techniques de vente directement en entreprise",
-          "Appliquer ce que tu apprends en cours au sein d’une équipe professionnelle",
-          "Accompagner les clients et gérer des missions concrètes",
-          "Développer des compétences commerciales et relationnelles"
-        ],
-        jobs: [
-          "Vendeur(se) en commerce",
-          "Assistant(e) commercial(e)",
-          "Conseiller(ère) de clientèle"
-        ],
-        next: "L’alternance peut se faire dès la 1re ou au cours d’une formation commerciale (CAP, Bac Pro ou autre diplôme), en fonction des accords avec une entreprise.",
-        pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/metiers-du-commerce-en-alternance/",
-        mode: "alternance",
-        family: "commerce",
-      },
-      alt_elec: {
-        title: "Métiers de l’Électricité en alternance",
-        pitch: "Apprendre le métier d’électricien en alternant cours au lycée et travail dans une entreprise.",
-        duration: "Variable selon contrat et formation",
-        learn: [
-          "Découvrir et pratiquer l’installation électrique dans des situations réelles",
-          "Appliquer directement en entreprise ce qui est appris en cours",
-          "Travailler sur des circuits, installations et équipements électriques",
-          "Développer des compétences techniques recherchées",
-          "Comprendre les normes de sécurité et qualité"
-        ],
-        jobs: [
-          "Électricien(ne) du bâtiment",
-          "Technicien(ne) électricien(ne)",
-          "Monteur(se) en installations électriques"
-        ],
-        next: "L’alternance peut se faire à différents niveaux de formation (CAP, Bac Pro…) en accord avec une entreprise.",
-        pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/les-metiers-de-lelectricite/",
-        mode: "alternance",
-        family: "électricité",
-      },
+  bac_melec: {
+    title: "Bac Pro MELEC",
+    pitch: "Concevoir, installer et maintenir des systèmes électriques performants pour les bâtiments et les environnements connectés.",
+    duration: "3 ans après la 3e",
+    learn: [
+      "Installer en autonomie",
+      "Raccorder des équipements",
+      "Tester et régler",
+      "Faire la maintenance",
+      "Travailler sur du connecté"
+    ],
+    jobs: [
+      "Technicien(ne) électricien(ne)",
+      "Électricien(ne) qualifié(e)",
+      "Installateur(trice) domotique"
+    ],
+    next: "Après : BTS possible.",
+    pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/bac-pro-metier-de-lelectricite-et-de-ses-environnements-connectes/",
+    mode: "initiale",
+    family: "électricité",
+  },
 
-      alt_metallerie: {
-        title: "Métiers de la Métallerie en alternance",
-        pitch: "Découvrir les métiers de la métallerie en alternant formation au lycée et missions en entreprise.",
-        duration: "Variable selon contrat et niveau de formation",
-        learn: [
-          "Appliquer les techniques de fabrication métallique en atelier",
-          "Participer à des projets concrets en entreprise",
-          "Assembler, souder et façonner des pièces métalliques",
-          "Travailler la métallerie pour le bâtiment et l’industrie",
-          "Développer des compétences techniques professionnelles"
-        ],
-        jobs: [
-          "Métallier(ère)",
-          "Serrurier(ère) métallier(ère)",
-          "Ouvrier(ère) en ouvrages métalliques"
-        ],
-        next: "L’alternance peut être organisée à différents moments de la formation (CAP ou Bac Pro) avec une entreprise partenaire.",
-        pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/les-metiers-de-la-metallerie/",
-        mode: "alternance",
-        family: "bâtiment",
-      }
-    };
+  cap_metallier: {
+    title: "CAP Serrurier / Métallier",
+    pitch: "Concevoir, fabriquer et poser des éléments métalliques pour les bâtiments et aménagements.",
+    duration: "2 ans",
+    learn: [
+      "Lire un plan",
+      "Découper le métal",
+      "Assembler / souder",
+      "Poser sur chantier"
+    ],
+    jobs: [
+      "Métallier(ère)",
+      "Serrurier(ère)",
+      "Monteur(se)"
+    ],
+    next: "Après : Bac Pro Métallerie possible.",
+    pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/cap-serrurier-metallier/",
+    mode: "initiale",
+    family: "bâtiment",
+  },
 
+  bac_metallerie: {
+    title: "Bac Pro Métallerie",
+    pitch: "Fabriquer, assembler et poser des structures métalliques pour le bâtiment (portes, garde-corps, escaliers…) en atelier et sur chantier.",
+    duration: "3 ans après la 3e",
+    learn: [
+      "Préparer un plan",
+      "Usiner / façonner",
+      "Assembler / souder",
+      "Installer",
+      "Contrôler"
+    ],
+    jobs: [
+      "Métallier(ère)",
+      "Serrurier(ère)",
+      "Charpentier(ère) métal"
+    ],
+    next: "Après : BTS possible.",
+    pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/bac-pro-ouvrages-du-batiment-metallerie/",
+    mode: "initiale",
+    family: "bâtiment",
+  },
+
+  cap_epc: {
+    title: "CAP Équipier Polyvalent du Commerce",
+    pitch: "Accueillir les clients, participer aux ventes et mettre en valeur les produits en magasin.",
+    duration: "2 ans",
+    learn: [
+      "Accueillir",
+      "Vendre / conseiller",
+      "Mettre en rayon",
+      "Encaisser"
+    ],
+    jobs: [
+      "Employé(e) de commerce",
+      "Vendeur(se)",
+      "Équipier(ère)"
+    ],
+    next: "Après : Bac Pro Commerce/Vente possible.",
+    pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/cap-equipier-polyvalent-du-commerce/",
+    mode: "initiale",
+    family: "commerce",
+  },
+
+  seconde_mrc: {
+    title: "2nde Pro MRC",
+    pitch: "Découvrir et apprendre les compétences clés du contact client, de la communication et du conseil en vente.",
+    duration: "1 an",
+    learn: [
+      "Accueillir",
+      "Conseiller",
+      "Communiquer",
+      "Fidéliser"
+    ],
+    jobs: [
+      "Conseiller(ère) clientèle",
+      "Vendeur(se)",
+      "Assistant(e) commercial(e)"
+    ],
+    next: "Après : 1re Accueil ou Commerce/Vente.",
+    pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/2nde-bac-pro-metiers-de-ma-relation-clientele-mrc/",
+    mode: "initiale",
+    family: "commerce",
+  },
+
+  bac_agora: {
+    title: "2nde GATL → Bac Pro AGOrA ",
+    pitch: "En 2nde, tu découvres la Gestion, l’Administration, le Transport et la Logistique (GATL). Ensuite, tu te spécialises en AGOrA (Assistance à la Gestion des Organisations et de leurs Activités).",
+    duration: "3 ans après la 3e",
+    learn: [
+      "Découvrir GATL",
+      "Gérer des dossiers",
+      "Utiliser des outils numériques",
+      "Organisation d’entreprise"
+    ],
+    jobs: [
+      "Assistant(e) administratif(ve)",
+      "Agent de gestion",
+      "Employé(e) logistique"
+    ],
+    next: "Après la 2nde GATL, poursuite en : AGOrA (au lycée A. Césaire).",
+    pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/bac-pro-gestion-administration-transport-logistique/",
+    mode: "initiale",
+    family: "gestion-administration",
+  }
+};
     /* =========================
        2) Texte "C'est quoi l'alternance ?"
        ========================= */
@@ -1596,10 +1498,7 @@
       return `
     <div>
       <div style="margin-bottom:10px; font-weight:800;">Voici ce que je te propose 👇</div>
-      <div class="cards">${cards}</div>
-      <div style="margin-top:10px; color: rgba(255,255,255,.70); font-size:13px;">
-        Tu peux recommencer pour tester un autre profil.
-      </div>
+      <div >${cards}</div>
     </div>
   `;
     }
@@ -1844,23 +1743,6 @@
 
       const container = document.createElement("div");
       container.className = "text-input-container";
-      // ⚠️ plus besoin de style inline : tu as déjà le CSS .text-input-container
-      // (si tu veux garder un fallback, décommente ci-dessous)
-      /*
-      container.style.cssText = `
-        display:flex;
-        gap:10px;
-        padding: 8px 16px 12px 16px;
-        width:100%;
-        box-sizing:border-box;
-        position: sticky;
-        bottom: 0;
-        z-index: 300;
-        background: rgba(10,14,28,.75);
-        border-top: 1px solid rgba(255,255,255,.08);
-        backdrop-filter: blur(10px);
-      `;
-      */
 
       const input = document.createElement("input");
       input.type = "text";
@@ -1874,17 +1756,17 @@
       sendBtn.textContent = "Envoyer";
 
       function send() {
-  const v = input.value.trim();
-  if (!v) return;
+        const v = input.value.trim();
+        if (!v) return;
 
-  onUserAnswer({ label: v, value: null, isText: true });
-  input.value = "";
+        onUserAnswer({ label: v, value: null, isText: true });
+        input.value = "";
 
-  // petit délai pour laisser le DOM se mettre à jour
-  setTimeout(() => {
-    input.blur();
-  }, 50);
-}
+        // petit délai pour laisser le DOM se mettre à jour
+        setTimeout(() => {
+          input.blur();
+        }, 50);
+      }
       sendBtn.onclick = send;
 
       // ✅ Enter = envoyer (Shift+Enter = nouvelle ligne si tu passes l'input en textarea plus tard)
