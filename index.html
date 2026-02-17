@@ -1874,13 +1874,17 @@
       sendBtn.textContent = "Envoyer";
 
       function send() {
-        const v = input.value.trim();
-        if (!v) return;
-        onUserAnswer({ label: v, value: null, isText: true });
-        input.value = "";
-        input.focus();
-      }
+  const v = input.value.trim();
+  if (!v) return;
 
+  onUserAnswer({ label: v, value: null, isText: true });
+  input.value = "";
+
+  // petit délai pour laisser le DOM se mettre à jour
+  setTimeout(() => {
+    input.blur();
+  }, 50);
+}
       sendBtn.onclick = send;
 
       // ✅ Enter = envoyer (Shift+Enter = nouvelle ligne si tu passes l'input en textarea plus tard)
