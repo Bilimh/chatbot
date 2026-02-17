@@ -1,416 +1,560 @@
-
 <!doctype html>
 <html lang="fr">
+
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Chatbot Orientation — Lycée Aimé Césaire</title>
 
   <style>
-  :root{
-    --bg:#0b1020;
-    --panel:rgba(255,255,255,.06);
-    --panel2:rgba(255,255,255,.08);
-    --text:rgba(255,255,255,.92);
-    --muted:rgba(255,255,255,.65);
-    --accent:#7c3aed;
-    --accent2:#22c55e;
-    --danger:#ef4444;
-    --shadow:0 18px 60px rgba(0,0,0,.45);
-    --radius:18px;
-  }
+    :root {
+      --bg: #0b1020;
+      --panel: rgba(255, 255, 255, .06);
+      --panel2: rgba(255, 255, 255, .08);
+      --text: rgba(255, 255, 255, .92);
+      --muted: rgba(255, 255, 255, .65);
+      --accent: #7c3aed;
+      --accent2: #22c55e;
+      --danger: #ef4444;
+      --shadow: 0 18px 60px rgba(0, 0, 0, .45);
+      --radius: 18px;
+    }
 
-  *{box-sizing:border-box}
-  html,body{height:100%}
+    * {
+      box-sizing: border-box
+    }
 
-  body{
-    margin:0;
-    color:var(--text);
-    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
-    background:
-      radial-gradient(1200px 800px at 20% 10%, rgba(124,58,237,.35), transparent 60%),
-      radial-gradient(900px 600px at 90% 30%, rgba(34,197,94,.25), transparent 55%),
-      radial-gradient(800px 700px at 40% 90%, rgba(59,130,246,.20), transparent 55%),
-      linear-gradient(180deg, #070a14, #0b1020 60%, #070a14);
-    display:block; /* important mobile */
-    padding:0;
-  }
+    html,
+    body {
+      height: 100%
+    }
 
-  /* App full screen (mobile like ChatGPT) */
-  .app{
-    width:100%;
-    height:100dvh;
-    overflow:hidden;
-    display:grid;
-    grid-template-rows: 64px 1fr auto;
-    border:0;
-    border-radius:0;
-    box-shadow:none;
-    background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
-  }
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background:
+        radial-gradient(1200px 800px at 20% 10%, rgba(124, 58, 237, .35), transparent 60%),
+        radial-gradient(900px 600px at 90% 30%, rgba(34, 197, 94, .25), transparent 55%),
+        radial-gradient(800px 700px at 40% 90%, rgba(59, 130, 246, .20), transparent 55%),
+        linear-gradient(180deg, #070a14, #0b1020 60%, #070a14);
+      display: block;
+      /* important mobile */
+      padding: 0;
+    }
 
-  /* Header sticky */
-  header{
-    position:sticky;
-    top:0;
-    z-index:200;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:14px 16px;
-    border-bottom:1px solid rgba(255,255,255,.10);
-    backdrop-filter: blur(10px);
-    background: rgba(10,14,28,.55);
-  }
+    /* App full screen (mobile like ChatGPT) */
+    .app {
+      width: 100%;
+      height: 100dvh;
+      overflow: hidden;
+      display: grid;
+      grid-template-rows: 64px 1fr auto;
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+      background: linear-gradient(180deg, rgba(255, 255, 255, .07), rgba(255, 255, 255, .04));
+    }
 
-  .brand{display:flex; gap:12px; align-items:center; min-width:0;}
-  .logo{
-    width:40px; height:40px; border-radius:14px;
-    background:
-      radial-gradient(18px 18px at 30% 30%, rgba(255,255,255,.45), transparent 60%),
-      linear-gradient(135deg, rgba(124,58,237,.95), rgba(34,197,94,.8));
-    box-shadow: 0 10px 30px rgba(124,58,237,.22);
-    flex:0 0 auto;
-  }
+    /* Header sticky */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, .10);
+      backdrop-filter: blur(10px);
+      background: rgba(10, 14, 28, .55);
+    }
 
-  .title{display:flex; flex-direction:column; line-height:1.1; min-width:0;}
-  .title strong{
-    font-size:14px;
-    letter-spacing:.2px;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-  }
-  .title span{
-    font-size:12px;
-    color:var(--muted);
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-  }
+    .brand {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      min-width: 0;
+    }
 
-  .header-actions{display:flex; gap:10px; align-items:center;}
-  .chip{
-    font-size:12px;
-    padding:8px 10px;
-    border-radius:999px;
-    border:1px solid rgba(255,255,255,.14);
-    background: rgba(255,255,255,.05);
-    color: var(--muted);
-  }
+    .logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      background:
+        radial-gradient(18px 18px at 30% 30%, rgba(255, 255, 255, .45), transparent 60%),
+        linear-gradient(135deg, rgba(124, 58, 237, .95), rgba(34, 197, 94, .8));
+      box-shadow: 0 10px 30px rgba(124, 58, 237, .22);
+      flex: 0 0 auto;
+    }
 
-  /* Main scroll area */
-  main{
-    padding:16px;
-    overflow-y:auto;
-    overflow-x:hidden;
-    scroll-behavior:smooth;
-    height:100%;
-    /* espace pour quick replies + input sticky */
-    padding-bottom: 140px;
-  }
+    .title {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+      min-width: 0;
+    }
 
-  /* Messages container */
-  .messages{
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-    width:100%;
-    margin:0;
-    max-width:none;
-  }
+    .title strong {
+      font-size: 14px;
+      letter-spacing: .2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
 
-  .row{
-    display:flex;
-    gap:10px;
-    align-items:flex-end;
-    width:100%;
-    animation: fadeIn .25s ease;
-  }
-  @keyframes fadeIn{
-    from{opacity:0; transform:translateY(10px)}
-    to{opacity:1; transform:translateY(0)}
-  }
-  .row.bot{justify-content:flex-start;}
-  .row.user{justify-content:flex-end;}
+    .title span {
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
 
-  /* Avatar hidden on mobile (optionnel) */
-  .avatar{
-    width:34px;height:34px;border-radius:12px;
-    background: rgba(255,255,255,.08);
-    border:1px solid rgba(255,255,255,.12);
-    display:none;
-    align-items:center; justify-content:center;
-    font-size:16px;
-    flex:0 0 auto;
-  }
+    .header-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
 
-  /* Bubble: full width on mobile */
-  .bubble{
-    width:100%;
-    max-width:100%;
-    padding:12px 14px;
-    border-radius: var(--radius);
-    border:1px solid rgba(255,255,255,.12);
-    background: rgba(255,255,255,.06);
-    box-shadow: 0 10px 26px rgba(0,0,0,.16);
-    line-height:1.45;
-    font-size:14px;
-    white-space:pre-wrap;
-    word-break: break-word;
-  }
-  .row.user .bubble{
-    background: linear-gradient(135deg, rgba(124,58,237,.30), rgba(124,58,237,.16));
-    border-color: rgba(124,58,237,.45);
-  }
+    .chip {
+      font-size: 12px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, .14);
+      background: rgba(255, 255, 255, .05);
+      color: var(--muted);
+    }
 
-  .meta{
-    font-size:11px;
-    color: rgba(255,255,255,.55);
-    margin: 0 6px;
-    white-space: nowrap;
-    display:none;
-  }
+    /* Main scroll area */
+    main {
+      padding: 16px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      height: 100%;
+      /* espace pour quick replies + input sticky */
+      padding-bottom: 140px;
+    }
 
-  /* Cards */
-  .cards{
-    display:grid;
-    grid-template-columns:1fr;
-    gap:12px;
-    margin-top:10px;
-  }
-  @media (min-width:640px){
-    .cards{ grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-  }
+    /* Messages container */
+    .messages {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+      margin: 0;
+      max-width: none;
+    }
 
-  .card{
-    border:1px solid rgba(255,255,255,.12);
-    background: rgba(255,255,255,.05);
-    border-radius:18px;
-    padding:16px;
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-    transition: transform .2s ease, border-color .2s ease;
-  }
-  .card:hover{
-    border-color: rgba(124,58,237,.4);
-    transform: translateY(-2px);
-  }
-  .card h3{margin:0; font-size:15px; letter-spacing:.2px; font-weight:700;}
-  .badge{
-    display:inline-flex;
-    align-items:center;
-    gap:6px;
-    font-size:11px;
-    padding:6px 10px;
-    border-radius:999px;
-    border:1px solid rgba(255,255,255,.14);
-    background: rgba(255,255,255,.06);
-    width: fit-content;
-    color: var(--muted);
-  }
-  .card p{margin:0; color:var(--muted); font-size:13px; line-height:1.45;}
-  .card .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:4px;}
+    .row {
+      display: flex;
+      gap: 10px;
+      align-items: flex-end;
+      width: 100%;
+      animation: fadeIn .25s ease;
+    }
 
-  .link{
-    text-decoration:none;
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    padding:10px 12px;
-    border-radius:12px;
-    border:1px solid rgba(255,255,255,.14);
-    background: rgba(255,255,255,.06);
-    color: var(--text);
-    font-weight:600;
-    font-size:12px;
-    transition: all .2s ease;
-  }
-  .link:hover{
-    background: rgba(255,255,255,.12);
-    border-color: rgba(255,255,255,.25);
-  }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px)
+      }
 
-  /* Quick replies + composer host (bottom area) */
-  #composerHost{
-    position: sticky;
-    bottom: 0;
-    z-index: 250;
-    background: rgba(10,14,28,.75);
-    backdrop-filter: blur(10px);
-    border-top: 1px solid rgba(255,255,255,.10);
-  }
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
 
-  .quick-replies{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-    justify-content:center;
-    padding:10px 14px 0 14px;
-    max-width: 980px;
-    margin:0 auto;
-  }
+    .row.bot {
+      justify-content: flex-start;
+    }
 
-  .qr{
-    cursor:pointer;
-    border:1px solid rgba(255,255,255,.14);
-    background: rgba(255,255,255,.06);
-    color: var(--text);
-    padding:10px 14px;
-    border-radius:999px;
-    font-weight:600;
-    font-size:13px;
-    transition: all .15s ease;
-    user-select:none;
-  }
-  .qr:hover{
-    background: rgba(255,255,255,.12);
-    border-color: rgba(255,255,255,.25);
-    transform: translateY(-1px);
-  }
-  .qr:active{ transform: translateY(1px); }
-  .qr.accent{ border-color: rgba(124,58,237,.55); background: rgba(124,58,237,.2); }
-  .qr.good{ border-color: rgba(34,197,94,.55); background: rgba(34,197,94,.14); }
-  .qr.warn{ border-color: rgba(239,68,68,.55); background: rgba(239,68,68,.12); }
+    .row.user {
+      justify-content: flex-end;
+    }
 
-  /* Composer (text input) */
-  .text-input-container{
-    display:flex;
-    gap:10px;
-    padding:10px 14px 14px 14px;
-    width:100%;
-    max-width: 980px;
-    margin:0 auto;
-    box-sizing:border-box;
-  }
+    /* Avatar hidden on mobile (optionnel) */
+    .avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, .08);
+      border: 1px solid rgba(255, 255, 255, .12);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex: 0 0 auto;
+    }
 
-  .text-input-container input{
-    flex:1;
-    padding:12px 18px;
-    border-radius:30px;
-    border:1px solid rgba(255,255,255,.15);
-    background: rgba(255,255,255,.07);
-    color:white;
-    font-size:14px;
-    outline:none;
-    transition: all .2s ease;
-  }
-  .text-input-container input:focus{
-    border-color: var(--accent);
-    background: rgba(255,255,255,.10);
-    box-shadow: 0 0 0 3px rgba(124,58,237,.2);
-  }
-  .text-input-container input::placeholder{
-    color: rgba(255,255,255,.5);
-  }
+    /* Bubble: full width on mobile */
+    .bubble {
+      width: 100%;
+      max-width: 100%;
+      padding: 12px 14px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255, 255, 255, .12);
+      background: rgba(255, 255, 255, .06);
+      box-shadow: 0 10px 26px rgba(0, 0, 0, .16);
+      line-height: 1.45;
+      font-size: 14px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
 
-  .text-input-container button{
-    padding:12px 18px;
-    border-radius:30px;
-    border:none;
-    background: linear-gradient(135deg, var(--accent), #9f67ff);
-    color:white;
-    font-weight:600;
-    font-size:14px;
-    cursor:pointer;
-    transition: all .2s ease;
-    white-space:nowrap;
-    box-shadow: 0 4px 12px rgba(124,58,237,.3);
-  }
-  .text-input-container button:hover{
-    transform: translateY(-1px);
-    box-shadow: 0 8px 16px rgba(124,58,237,.4);
-  }
-  .text-input-container button:active{
-    transform: translateY(1px);
-  }
+    .row.user .bubble {
+      background: linear-gradient(135deg, rgba(124, 58, 237, .30), rgba(124, 58, 237, .16));
+      border-color: rgba(124, 58, 237, .45);
+    }
 
-  /* Typing indicator */
-  .typing{display:inline-flex; gap:6px; align-items:center;}
-  .dot{
-    width:7px;height:7px;border-radius:50%;
-    background: rgba(255,255,255,.65);
-    animation: bounce 1s infinite ease-in-out;
-  }
-  .dot:nth-child(2){ animation-delay:.15s; }
-  .dot:nth-child(3){ animation-delay:.30s; }
-  @keyframes bounce{
-    0%,80%,100%{ transform: translateY(0); opacity:.6;}
-    40%{ transform: translateY(-6px); opacity:1;}
-  }
+    .meta {
+      font-size: 11px;
+      color: rgba(255, 255, 255, .55);
+      margin: 0 6px;
+      white-space: nowrap;
+      display: none;
+    }
 
-  /* Links in header title */
-  a{
-    text-decoration:none;
-    color:white;
-  }
+    /* Cards */
+    .cards {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 10px;
+    }
 
-  /* Scrollbar */
-  ::-webkit-scrollbar{ width:6px; }
-  ::-webkit-scrollbar-track{ background: rgba(255,255,255,.03); }
-  ::-webkit-scrollbar-thumb{ background: rgba(255,255,255,.15); border-radius:10px; }
-  ::-webkit-scrollbar-thumb:hover{ background: rgba(255,255,255,.25); }
+    @media (min-width:640px) {
+      .cards {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      }
+    }
 
-  /* Desktop refinements */
-  @media (min-width: 768px){
-    .messages{
-      max-width: 820px;
+    .card {
+      border: 1px solid rgba(255, 255, 255, .12);
+      background: rgba(255, 255, 255, .05);
+      border-radius: 18px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: transform .2s ease, border-color .2s ease;
+    }
+
+    .card:hover {
+      border-color: rgba(124, 58, 237, .4);
+      transform: translateY(-2px);
+    }
+
+    .card h3 {
+      margin: 0;
+      font-size: 15px;
+      letter-spacing: .2px;
+      font-weight: 700;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, .14);
+      background: rgba(255, 255, 255, .06);
+      width: fit-content;
+      color: var(--muted);
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .card .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+
+    .link {
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, .14);
+      background: rgba(255, 255, 255, .06);
+      color: var(--text);
+      font-weight: 600;
+      font-size: 12px;
+      transition: all .2s ease;
+    }
+
+    .link:hover {
+      background: rgba(255, 255, 255, .12);
+      border-color: rgba(255, 255, 255, .25);
+    }
+
+    /* Quick replies + composer host (bottom area) */
+    #composerHost {
+      position: sticky;
+      bottom: 0;
+      z-index: 250;
+      background: rgba(10, 14, 28, .75);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255, 255, 255, .10);
+    }
+
+    .quick-replies {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 10px 14px 0 14px;
+      max-width: 980px;
       margin: 0 auto;
     }
-    .bubble{
-      width:auto;
-      max-width: 75%;
+
+    .qr {
+      cursor: pointer;
+      border: 1px solid rgba(255, 255, 255, .14);
+      background: rgba(255, 255, 255, .06);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 13px;
+      transition: all .15s ease;
+      user-select: none;
     }
-    .row.user .bubble{
-  width: fit-content;
-  max-width: 80%;
-  margin-left: auto;      /* pousse à droite */
-}
-  }
 
-  /* Small screens tweaks */
-  @media (max-width: 600px){
-    .chip{ display:none; }
-    main{ padding:14px; padding-bottom:150px; }
-    .text-input-container button{ padding:12px 16px; }
-.row.user .bubble{
-  width: fit-content;
-  max-width: 80%;
-  margin-left: auto;      /* pousse à droite */
-}
-  }
-</style>
+    .qr:hover {
+      background: rgba(255, 255, 255, .12);
+      border-color: rgba(255, 255, 255, .25);
+      transform: translateY(-1px);
+    }
+
+    .qr:active {
+      transform: translateY(1px);
+    }
+
+    .qr.accent {
+      border-color: rgba(124, 58, 237, .55);
+      background: rgba(124, 58, 237, .2);
+    }
+
+    .qr.good {
+      border-color: rgba(34, 197, 94, .55);
+      background: rgba(34, 197, 94, .14);
+    }
+
+    .qr.warn {
+      border-color: rgba(239, 68, 68, .55);
+      background: rgba(239, 68, 68, .12);
+    }
+
+    /* Composer (text input) */
+    .text-input-container {
+      display: flex;
+      gap: 10px;
+      padding: 10px 14px 14px 14px;
+      width: 100%;
+      max-width: 980px;
+      margin: 0 auto;
+      box-sizing: border-box;
+    }
+
+    .text-input-container input {
+      flex: 1;
+      padding: 12px 18px;
+      border-radius: 30px;
+      border: 1px solid rgba(255, 255, 255, .15);
+      background: rgba(255, 255, 255, .07);
+      color: white;
+      font-size: 14px;
+      outline: none;
+      transition: all .2s ease;
+    }
+
+    .text-input-container input:focus {
+      border-color: var(--accent);
+      background: rgba(255, 255, 255, .10);
+      box-shadow: 0 0 0 3px rgba(124, 58, 237, .2);
+    }
+
+    .text-input-container input::placeholder {
+      color: rgba(255, 255, 255, .5);
+    }
+
+    .text-input-container button {
+      padding: 12px 18px;
+      border-radius: 30px;
+      border: none;
+      background: linear-gradient(135deg, var(--accent), #9f67ff);
+      color: white;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all .2s ease;
+      white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(124, 58, 237, .3);
+    }
+
+    .text-input-container button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 16px rgba(124, 58, 237, .4);
+    }
+
+    .text-input-container button:active {
+      transform: translateY(1px);
+    }
+
+    /* Typing indicator */
+    .typing {
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .65);
+      animation: bounce 1s infinite ease-in-out;
+    }
+
+    .dot:nth-child(2) {
+      animation-delay: .15s;
+    }
+
+    .dot:nth-child(3) {
+      animation-delay: .30s;
+    }
+
+    @keyframes bounce {
+
+      0%,
+      80%,
+      100% {
+        transform: translateY(0);
+        opacity: .6;
+      }
+
+      40% {
+        transform: translateY(-6px);
+        opacity: 1;
+      }
+    }
+
+    /* Links in header title */
+    a {
+      text-decoration: none;
+      color: white;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, .03);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, .15);
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, .25);
+    }
+
+    /* Desktop refinements */
+    @media (min-width: 768px) {
+      .messages {
+        max-width: 820px;
+        margin: 0 auto;
+      }
+
+      .bubble {
+        width: auto;
+        max-width: 75%;
+      }
+
+      .row.user .bubble {
+        width: fit-content;
+        max-width: 80%;
+        margin-left: auto;
+        /* pousse à droite */
+      }
+    }
+
+    /* Small screens tweaks */
+    @media (max-width: 600px) {
+      .chip {
+        display: none;
+      }
+
+      main {
+        padding: 14px;
+        padding-bottom: 150px;
+      }
+
+      .text-input-container button {
+        padding: 12px 16px;
+      }
+
+      .text-input-container input {
+        font-size: 16px;
+      }
+
+      .row.user .bubble {
+        width: fit-content;
+        max-width: 80%;
+        margin-left: auto;
+        /* pousse à droite */
+      }
+    }
+  </style>
 </head>
+
 <body>
-<div class="app" role="application" aria-label="Chatbot orientation">
-  <header>
-    <div class="brand">
-      <div class="logo" aria-hidden="true"></div>
-      <div class="title">
-        <strong><a href="./index.html">CésaireGPT</a></strong>
-        <span>Découvrir les métiers et formations en 2 minutes</span>
+  <div class="app" role="application" aria-label="Chatbot orientation">
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div class="title">
+          <strong><a href="./index.html">CésaireGPT</a></strong>
+          <span>Découvrir les métiers et formations en 2 minutes</span>
+        </div>
       </div>
+
+      <div class="header-actions">
+        <span class="chip" id="statusChip">Prêt</span>
+        <span id="btnDemo" type="button" title="Mode démo (auto)"></span>
+      </div>
+    </header>
+
+    <!-- ✅ Zone scroll UNIQUEMENT pour les messages -->
+    <main id="main">
+      <div class="messages" id="messages"></div>
+    </main>
+
+    <!-- ✅ Zone fixe en bas : quick replies + input -->
+    <div id="composerHost">
+      <div id="quickReplies" class="quick-replies"></div>
+      <!-- addTextInput() viendra ajouter .text-input-container ici -->
     </div>
-
-    <div class="header-actions">
-      <span class="chip" id="statusChip">Prêt</span>
-      <span  id="btnDemo" type="button" title="Mode démo (auto)"></span>
-    </div>
-  </header>
-
-  <!-- ✅ Zone scroll UNIQUEMENT pour les messages -->
-  <main id="main">
-    <div class="messages" id="messages"></div>
-  </main>
-
-  <!-- ✅ Zone fixe en bas : quick replies + input -->
-  <div id="composerHost">
-    <div id="quickReplies" class="quick-replies"></div>
-    <!-- addTextInput() viendra ajouter .text-input-container ici -->
   </div>
-</div>
-<script>
+  <script>
     /* =========================
    0) Sélecteurs DOM attendus
    =========================
@@ -422,1007 +566,1007 @@
    - #btnRestart
    - #btnDemo
 */
-const messagesEl = document.getElementById("messages");
-const quickRepliesEl = document.getElementById("quickReplies");
-const mainEl = document.getElementById("main");
-const statusChip = document.getElementById("statusChip");
-const btnRestart = document.getElementById("btnRestart");
-const btnDemo = document.getElementById("btnDemo");
+    const messagesEl = document.getElementById("messages");
+    const quickRepliesEl = document.getElementById("quickReplies");
+    const mainEl = document.getElementById("main");
+    const statusChip = document.getElementById("statusChip");
+    const btnRestart = document.getElementById("btnRestart");
+    const btnDemo = document.getElementById("btnDemo");
 
-/* =========================
-   1) CONTENU : formations
-   ========================= */
-const PROGRAMS = {
-  // ===== Initiale =====
-cap_elec: {
-  title: "CAP Électricien / Électricienne",
-  pitch: "Installer, entretenir et dépanner des systèmes électriques pour assurer l’énergie et la sécurité des bâtiments.",
-  duration: "2 ans",
-  learn: [
-    "Lire et interpréter des plans électriques",
-    "Installer des circuits et appareils électriques",
-    "Assurer la sécurité des installations",
-    "Diagnostiquer et réparer des pannes simples"
-  ],
-  jobs: [
-    "Électricien(ne) du bâtiment",
-    "Technicien(ne) électricien(ne)",
-    "Monteur(se) en installations électriques"
-  ],
-  next: "Après le CAP : poursuivre vers une Mention Complémentaire ou un Bac Pro en électricité pour aller plus loin.",
-  pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/cap-electricien/",
-  mode: "initiale",
-  family: "électricité",
-},
-bac_melec: {
-  title: "Bac Pro Métiers de l'Électricité et de ses Environnements Connectés (MELEC)",
-  pitch: "Concevoir, installer et maintenir des systèmes électriques performants pour les bâtiments et les environnements connectés.",
-  duration: "3 ans après la 3ᵉ (ou 2 ans après certains CAP)",
-  learn: [
-    "Analyser et définir des installations électriques",
-    "Installer et raccorder des circuits et équipements",
-    "Paramétrer et contrôler le bon fonctionnement",
-    "Assurer la maintenance et la sécurité énergétique",
-    "Travailler avec des technologies connectées"
-  ],
-  jobs: [
-    "Électricien(ne) qualifié(e)",
-    "Technicien(ne) électrotechnicien(ne)",
-    "Installateur(trice) domotique"
-  ],
-  next: "Après le Bac Pro : BTS ou spécialisations techniques pour aller encore plus loin.",
-  pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/bac-pro-metier-de-lelectricite-et-de-ses-environnements-connectes/",
-  mode: "initiale",
-  family: "électricité",
-},
-cap_metallier: {
-  title: "CAP Serrurier / Métallier",
-  pitch: "Concevoir, fabriquer et poser des éléments métalliques pour les bâtiments et aménagements.",
-  duration: "2 ans",
-  learn: [
-    "Lire des plans et tracer les pièces",
-    "Découper et façonner des métaux",
-    "Assembler et souder des éléments métalliques",
-    "Installer des ouvrages sur chantier",
-    "Vérifier la qualité et la sécurité des réalisations"
-  ],
-  jobs: [
-    "Métallier(ère)",
-    "Serrurier(ère) métallier",
-    "Monteur(se) en ouvrages métalliques"
-  ],
-  next: "Après le CAP : poursuite possible vers un Bac Pro Ouvrages du Bâtiment – Métallerie ou des mentions complémentaires pour aller plus loin.",
-  pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/cap-serrurier-metallier/",
-  mode: "initiale",
-  family: "bâtiment",
-},
-bac_metallerie: {
-  title: "Bac Pro Ouvrages du Bâtiment : Métallerie",
-  pitch: "Fabriquer, assembler et poser des structures métalliques pour le bâtiment (portes, garde-corps, escaliers…) en atelier et sur chantier.",
-  duration: "3 ans après la 3e",
-  learn: [
-    "Lire et préparer des plans techniques",
-    "Découper, façonner et assembler des pièces métalliques",
-    "Installer des ouvrages sur chantier",
-    "Travailler avec des outils et machines professionnelles",
-    "Respecter les normes de sécurité et qualité"
-  ],
-  jobs: [
-    "Métallier(ère)",
-    "Serrurier(ère) métallier(ère)",
-    "Charpentier(ère) métallique"
-  ],
-  next: "Après le Bac Pro : BTS ou spécialisations techniques pour aller plus loin.",
-  pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/bac-pro-ouvrages-du-batiment-metallerie/",
-  mode: "initiale",
-  family: "bâtiment",
-},
-cap_epc: {
-  title: "CAP Équipier / Équipière Polyvalent(e) du Commerce",
-  pitch: "Accueillir les clients, participer aux ventes et mettre en valeur les produits en magasin.",
-  duration: "2 ans",
-  learn: [
-    "Mettre en valeur les produits",
-    "Organiser un rayon",
-    "Accueillir et conseiller les clients",
-    "Encaisser et gérer les stocks"
-  ],
-  jobs: [
-    "Employé(e) de commerce",
-    "Équipier(ère) polyvalent(e)",
-    "Vendeur(se) en magasin"
-  ],
-  next: "Après le CAP : poursuite possible en Bac Pro Métiers du Commerce et de la Vente.",
-  pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/cap-equipier-polyvalent-du-commerce/",
-  mode: "initiale",
-  family: "commerce",
-},
-seconde_mrc: {
-  title: "2nde Professionnelle Métiers de la Relation Clientèle (MRC)",
-  pitch: "Découvrir et apprendre les compétences clés du contact client, de la communication et du conseil en vente.",
-  duration: "1 an après la 3e",
-  learn: [
-    "Accueillir des clients en face-à-face et par téléphone",
-    "Communiquer et comprendre les besoins des clients",
-    "Analyser des informations pour mieux conseiller",
-    "Conseiller et fidéliser une clientèle",
-    "Suivre la relation client et le service après-vente"
-  ],
-  jobs: [
-    "Conseiller(ère) clientèle",
-    "Assistant(e) commercial(e)",
-    "Vendeur(se) polyvalent(e)"
-  ],
-  next: "Après cette 2nde : entrée en 1re pro Métiers de l’Accueil, ou Métiers du Commerce et de la Vente.",
-  pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/2nde-bac-pro-metiers-de-ma-relation-clientele-mrc/",
-  mode: "initiale",
-  family: "commerce",
-},
-  bac_commerce_vente: {
-    title: "Bac Pro Métiers du Commerce et de la Vente",
-    badge: "💬 Initiale — Vente & Conseil",
-    pitch: "Conseiller, vendre, fidéliser, organiser un espace de vente et suivre des objectifs.",
-    jobs: ["Vendeur(se) conseil", "Conseiller(ère) clientèle"],
-    next: "Après : BTS MCO / NDRC (selon projet).",
-    pageUrl: "https://example.com/page-bac-commerce-vente",
-    mode: "initiale",
-    family: "commerce",
-  },
-bac_agora: {
-  title: "2nde GATL → Bac Pro AGOrA",
-  pitch: "En 2nde, tu découvres la Gestion, l’Administration, le Transport et la Logistique (GATL). Ensuite, tu te spécialises en AGOrA (Assistance à la Gestion des Organisations et de leurs Activités).",
-  duration: "3 ans après la 3e",
-  learn: [
-    "En 2nde GATL : comprendre le fonctionnement d’une entreprise",
-    "Organiser des dossiers administratifs",
-    "Découvrir le transport et la logistique",
-    "Utiliser des outils numériques professionnels",
-    "En 1re et Terminale AGOrA : gérer des activités administratives et accompagner une organisation au quotidien"
-  ],
-  jobs: [
-    "Assistant(e) administratif(ve)",
-    "Agent de gestion",
-    "Employé(e) en transport ou logistique"
-  ],
-  next: "Après la 2nde GATL, poursuite en : AGOrA (au lycée A. Césaire), Organisation de Transport de Marchandises ou Logistique (LP Antoine de Saint-Exupéry à Halluin).",
-  pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/bac-pro-gestion-administration-transport-logistique/",
-  mode: "initiale",
-  family: "gestion-administration",
-},
-bac_accueil: {
-  title: "Bac Pro Métiers de l’Accueil (MAC)",
-  pitch: "Apprendre à accueillir, informer et accompagner les personnes dans différents lieux (entreprises, services publics, événements…).",
-  duration: "3 ans après la 3e (entrée possible en 1re après une 2nde MRC ou GATL)",
-  learn: [
-    "Accueillir les visiteurs en face-à-face, par téléphone ou en ligne",
-    "Informer et orienter avec clarté",
-    "Gérer des rendez-vous et des informations",
-    "Utiliser des outils numériques d’accueil",
-    "Assurer un service professionnel et convivial"
-  ],
-  jobs: [
-    "Hôte / Hôtesse d’accueil",
-    "Agent(e) d’accueil et d’information",
-    "Réceptionniste en entreprise ou en événementiel"
-  ],
-  next: "Après le Bac Pro : BTS ou spécialisation dans la communication, l’événementiel ou le service client.",
-  pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/bac-pro-metiers-de-laccueil/",
-  mode: "initiale",
-  family: "service-accueil",
-},
+    /* =========================
+       1) CONTENU : formations
+       ========================= */
+    const PROGRAMS = {
+      // ===== Initiale =====
+      cap_elec: {
+        title: "CAP Électricien / Électricienne",
+        pitch: "Installer, entretenir et dépanner des systèmes électriques pour assurer l’énergie et la sécurité des bâtiments.",
+        duration: "2 ans",
+        learn: [
+          "Lire et interpréter des plans électriques",
+          "Installer des circuits et appareils électriques",
+          "Assurer la sécurité des installations",
+          "Diagnostiquer et réparer des pannes simples"
+        ],
+        jobs: [
+          "Électricien(ne) du bâtiment",
+          "Technicien(ne) électricien(ne)",
+          "Monteur(se) en installations électriques"
+        ],
+        next: "Après le CAP : poursuivre vers une Mention Complémentaire ou un Bac Pro en électricité pour aller plus loin.",
+        pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/cap-electricien/",
+        mode: "initiale",
+        family: "électricité",
+      },
+      bac_melec: {
+        title: "Bac Pro Métiers de l'Électricité et de ses Environnements Connectés (MELEC)",
+        pitch: "Concevoir, installer et maintenir des systèmes électriques performants pour les bâtiments et les environnements connectés.",
+        duration: "3 ans après la 3ᵉ (ou 2 ans après certains CAP)",
+        learn: [
+          "Analyser et définir des installations électriques",
+          "Installer et raccorder des circuits et équipements",
+          "Paramétrer et contrôler le bon fonctionnement",
+          "Assurer la maintenance et la sécurité énergétique",
+          "Travailler avec des technologies connectées"
+        ],
+        jobs: [
+          "Électricien(ne) qualifié(e)",
+          "Technicien(ne) électrotechnicien(ne)",
+          "Installateur(trice) domotique"
+        ],
+        next: "Après le Bac Pro : BTS ou spécialisations techniques pour aller encore plus loin.",
+        pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/bac-pro-metier-de-lelectricite-et-de-ses-environnements-connectes/",
+        mode: "initiale",
+        family: "électricité",
+      },
+      cap_metallier: {
+        title: "CAP Serrurier / Métallier",
+        pitch: "Concevoir, fabriquer et poser des éléments métalliques pour les bâtiments et aménagements.",
+        duration: "2 ans",
+        learn: [
+          "Lire des plans et tracer les pièces",
+          "Découper et façonner des métaux",
+          "Assembler et souder des éléments métalliques",
+          "Installer des ouvrages sur chantier",
+          "Vérifier la qualité et la sécurité des réalisations"
+        ],
+        jobs: [
+          "Métallier(ère)",
+          "Serrurier(ère) métallier",
+          "Monteur(se) en ouvrages métalliques"
+        ],
+        next: "Après le CAP : poursuite possible vers un Bac Pro Ouvrages du Bâtiment – Métallerie ou des mentions complémentaires pour aller plus loin.",
+        pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/cap-serrurier-metallier/",
+        mode: "initiale",
+        family: "bâtiment",
+      },
+      bac_metallerie: {
+        title: "Bac Pro Ouvrages du Bâtiment : Métallerie",
+        pitch: "Fabriquer, assembler et poser des structures métalliques pour le bâtiment (portes, garde-corps, escaliers…) en atelier et sur chantier.",
+        duration: "3 ans après la 3e",
+        learn: [
+          "Lire et préparer des plans techniques",
+          "Découper, façonner et assembler des pièces métalliques",
+          "Installer des ouvrages sur chantier",
+          "Travailler avec des outils et machines professionnelles",
+          "Respecter les normes de sécurité et qualité"
+        ],
+        jobs: [
+          "Métallier(ère)",
+          "Serrurier(ère) métallier(ère)",
+          "Charpentier(ère) métallique"
+        ],
+        next: "Après le Bac Pro : BTS ou spécialisations techniques pour aller plus loin.",
+        pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/bac-pro-ouvrages-du-batiment-metallerie/",
+        mode: "initiale",
+        family: "bâtiment",
+      },
+      cap_epc: {
+        title: "CAP Équipier / Équipière Polyvalent(e) du Commerce",
+        pitch: "Accueillir les clients, participer aux ventes et mettre en valeur les produits en magasin.",
+        duration: "2 ans",
+        learn: [
+          "Mettre en valeur les produits",
+          "Organiser un rayon",
+          "Accueillir et conseiller les clients",
+          "Encaisser et gérer les stocks"
+        ],
+        jobs: [
+          "Employé(e) de commerce",
+          "Équipier(ère) polyvalent(e)",
+          "Vendeur(se) en magasin"
+        ],
+        next: "Après le CAP : poursuite possible en Bac Pro Métiers du Commerce et de la Vente.",
+        pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/cap-equipier-polyvalent-du-commerce/",
+        mode: "initiale",
+        family: "commerce",
+      },
+      seconde_mrc: {
+        title: "2nde Professionnelle Métiers de la Relation Clientèle (MRC)",
+        pitch: "Découvrir et apprendre les compétences clés du contact client, de la communication et du conseil en vente.",
+        duration: "1 an après la 3e",
+        learn: [
+          "Accueillir des clients en face-à-face et par téléphone",
+          "Communiquer et comprendre les besoins des clients",
+          "Analyser des informations pour mieux conseiller",
+          "Conseiller et fidéliser une clientèle",
+          "Suivre la relation client et le service après-vente"
+        ],
+        jobs: [
+          "Conseiller(ère) clientèle",
+          "Assistant(e) commercial(e)",
+          "Vendeur(se) polyvalent(e)"
+        ],
+        next: "Après cette 2nde : entrée en 1re pro Métiers de l’Accueil, ou Métiers du Commerce et de la Vente.",
+        pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/2nde-bac-pro-metiers-de-ma-relation-clientele-mrc/",
+        mode: "initiale",
+        family: "commerce",
+      },
+      bac_commerce_vente: {
+        title: "Bac Pro Métiers du Commerce et de la Vente",
+        badge: "💬 Initiale — Vente & Conseil",
+        pitch: "Conseiller, vendre, fidéliser, organiser un espace de vente et suivre des objectifs.",
+        jobs: ["Vendeur(se) conseil", "Conseiller(ère) clientèle"],
+        next: "Après : BTS MCO / NDRC (selon projet).",
+        pageUrl: "https://example.com/page-bac-commerce-vente",
+        mode: "initiale",
+        family: "commerce",
+      },
+      bac_agora: {
+        title: "2nde GATL → Bac Pro AGOrA",
+        pitch: "En 2nde, tu découvres la Gestion, l’Administration, le Transport et la Logistique (GATL). Ensuite, tu te spécialises en AGOrA (Assistance à la Gestion des Organisations et de leurs Activités).",
+        duration: "3 ans après la 3e",
+        learn: [
+          "En 2nde GATL : comprendre le fonctionnement d’une entreprise",
+          "Organiser des dossiers administratifs",
+          "Découvrir le transport et la logistique",
+          "Utiliser des outils numériques professionnels",
+          "En 1re et Terminale AGOrA : gérer des activités administratives et accompagner une organisation au quotidien"
+        ],
+        jobs: [
+          "Assistant(e) administratif(ve)",
+          "Agent de gestion",
+          "Employé(e) en transport ou logistique"
+        ],
+        next: "Après la 2nde GATL, poursuite en : AGOrA (au lycée A. Césaire), Organisation de Transport de Marchandises ou Logistique (LP Antoine de Saint-Exupéry à Halluin).",
+        pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/bac-pro-gestion-administration-transport-logistique/",
+        mode: "initiale",
+        family: "gestion-administration",
+      },
+      bac_accueil: {
+        title: "Bac Pro Métiers de l’Accueil (MAC)",
+        pitch: "Apprendre à accueillir, informer et accompagner les personnes dans différents lieux (entreprises, services publics, événements…).",
+        duration: "3 ans après la 3e (entrée possible en 1re après une 2nde MRC ou GATL)",
+        learn: [
+          "Accueillir les visiteurs en face-à-face, par téléphone ou en ligne",
+          "Informer et orienter avec clarté",
+          "Gérer des rendez-vous et des informations",
+          "Utiliser des outils numériques d’accueil",
+          "Assurer un service professionnel et convivial"
+        ],
+        jobs: [
+          "Hôte / Hôtesse d’accueil",
+          "Agent(e) d’accueil et d’information",
+          "Réceptionniste en entreprise ou en événementiel"
+        ],
+        next: "Après le Bac Pro : BTS ou spécialisation dans la communication, l’événementiel ou le service client.",
+        pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/bac-pro-metiers-de-laccueil/",
+        mode: "initiale",
+        family: "service-accueil",
+      },
 
-  // ===== Alternance =====
-alt_commerce: {
-  title: "Métiers du Commerce en alternance",
-  pitch: "Suivre une formation commerciale en alternance entre l’école et l’entreprise pour apprendre en pratiquant.",
-  duration: "Variable selon la formation et le contrat en entreprise",
-  learn: [
-    "Découvrir les techniques de vente directement en entreprise",
-    "Appliquer ce que tu apprends en cours au sein d’une équipe professionnelle",
-    "Accompagner les clients et gérer des missions concrètes",
-    "Développer des compétences commerciales et relationnelles"
-  ],
-  jobs: [
-    "Vendeur(se) en commerce",
-    "Assistant(e) commercial(e)",
-    "Conseiller(ère) de clientèle"
-  ],
-  next: "L’alternance peut se faire dès la 1re ou au cours d’une formation commerciale (CAP, Bac Pro ou autre diplôme), en fonction des accords avec une entreprise.",
-  pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/metiers-du-commerce-en-alternance/",
-  mode: "alternance",
-  family: "commerce",
-},
-alt_elec: {
-  title: "Métiers de l’Électricité en alternance",
-  pitch: "Apprendre le métier d’électricien en alternant cours au lycée et travail dans une entreprise.",
-  duration: "Variable selon contrat et formation",
-  learn: [
-    "Découvrir et pratiquer l’installation électrique dans des situations réelles",
-    "Appliquer directement en entreprise ce qui est appris en cours",
-    "Travailler sur des circuits, installations et équipements électriques",
-    "Développer des compétences techniques recherchées",
-    "Comprendre les normes de sécurité et qualité"
-  ],
-  jobs: [
-    "Électricien(ne) du bâtiment",
-    "Technicien(ne) électricien(ne)",
-    "Monteur(se) en installations électriques"
-  ],
-  next: "L’alternance peut se faire à différents niveaux de formation (CAP, Bac Pro…) en accord avec une entreprise.",
-  pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/les-metiers-de-lelectricite/",
-  mode: "alternance",
-  family: "électricité",
-},
+      // ===== Alternance =====
+      alt_commerce: {
+        title: "Métiers du Commerce en alternance",
+        pitch: "Suivre une formation commerciale en alternance entre l’école et l’entreprise pour apprendre en pratiquant.",
+        duration: "Variable selon la formation et le contrat en entreprise",
+        learn: [
+          "Découvrir les techniques de vente directement en entreprise",
+          "Appliquer ce que tu apprends en cours au sein d’une équipe professionnelle",
+          "Accompagner les clients et gérer des missions concrètes",
+          "Développer des compétences commerciales et relationnelles"
+        ],
+        jobs: [
+          "Vendeur(se) en commerce",
+          "Assistant(e) commercial(e)",
+          "Conseiller(ère) de clientèle"
+        ],
+        next: "L’alternance peut se faire dès la 1re ou au cours d’une formation commerciale (CAP, Bac Pro ou autre diplôme), en fonction des accords avec une entreprise.",
+        pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/metiers-du-commerce-en-alternance/",
+        mode: "alternance",
+        family: "commerce",
+      },
+      alt_elec: {
+        title: "Métiers de l’Électricité en alternance",
+        pitch: "Apprendre le métier d’électricien en alternant cours au lycée et travail dans une entreprise.",
+        duration: "Variable selon contrat et formation",
+        learn: [
+          "Découvrir et pratiquer l’installation électrique dans des situations réelles",
+          "Appliquer directement en entreprise ce qui est appris en cours",
+          "Travailler sur des circuits, installations et équipements électriques",
+          "Développer des compétences techniques recherchées",
+          "Comprendre les normes de sécurité et qualité"
+        ],
+        jobs: [
+          "Électricien(ne) du bâtiment",
+          "Technicien(ne) électricien(ne)",
+          "Monteur(se) en installations électriques"
+        ],
+        next: "L’alternance peut se faire à différents niveaux de formation (CAP, Bac Pro…) en accord avec une entreprise.",
+        pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/les-metiers-de-lelectricite/",
+        mode: "alternance",
+        family: "électricité",
+      },
 
-alt_metallerie: {
-  title: "Métiers de la Métallerie en alternance",
-  pitch: "Découvrir les métiers de la métallerie en alternant formation au lycée et missions en entreprise.",
-  duration: "Variable selon contrat et niveau de formation",
-  learn: [
-    "Appliquer les techniques de fabrication métallique en atelier",
-    "Participer à des projets concrets en entreprise",
-    "Assembler, souder et façonner des pièces métalliques",
-    "Travailler la métallerie pour le bâtiment et l’industrie",
-    "Développer des compétences techniques professionnelles"
-  ],
-  jobs: [
-    "Métallier(ère)",
-    "Serrurier(ère) métallier(ère)",
-    "Ouvrier(ère) en ouvrages métalliques"
-  ],
-  next: "L’alternance peut être organisée à différents moments de la formation (CAP ou Bac Pro) avec une entreprise partenaire.",
-  pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/les-metiers-de-la-metallerie/",
-  mode: "alternance",
-  family: "bâtiment",
-}
-};
+      alt_metallerie: {
+        title: "Métiers de la Métallerie en alternance",
+        pitch: "Découvrir les métiers de la métallerie en alternant formation au lycée et missions en entreprise.",
+        duration: "Variable selon contrat et niveau de formation",
+        learn: [
+          "Appliquer les techniques de fabrication métallique en atelier",
+          "Participer à des projets concrets en entreprise",
+          "Assembler, souder et façonner des pièces métalliques",
+          "Travailler la métallerie pour le bâtiment et l’industrie",
+          "Développer des compétences techniques professionnelles"
+        ],
+        jobs: [
+          "Métallier(ère)",
+          "Serrurier(ère) métallier(ère)",
+          "Ouvrier(ère) en ouvrages métalliques"
+        ],
+        next: "L’alternance peut être organisée à différents moments de la formation (CAP ou Bac Pro) avec une entreprise partenaire.",
+        pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/les-metiers-de-la-metallerie/",
+        mode: "alternance",
+        family: "bâtiment",
+      }
+    };
 
-/* =========================
-   2) Texte "C'est quoi l'alternance ?"
-   ========================= */
-const ALTERNANCE_EXPLAIN = [
-  "🔄 L'alternance, c'est apprendre un métier en travaillant.",
-  "",
-  "👉 Une partie du temps au lycée",
-  "👉 Une partie du temps en entreprise",
-  "",
-  "✅ Tu apprends sur le terrain",
-  "✅ Tu gagnes de l'expérience",
-  "✅ Tu peux être rémunéré(e) selon le contrat",
-].join("\n");
+    /* =========================
+       2) Texte "C'est quoi l'alternance ?"
+       ========================= */
+    const ALTERNANCE_EXPLAIN = [
+      "🔄 L'alternance, c'est apprendre un métier en travaillant.",
+      "",
+      "👉 Une partie du temps au lycée",
+      "👉 Une partie du temps en entreprise",
+      "",
+      "✅ Tu apprends sur le terrain",
+      "✅ Tu gagnes de l'expérience",
+      "✅ Tu peux être rémunéré(e) selon le contrat",
+    ].join("\n");
 
-/* =========================
-   3) MOTS-CLÉS ET RÉPONSES VARIÉES (CORRIGÉ)
-   ========================= */
-const KEYWORDS = {
-  // Salutations
-  salut: { 
-    replies: [
-      "Salut 👋 Bienvenue au lycée Aimé Césaire !",
-      "Bonjour ! Je suis là pour t'orienter 😊",
-      "Hey ! Prêt(e) à découvrir nos formations ?",
-      "Salut ! Je suis le chatbot d'orientation du lycée."
-    ],
-    next: "start",
-    isGreeting: true 
-  },
-  bonjour: { 
-    replies: [
-      "Bonjour ! Bienvenue au lycée Aimé Césaire 👋",
-      "Bonjour ! Tu cherches une formation ?",
-      "Salut ! Je suis là pour t'aider à t'orienter."
-    ], 
-    next: "start",
-    isGreeting: true 
-  },
-  hello: { 
-    replies: [
-      "Hello ! Welcome to Aimé Césaire high school 👋",
-      "Hi there ! How can I help you ?",
-    ], 
-    next: "start",
-    isGreeting: true 
-  },
+    /* =========================
+       3) MOTS-CLÉS ET RÉPONSES VARIÉES (CORRIGÉ)
+       ========================= */
+    const KEYWORDS = {
+      // Salutations
+      salut: {
+        replies: [
+          "Salut 👋 Bienvenue au lycée Aimé Césaire !",
+          "Bonjour ! Je suis là pour t'orienter 😊",
+          "Hey ! Prêt(e) à découvrir nos formations ?",
+          "Salut ! Je suis le chatbot d'orientation du lycée."
+        ],
+        next: "start",
+        isGreeting: true
+      },
+      bonjour: {
+        replies: [
+          "Bonjour ! Bienvenue au lycée Aimé Césaire 👋",
+          "Bonjour ! Tu cherches une formation ?",
+          "Salut ! Je suis là pour t'aider à t'orienter."
+        ],
+        next: "start",
+        isGreeting: true
+      },
+      hello: {
+        replies: [
+          "Hello ! Welcome to Aimé Césaire high school 👋",
+          "Hi there ! How can I help you ?",
+        ],
+        next: "start",
+        isGreeting: true
+      },
 
-  // ÉLECTRICITÉ
-  electricite: { 
-    replies: [
-      "🔌 L'électricité, bon choix ! On propose un CAP (2 ans) et un Bac Pro MELEC (3 ans). Tu préfères lequel ?",
-      "⚡ Génial ! En électricité, tu as le CAP pour entrer vite dans le métier, ou le Bac Pro pour aller plus loin.",
-      "🔧 L'électricité t'intéresse ? CAP ou Bac Pro ?",
-      "💡 L'électricité, un secteur qui recrute ! Formation courte ou longue ?"
-    ],
-    next: "elec_choice"
-  },
-  elec: { 
-    replies: [
-      "🔌 L'électricité, top ! CAP ou Bac Pro ?",
-      "⚡ Tu veux en savoir plus sur l'électricité ? CAP ou Bac Pro ?"
-    ],
-    next: "elec_choice" 
-  },
+      // ÉLECTRICITÉ
+      electricite: {
+        replies: [
+          "🔌 L'électricité, bon choix ! On propose un CAP (2 ans) et un Bac Pro MELEC (3 ans). Tu préfères lequel ?",
+          "⚡ Génial ! En électricité, tu as le CAP pour entrer vite dans le métier, ou le Bac Pro pour aller plus loin.",
+          "🔧 L'électricité t'intéresse ? CAP ou Bac Pro ?",
+          "💡 L'électricité, un secteur qui recrute ! Formation courte ou longue ?"
+        ],
+        next: "elec_choice"
+      },
+      elec: {
+        replies: [
+          "🔌 L'électricité, top ! CAP ou Bac Pro ?",
+          "⚡ Tu veux en savoir plus sur l'électricité ? CAP ou Bac Pro ?"
+        ],
+        next: "elec_choice"
+      },
 
-  // MÉTALLERIE
-  metallerie: { 
-    replies: [
-      "🧱 La métallerie, super choix ! CAP (2 ans) ou Bac Pro (3 ans) ?",
-      "🏗️ La métallerie, c'est précis et créatif. Tu préfères le CAP pratique ou le Bac Pro ?",
-      "🔨 Métallerie : CAP pour les bases, Bac Pro pour maîtriser les plans complexes.",
-      "⚙️ Un métier d'art ! Formation courte ou approfondie ?"
-    ],
-    next: "metal_choice" 
-  },
-  metal: { 
-    replies: [
-      "🧱 Métallerie ! CAP ou Bac Pro ?",
-      "🔨 Tu veux découvrir la métallerie ? CAP ou Bac Pro ?"
-    ],
-    next: "metal_choice" 
-  },
+      // MÉTALLERIE
+      metallerie: {
+        replies: [
+          "🧱 La métallerie, super choix ! CAP (2 ans) ou Bac Pro (3 ans) ?",
+          "🏗️ La métallerie, c'est précis et créatif. Tu préfères le CAP pratique ou le Bac Pro ?",
+          "🔨 Métallerie : CAP pour les bases, Bac Pro pour maîtriser les plans complexes.",
+          "⚙️ Un métier d'art ! Formation courte ou approfondie ?"
+        ],
+        next: "metal_choice"
+      },
+      metal: {
+        replies: [
+          "🧱 Métallerie ! CAP ou Bac Pro ?",
+          "🔨 Tu veux découvrir la métallerie ? CAP ou Bac Pro ?"
+        ],
+        next: "metal_choice"
+      },
 
-  // COMMERCE
-  commerce: { 
-    replies: [
-      "🛍️ Le commerce, excellent ! CAP, 2nde MRC ou Bac Pro Vente ?",
-      "💬 Tu veux travailler dans la vente ? On a trois parcours : CAP (2 ans), 2nde MRC (découverte) ou Bac Pro (3 ans).",
-      "🧺 Commerce : CAP Équipier, 2nde MRC ou Bac Pro Commerce/Vente ?",
-      "🛒 Formation rapide, découverte ou approfondie ?"
-    ],
-    next: "commerce_choice" 
-  },
-  vente: { 
-    replies: [
-      "💬 La vente, super ! CAP, 2nde MRC ou Bac Pro ?",
-      "🛍️ Tu veux faire de la vente ? CAP, 2nde ou Bac Pro ?"
-    ],
-    next: "commerce_choice" 
-  },
+      // COMMERCE
+      commerce: {
+        replies: [
+          "🛍️ Le commerce, excellent ! CAP, 2nde MRC ou Bac Pro Vente ?",
+          "💬 Tu veux travailler dans la vente ? On a trois parcours : CAP (2 ans), 2nde MRC (découverte) ou Bac Pro (3 ans).",
+          "🧺 Commerce : CAP Équipier, 2nde MRC ou Bac Pro Commerce/Vente ?",
+          "🛒 Formation rapide, découverte ou approfondie ?"
+        ],
+        next: "commerce_choice"
+      },
+      vente: {
+        replies: [
+          "💬 La vente, super ! CAP, 2nde MRC ou Bac Pro ?",
+          "🛍️ Tu veux faire de la vente ? CAP, 2nde ou Bac Pro ?"
+        ],
+        next: "commerce_choice"
+      },
 
-  // GESTION
-  gestion: { 
-    replies: [
-      "📁 La gestion administrative, parfait ! Bac Pro AGOrA en 3 ans, avec une 2nde GATL pour démarrer.",
-      "🗂️ Gestion/administration : le Bac Pro AGOrA forme aux métiers d'assistant(e). 2nde GATL puis spécialisation.",
-      "📊 Tu veux travailler dans l'administration ? Bac Pro AGOrA, formation complète !",
-      "📋 Assistant de gestion, ça te parle ? Bac Pro AGOrA au lycée !"
-    ],
-    next: "result_bac_agora" 
-  },
-  agora: { 
-    replies: [
-      "📁 Bac Pro AGOrA : gestion, administration, organisation. Tu commences en 2nde GATL !",
-      "📊 AGOrA, excellent choix ! Formation complète en gestion d'entreprise."
-    ],
-    next: "result_bac_agora" 
-  },
-  gatll: { 
-    replies: [
-      "📁 2nde GATL : la porte d'entrée vers le Bac Pro AGOrA !",
-      "🎯 2nde GATL = découverte de la gestion, administration, transport et logistique."
-    ],
-    next: "result_bac_agora" 
-  },
+      // GESTION
+      gestion: {
+        replies: [
+          "📁 La gestion administrative, parfait ! Bac Pro AGOrA en 3 ans, avec une 2nde GATL pour démarrer.",
+          "🗂️ Gestion/administration : le Bac Pro AGOrA forme aux métiers d'assistant(e). 2nde GATL puis spécialisation.",
+          "📊 Tu veux travailler dans l'administration ? Bac Pro AGOrA, formation complète !",
+          "📋 Assistant de gestion, ça te parle ? Bac Pro AGOrA au lycée !"
+        ],
+        next: "result_bac_agora"
+      },
+      agora: {
+        replies: [
+          "📁 Bac Pro AGOrA : gestion, administration, organisation. Tu commences en 2nde GATL !",
+          "📊 AGOrA, excellent choix ! Formation complète en gestion d'entreprise."
+        ],
+        next: "result_bac_agora"
+      },
+      gatll: {
+        replies: [
+          "📁 2nde GATL : la porte d'entrée vers le Bac Pro AGOrA !",
+          "🎯 2nde GATL = découverte de la gestion, administration, transport et logistique."
+        ],
+        next: "result_bac_agora"
+      },
 
-  // ACCUEIL
-  accueil: { 
-    replies: [
-      "🙂 L'accueil, un métier de contact ! Bac Pro Métiers de l'Accueil en 3 ans.",
-      "👋 Accueil relation client : formation complète pour devenir agent d'accueil.",
-      "😊 Tu as le contact ? Le Bac Pro Accueil est fait pour toi !",
-      "📞 Accueil physique et téléphonique, un Bac Pro qui mène à l'emploi."
-    ],
-    next: "result_bac_accueil" 
-  },
+      // ACCUEIL
+      accueil: {
+        replies: [
+          "🙂 L'accueil, un métier de contact ! Bac Pro Métiers de l'Accueil en 3 ans.",
+          "👋 Accueil relation client : formation complète pour devenir agent d'accueil.",
+          "😊 Tu as le contact ? Le Bac Pro Accueil est fait pour toi !",
+          "📞 Accueil physique et téléphonique, un Bac Pro qui mène à l'emploi."
+        ],
+        next: "result_bac_accueil"
+      },
 
-  // ALTERNANCE
-  alternance: { 
-    replies: [
-      "🔄 L'alternance, c'est apprendre en entreprise ! On propose ça en électricité, métallerie et commerce.",
-      "💼 Alternance = 2 jours au lycée, 3 jours en entreprise. Quel secteur ?",
-      "📅 L'alternance te tente ? Électricité, métallerie ou commerce ?",
-      "🔁 Formation en alternance : expérience garantie ! Élec, métal ou commerce ?"
-    ],
-    next: "alternance_choice" 
-  },
+      // ALTERNANCE
+      alternance: {
+        replies: [
+          "🔄 L'alternance, c'est apprendre en entreprise ! On propose ça en électricité, métallerie et commerce.",
+          "💼 Alternance = 2 jours au lycée, 3 jours en entreprise. Quel secteur ?",
+          "📅 L'alternance te tente ? Électricité, métallerie ou commerce ?",
+          "🔁 Formation en alternance : expérience garantie ! Élec, métal ou commerce ?"
+        ],
+        next: "alternance_choice"
+      },
 
-  // CAP - GARDER LE CONTEXTE
-  cap_elec: {
-    replies: [
-      "🎓 CAP Électricien, excellent choix ! Formation en 2 ans pour devenir électricien(ne) installateur(trice).",
-      "✅ Le CAP Électricien, c'est concret ! Tu seras opérationnel(le) rapidement."
-    ],
-    next: "result_cap_elec"
-  },
-  cap_metal: {
-    replies: [
-      "🎓 CAP Métallier, super ! Formation en 2 ans pour maîtriser les bases du métier.",
-      "✅ Le CAP Métallier, c'est pratique et précis ! Tu apprendras à fabriquer garde-corps, portails..."
-    ],
-    next: "result_cap_metallier"
-  },
-  cap_commerce: {
-    replies: [
-      "🎓 CAP Équipier Polyvalent du Commerce, parfait ! Formation en 2 ans pour travailler en magasin.",
-      "✅ Le CAP Commerce, c'est la voie rapide pour devenir employé(e) de commerce."
-    ],
-    next: "result_cap_epc"
-  },
+      // CAP - GARDER LE CONTEXTE
+      cap_elec: {
+        replies: [
+          "🎓 CAP Électricien, excellent choix ! Formation en 2 ans pour devenir électricien(ne) installateur(trice).",
+          "✅ Le CAP Électricien, c'est concret ! Tu seras opérationnel(le) rapidement."
+        ],
+        next: "result_cap_elec"
+      },
+      cap_metal: {
+        replies: [
+          "🎓 CAP Métallier, super ! Formation en 2 ans pour maîtriser les bases du métier.",
+          "✅ Le CAP Métallier, c'est pratique et précis ! Tu apprendras à fabriquer garde-corps, portails..."
+        ],
+        next: "result_cap_metallier"
+      },
+      cap_commerce: {
+        replies: [
+          "🎓 CAP Équipier Polyvalent du Commerce, parfait ! Formation en 2 ans pour travailler en magasin.",
+          "✅ Le CAP Commerce, c'est la voie rapide pour devenir employé(e) de commerce."
+        ],
+        next: "result_cap_epc"
+      },
 
-  // BAC PRO - GARDER LE CONTEXTE
-  bac_elec: {
-    replies: [
-      "📈 Bac Pro MELEC, top ! Formation en 3 ans pour devenir technicien(ne) électricien(ne).",
-      "🎯 Le Bac Pro Électricité, c'est plus complet ! Tu pourras évoluer vers des postes à responsabilités."
-    ],
-    next: "result_bac_melec"
-  },
-  bac_metal: {
-    replies: [
-      "📈 Bac Pro Métallerie, excellent ! Formation en 3 ans pour maîtriser les ouvrages complexes.",
-      "🎯 Le Bac Pro Métallerie ouvre plus de portes ! BTS possible après."
-    ],
-    next: "result_bac_metallerie"
-  },
-  bac_commerce: {
-    replies: [
-      "📈 Bac Pro Commerce/Vente, super ! Formation en 3 ans pour devenir vendeur(se) conseil.",
-      "🎯 Le Bac Pro Commerce, c'est la voie pour évoluer vers des postes de management."
-    ],
-    next: "result_bac_commerce_vente"
-  },
+      // BAC PRO - GARDER LE CONTEXTE
+      bac_elec: {
+        replies: [
+          "📈 Bac Pro MELEC, top ! Formation en 3 ans pour devenir technicien(ne) électricien(ne).",
+          "🎯 Le Bac Pro Électricité, c'est plus complet ! Tu pourras évoluer vers des postes à responsabilités."
+        ],
+        next: "result_bac_melec"
+      },
+      bac_metal: {
+        replies: [
+          "📈 Bac Pro Métallerie, excellent ! Formation en 3 ans pour maîtriser les ouvrages complexes.",
+          "🎯 Le Bac Pro Métallerie ouvre plus de portes ! BTS possible après."
+        ],
+        next: "result_bac_metallerie"
+      },
+      bac_commerce: {
+        replies: [
+          "📈 Bac Pro Commerce/Vente, super ! Formation en 3 ans pour devenir vendeur(se) conseil.",
+          "🎯 Le Bac Pro Commerce, c'est la voie pour évoluer vers des postes de management."
+        ],
+        next: "result_bac_commerce_vente"
+      },
 
-  // RÉPONSES SPÉCIFIQUES
-  cap: { 
-    replies: [], // Ne plus utiliser, géré par les contextes spécifiques
-    next: null 
-  },
-  bacpro: { 
-    replies: [], // Ne plus utiliser, géré par les contextes spécifiques
-    next: null 
-  },
+      // RÉPONSES SPÉCIFIQUES
+      cap: {
+        replies: [], // Ne plus utiliser, géré par les contextes spécifiques
+        next: null
+      },
+      bacpro: {
+        replies: [], // Ne plus utiliser, géré par les contextes spécifiques
+        next: null
+      },
 
-  // Remerciements
-  merci: { 
-    replies: [
-      "Avec plaisir ! 👋",
-      "De rien ! Reviens quand tu veux 😊",
-      "Service ! N'hésite pas à recommencer 🚀",
-      "😄 Contente d'avoir pu t'aider !",
-      "👍 Bonne continuation !"
-    ],
-    next: null 
-  },
+      // Remerciements
+      merci: {
+        replies: [
+          "Avec plaisir ! 👋",
+          "De rien ! Reviens quand tu veux 😊",
+          "Service ! N'hésite pas à recommencer 🚀",
+          "😄 Contente d'avoir pu t'aider !",
+          "👍 Bonne continuation !"
+        ],
+        next: null
+      },
 
-  // Au revoir
-  aurevoir: { 
-    replies: [
-      "À bientôt ! 👋",
-      "Salut ! Bonne continuation 🚀",
-      "Bye ! Reviens tester d'autres formations 😊",
-      "👋 N'hésite pas à revenir !",
-      "Bonne journée !"
-    ],
-    next: null 
-  },
+      // Au revoir
+      aurevoir: {
+        replies: [
+          "À bientôt ! 👋",
+          "Salut ! Bonne continuation 🚀",
+          "Bye ! Reviens tester d'autres formations 😊",
+          "👋 N'hésite pas à revenir !",
+          "Bonne journée !"
+        ],
+        next: null
+      },
 
-  // Aide
-  aide: {
-    replies: [
-      "🤖 Je suis là pour t'orienter ! Tu peux me parler d'électricité, métallerie, commerce, gestion, accueil ou alternance.",
-      "💡 Écris un métier ou une formation : CAP électricien, Bac Pro commerce, alternance...",
-      "🔍 Tu cherches quoi ? Électricité, métallerie, commerce, gestion, accueil ?"
-    ],
-    next: "start"
-  }
-};
+      // Aide
+      aide: {
+        replies: [
+          "🤖 Je suis là pour t'orienter ! Tu peux me parler d'électricité, métallerie, commerce, gestion, accueil ou alternance.",
+          "💡 Écris un métier ou une formation : CAP électricien, Bac Pro commerce, alternance...",
+          "🔍 Tu cherches quoi ? Électricité, métallerie, commerce, gestion, accueil ?"
+        ],
+        next: "start"
+      }
+    };
 
-/* =========================
-   4) ARBRE PRINCIPAL (FLOW)
-   ========================= */
-/* =========================
-   4) ARBRE PRINCIPAL (FLOW) - CORRIGÉ
-   ========================= */
-const FLOW = {
-  start: {
-    bot: [
-      "Salut 👋 Je suis le chatbot d'orientation du lycée Aimé Césaire.\nJe suis conçu par les élèves du lycée, pour les futurs élèves du lycée.\n\nEn quelques clics, je t'aide à découvrir une formation et un métier.\nPrêt(e) ? 🚀\n\nTu t'intéresses plutôt à :",
-      "Bonjour ! 👋 Je suis le chatbot du lycée Aimé Césaire.\nJe suis là pour t'aider à trouver la formation qui te correspond.\n\nTu veux découvrir l'électricité, la métallerie, le commerce, la gestion ou l'accueil ?",
-      "Salut ! 🤖\nBienvenue au lycée Aimé Césaire.\n\nDis-moi ce qui t'intéresse : électricité, métallerie, commerce, gestion, accueil...",
-      "Hé ! 👋\nJe suis le chatbot d'orientation du lycée.\nConçu par des élèves, pour des élèves.\n\nTu cherches une formation dans quel domaine ?"
-    ],
-    replies: [] // Pas de boutons au début
-  },
+    /* =========================
+       4) ARBRE PRINCIPAL (FLOW)
+       ========================= */
+    /* =========================
+       4) ARBRE PRINCIPAL (FLOW) - CORRIGÉ
+       ========================= */
+    const FLOW = {
+      start: {
+        bot: [
+          "Salut 👋 Je suis le chatbot d'orientation du lycée Aimé Césaire.\nJe suis conçu par les élèves du lycée, pour les futurs élèves du lycée.\n\nEn quelques clics, je t'aide à découvrir une formation et un métier.\nPrêt(e) ? 🚀\n\nTu t'intéresses plutôt à :",
+          "Bonjour ! 👋 Je suis le chatbot du lycée Aimé Césaire.\nJe suis là pour t'aider à trouver la formation qui te correspond.\n\nTu veux découvrir l'électricité, la métallerie, le commerce, la gestion ou l'accueil ?",
+          "Salut ! 🤖\nBienvenue au lycée Aimé Césaire.\n\nDis-moi ce qui t'intéresse : électricité, métallerie, commerce, gestion, accueil...",
+          "Hé ! 👋\nJe suis le chatbot d'orientation du lycée.\nConçu par des élèves, pour des élèves.\n\nTu cherches une formation dans quel domaine ?"
+        ],
+        replies: [] // Pas de boutons au début
+      },
 
-  // ÉLECTRICITÉ
-  elec_choice: {
-    bot: "🔌 Électricité : CAP ou Bac Pro ?",
-    replies: [
-      { label: "🎓 CAP Électricien (2 ans)", value: "cap_elec" },
-      { label: "📈 Bac Pro MELEC (3 ans)", value: "bac_melec" },
-      { label: "🔄 Alternance", value: "alt_elec" },
-      //{ label: "🔙 Retour", value: "back" },
-    ],
-    next: (ans) => {
-      if (ans === "cap_elec") return "result_cap_elec";
-      if (ans === "bac_melec") return "result_bac_melec";
-      if (ans === "alt_elec") return "result_alt_elec";
-      return "start";
-    },
-  },
+      // ÉLECTRICITÉ
+      elec_choice: {
+        bot: "🔌 Électricité : CAP ou Bac Pro ?",
+        replies: [
+          { label: "🎓 CAP Électricien (2 ans)", value: "cap_elec" },
+          { label: "📈 Bac Pro MELEC (3 ans)", value: "bac_melec" },
+          { label: "🔄 Alternance", value: "alt_elec" },
+          //{ label: "🔙 Retour", value: "back" },
+        ],
+        next: (ans) => {
+          if (ans === "cap_elec") return "result_cap_elec";
+          if (ans === "bac_melec") return "result_bac_melec";
+          if (ans === "alt_elec") return "result_alt_elec";
+          return "start";
+        },
+      },
 
-  // MÉTALLERIE
-  metal_choice: {
-    bot: "🧱 Métallerie : CAP ou Bac Pro ?",
-    replies: [
-      { label: "🎓 CAP Métallier (2 ans)", value: "cap_metal" },
-      { label: "📈 Bac Pro Métallerie (3 ans)", value: "bac_metal" },
-      { label: "🔄 Alternance", value: "alt_metal" },
-      //{ label: "🔙 Retour", value: "back" },
-    ],
-    next: (ans) => {
-      if (ans === "cap_metal") return "result_cap_metallier";
-      if (ans === "bac_metal") return "result_bac_metallerie";
-      if (ans === "alt_metal") return "result_alt_metallerie";
-      return "start";
-    },
-  },
+      // MÉTALLERIE
+      metal_choice: {
+        bot: "🧱 Métallerie : CAP ou Bac Pro ?",
+        replies: [
+          { label: "🎓 CAP Métallier (2 ans)", value: "cap_metal" },
+          { label: "📈 Bac Pro Métallerie (3 ans)", value: "bac_metal" },
+          { label: "🔄 Alternance", value: "alt_metal" },
+          //{ label: "🔙 Retour", value: "back" },
+        ],
+        next: (ans) => {
+          if (ans === "cap_metal") return "result_cap_metallier";
+          if (ans === "bac_metal") return "result_bac_metallerie";
+          if (ans === "alt_metal") return "result_alt_metallerie";
+          return "start";
+        },
+      },
 
-  // COMMERCE
-  commerce_choice: {
-    bot: "🛍️ Commerce : quelle voie ?",
-    replies: [
-      { label: "🎓 CAP Équipier Polyvalent", value: "cap_commerce" },
-      { label: "🧭 2nde MRC (découverte)", value: "seconde_mrc" },
-      { label: "📈 Bac Pro Commerce/Vente", value: "bac_commerce" },
-      { label: "🔄 Alternance", value: "alt_commerce" },
-      //{ label: "🔙 Retour", value: "back" },
-    ],
-    next: (ans) => {
-      if (ans === "cap_commerce") return "result_cap_epc";
-      if (ans === "seconde_mrc") return "result_seconde_mrc";
-      if (ans === "bac_commerce") return "result_bac_commerce_vente";
-      if (ans === "alt_commerce") return "result_alt_commerce";
-      return "start";
-    },
-  },
+      // COMMERCE
+      commerce_choice: {
+        bot: "🛍️ Commerce : quelle voie ?",
+        replies: [
+          { label: "🎓 CAP Équipier Polyvalent", value: "cap_commerce" },
+          { label: "🧭 2nde MRC (découverte)", value: "seconde_mrc" },
+          { label: "📈 Bac Pro Commerce/Vente", value: "bac_commerce" },
+          { label: "🔄 Alternance", value: "alt_commerce" },
+          //{ label: "🔙 Retour", value: "back" },
+        ],
+        next: (ans) => {
+          if (ans === "cap_commerce") return "result_cap_epc";
+          if (ans === "seconde_mrc") return "result_seconde_mrc";
+          if (ans === "bac_commerce") return "result_bac_commerce_vente";
+          if (ans === "alt_commerce") return "result_alt_commerce";
+          return "start";
+        },
+      },
 
-  // ALTERNANCE
-  alternance_choice: {
-    bot: "🔄 Alternance disponible en :\n• Électricité\n• Métallerie\n• Commerce\n\nTu veux quel secteur ?",
-    replies: [
-      { label: "⚡ Électricité", value: "alt_elec" },
-      { label: "🧱 Métallerie", value: "alt_metal" },
-      { label: "🛍️ Commerce", value: "alt_commerce" },
-      //{ label: "🔙 Retour", value: "back" },
-    ],
-    next: (ans) => {
-      if (ans === "alt_elec") return "result_alt_elec";
-      if (ans === "alt_metal") return "result_alt_metallerie";
-      if (ans === "alt_commerce") return "result_alt_commerce";
-      return "start";
-    },
-  },
+      // ALTERNANCE
+      alternance_choice: {
+        bot: "🔄 Alternance disponible en :\n• Électricité\n• Métallerie\n• Commerce\n\nTu veux quel secteur ?",
+        replies: [
+          { label: "⚡ Électricité", value: "alt_elec" },
+          { label: "🧱 Métallerie", value: "alt_metal" },
+          { label: "🛍️ Commerce", value: "alt_commerce" },
+          //{ label: "🔙 Retour", value: "back" },
+        ],
+        next: (ans) => {
+          if (ans === "alt_elec") return "result_alt_elec";
+          if (ans === "alt_metal") return "result_alt_metallerie";
+          if (ans === "alt_commerce") return "result_alt_commerce";
+          return "start";
+        },
+      },
 
-  // CHOIX CAP
-  cap_choice: {
-    bot: "🎓 CAP disponible en :\n• Électricité\n• Métallerie\n• Commerce\n\nTu préfères lequel ?",
-    replies: [
-      { label: "⚡ CAP Électricien", value: "cap_elec" },
-      { label: "🧱 CAP Métallier", value: "cap_metal" },
-      { label: "🛍️ CAP Commerce", value: "cap_commerce" },
-      //{ label: "🔙 Retour", value: "back" },
-    ],
-    next: (ans) => {
-      if (ans === "cap_elec") return "result_cap_elec";
-      if (ans === "cap_metal") return "result_cap_metallier";
-      if (ans === "cap_commerce") return "result_cap_epc";
-      return "start";
-    },
-  },
+      // CHOIX CAP
+      cap_choice: {
+        bot: "🎓 CAP disponible en :\n• Électricité\n• Métallerie\n• Commerce\n\nTu préfères lequel ?",
+        replies: [
+          { label: "⚡ CAP Électricien", value: "cap_elec" },
+          { label: "🧱 CAP Métallier", value: "cap_metal" },
+          { label: "🛍️ CAP Commerce", value: "cap_commerce" },
+          //{ label: "🔙 Retour", value: "back" },
+        ],
+        next: (ans) => {
+          if (ans === "cap_elec") return "result_cap_elec";
+          if (ans === "cap_metal") return "result_cap_metallier";
+          if (ans === "cap_commerce") return "result_cap_epc";
+          return "start";
+        },
+      },
 
-  // CHOIX BAC PRO
-  bac_choice: {
-    bot: "📈 Bac Pro disponible en :\n• Électricité (MELEC)\n• Métallerie\n• Commerce/Vente\n• Gestion (AGOrA)\n• Accueil\n\nLequel te tente ?",
-    replies: [
-      { label: "⚡ MELEC", value: "bac_melec" },
-      { label: "🧱 Métallerie", value: "bac_metal" },
-      { label: "🛍️ Commerce/Vente", value: "bac_commerce" },
-      { label: "📁 AGOrA", value: "agora" },
-      { label: "🙂 Accueil", value: "accueil" },
-      //{ label: "🔙 Retour", value: "back" },
-    ],
-    next: (ans) => {
-      if (ans === "bac_melec") return "result_bac_melec";
-      if (ans === "bac_metal") return "result_bac_metallerie";
-      if (ans === "bac_commerce") return "result_bac_commerce_vente";
-      if (ans === "agora") return "result_bac_agora";
-      if (ans === "accueil") return "result_bac_accueil";
-      return "start";
-    },
-  },
+      // CHOIX BAC PRO
+      bac_choice: {
+        bot: "📈 Bac Pro disponible en :\n• Électricité (MELEC)\n• Métallerie\n• Commerce/Vente\n• Gestion (AGOrA)\n• Accueil\n\nLequel te tente ?",
+        replies: [
+          { label: "⚡ MELEC", value: "bac_melec" },
+          { label: "🧱 Métallerie", value: "bac_metal" },
+          { label: "🛍️ Commerce/Vente", value: "bac_commerce" },
+          { label: "📁 AGOrA", value: "agora" },
+          { label: "🙂 Accueil", value: "accueil" },
+          //{ label: "🔙 Retour", value: "back" },
+        ],
+        next: (ans) => {
+          if (ans === "bac_melec") return "result_bac_melec";
+          if (ans === "bac_metal") return "result_bac_metallerie";
+          if (ans === "bac_commerce") return "result_bac_commerce_vente";
+          if (ans === "agora") return "result_bac_agora";
+          if (ans === "accueil") return "result_bac_accueil";
+          return "start";
+        },
+      },
 
-  // ----- RÉSULTATS (avec cartes) -----
-  result_cap_elec: { result: ["cap_elec"] },
-  result_bac_melec: { result: ["bac_melec"] },
-  result_cap_metallier: { result: ["cap_metallier"] },
-  result_bac_metallerie: { result: ["bac_metallerie"] },
-  result_cap_epc: { result: ["cap_epc"] },
-  result_seconde_mrc: { result: ["seconde_mrc"] },
-  result_bac_commerce_vente: { result: ["bac_commerce_vente"] },
-  result_bac_agora: { result: ["bac_agora"] },
-  result_bac_accueil: { result: ["bac_accueil"] },
-  result_alt_commerce: { result: ["alt_commerce"] },
-  result_alt_elec: { result: ["alt_elec"] },
-  result_alt_metallerie: { result: ["alt_metallerie"] },
-};
+      // ----- RÉSULTATS (avec cartes) -----
+      result_cap_elec: { result: ["cap_elec"] },
+      result_bac_melec: { result: ["bac_melec"] },
+      result_cap_metallier: { result: ["cap_metallier"] },
+      result_bac_metallerie: { result: ["bac_metallerie"] },
+      result_cap_epc: { result: ["cap_epc"] },
+      result_seconde_mrc: { result: ["seconde_mrc"] },
+      result_bac_commerce_vente: { result: ["bac_commerce_vente"] },
+      result_bac_agora: { result: ["bac_agora"] },
+      result_bac_accueil: { result: ["bac_accueil"] },
+      result_alt_commerce: { result: ["alt_commerce"] },
+      result_alt_elec: { result: ["alt_elec"] },
+      result_alt_metallerie: { result: ["alt_metallerie"] },
+    };
 
 
-/* =========================
-   5) État + helpers
-   ========================= */
-let state = { nodeId: "start", history: [] };
-let demoTimer = null;
+    /* =========================
+       5) État + helpers
+       ========================= */
+    let state = { nodeId: "start", history: [] };
+    let demoTimer = null;
 
-function nowTime() {
-  const d = new Date();
-  return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-}
-function scrollToBottom() {
-  mainEl.scrollTop = mainEl.scrollHeight;
-}
-function setStatus(text) {
-  statusChip.textContent = text;
-}
+    function nowTime() {
+      const d = new Date();
+      return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    }
+    function scrollToBottom() {
+      mainEl.scrollTop = mainEl.scrollHeight;
+    }
+    function setStatus(text) {
+      statusChip.textContent = text;
+    }
 
-/* =========================
-   6) Messages (UI)
-   ========================= */
-function addMessage({ from, text, html }) {
-  const row = document.createElement("div");
-  row.className = "row " + (from === "bot" ? "bot" : "user");
+    /* =========================
+       6) Messages (UI)
+       ========================= */
+    function addMessage({ from, text, html }) {
+      const row = document.createElement("div");
+      row.className = "row " + (from === "bot" ? "bot" : "user");
 
-  if (from === "bot") {
-    const av = document.createElement("div");
-    av.className = "avatar";
-    av.textContent = "🤖";
-    row.appendChild(av);
-  }
+      if (from === "bot") {
+        const av = document.createElement("div");
+        av.className = "avatar";
+        av.textContent = "🤖";
+        row.appendChild(av);
+      }
 
-  const bubble = document.createElement("div");
-  bubble.className = "bubble";
-  if (html) bubble.innerHTML = html;
-  else bubble.textContent = text;
+      const bubble = document.createElement("div");
+      bubble.className = "bubble";
+      if (html) bubble.innerHTML = html;
+      else bubble.textContent = text;
 
-  const meta = document.createElement("div");
-  meta.className = "meta";
-  meta.textContent = nowTime();
+      const meta = document.createElement("div");
+      meta.className = "meta";
+      meta.textContent = nowTime();
 
-  if (from === "user") {
-    row.appendChild(meta);
-    row.appendChild(bubble);
-  } else {
-    row.appendChild(bubble);
-    row.appendChild(meta);
-  }
+      if (from === "user") {
+        row.appendChild(meta);
+        row.appendChild(bubble);
+      } else {
+        row.appendChild(bubble);
+        row.appendChild(meta);
+      }
 
-  messagesEl.appendChild(row);
-  scrollToBottom();
-}
+      messagesEl.appendChild(row);
+      scrollToBottom();
+    }
 
-function addTyping() {
-  const row = document.createElement("div");
-  row.className = "row bot";
-  row.dataset.typing = "1";
+    function addTyping() {
+      const row = document.createElement("div");
+      row.className = "row bot";
+      row.dataset.typing = "1";
 
-  const av = document.createElement("div");
-  av.className = "avatar";
-  av.textContent = "🤖";
+      const av = document.createElement("div");
+      av.className = "avatar";
+      av.textContent = "🤖";
 
-  const bubble = document.createElement("div");
-  bubble.className = "bubble";
-  bubble.innerHTML = `<span class="typing" aria-label="Le bot écrit">
+      const bubble = document.createElement("div");
+      bubble.className = "bubble";
+      bubble.innerHTML = `<span class="typing" aria-label="Le bot écrit">
       <span class="dot"></span><span class="dot"></span><span class="dot"></span>
     </span>`;
 
-  row.appendChild(av);
-  row.appendChild(bubble);
-  messagesEl.appendChild(row);
-  scrollToBottom();
-}
-function removeTyping() {
-  const t = messagesEl.querySelector('[data-typing="1"]');
-  if (t) t.remove();
-}
-
-/* =========================
-   7) Effet ChatGPT : mot par mot
-   ========================= */
-function escapeHtml(str) {
-  return str
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-}
-
-function typewriterMessage(text, { speed = 60, onComplete } = {}) {
-  setStatus("Écrit…");
-  quickRepliesEl.style.display = "none";
-
-  const row = document.createElement("div");
-  row.className = "row bot";
-
-  const av = document.createElement("div");
-  av.className = "avatar";
-  av.textContent = "🤖";
-
-  const bubble = document.createElement("div");
-  bubble.className = "bubble";
-  bubble.textContent = "";
-
-  const meta = document.createElement("div");
-  meta.className = "meta";
-  meta.textContent = nowTime();
-
-  row.appendChild(av);
-  row.appendChild(bubble);
-  row.appendChild(meta);
-  messagesEl.appendChild(row);
-  scrollToBottom();
-
-  const safe = escapeHtml(text);
-  const parts = safe.split(/(\s+)/);
-  let i = 0;
-
-  const timer = setInterval(() => {
-    bubble.innerHTML += parts[i] ?? "";
-    i++;
-    scrollToBottom();
-    if (i >= parts.length) {
-      clearInterval(timer);
-      setStatus("Prêt");
-      quickRepliesEl.style.display = "flex";
-      if (onComplete) onComplete();
+      row.appendChild(av);
+      row.appendChild(bubble);
+      messagesEl.appendChild(row);
+      scrollToBottom();
     }
-  }, speed);
-}
-
-function botSay(textOrHtml, { html = false, speed = 60, onComplete } = {}) {
-  if (html) {
-    setStatus("Répond…");
-    quickRepliesEl.style.display = "none";
-    addTyping();
-    
-    const delay = 300 + Math.random() * 200;
-    window.setTimeout(() => {
-      removeTyping();
-      addMessage({ from: "bot", html: textOrHtml });
-      setStatus("Prêt");
-      quickRepliesEl.style.display = "flex";
-      if (onComplete) onComplete();
-    }, delay);
-    return;
-  }
-
-  quickRepliesEl.style.display = "none";
-  addTyping();
-  
-  const delay = 200 + Math.random() * 150;
-  window.setTimeout(() => {
-    removeTyping();
-    typewriterMessage(textOrHtml, { speed, onComplete });
-  }, delay);
-}
-
-/* =========================
-   8) RÉPONSES ALÉATOIRES
-   ========================= */
-function getRandomReply(keyword) {
-  const keywordData = KEYWORDS[keyword];
-  if (keywordData && keywordData.replies) {
-    const randomIndex = Math.floor(Math.random() * keywordData.replies.length);
-    return keywordData.replies[randomIndex];
-  }
-  return null;
-}
-
-/* =========================
-   9) GESTION DU TEXTE LIBRE (CORRIGÉ)
-   ========================= */
-function handleUserInput(inputText) {
-  const text = inputText.toLowerCase().trim();
-  
-  // Ignorer si vide
-  if (!text) return null;
-  
-  // Vérifier les salutations
-  if (text.includes("salut") || text.includes("bonjour") || text.includes("hello") || text === "bjr" || text === "slt") {
-    return { type: "greeting", keyword: "salut" };
-  }
-  
-  if (text.includes("merci") || text.includes("thanks") || text.includes("thank")) {
-    return { type: "reply", keyword: "merci" };
-  }
-  
-  if (text.includes("au revoir") || text.includes("bye") || text.includes("ciao") || text.includes("a+") || text.includes("à plus")) {
-    return { type: "reply", keyword: "aurevoir" };
-  }
-
-  if (text.includes("aide") || text.includes("help") || text.includes("quoi") || text.includes("comment")) {
-    return { type: "reply", keyword: "aide" };
-  }
-
-  // === GESTION DU CONTEXTE ===
-  // Si on est dans un choix spécifique, priorité au contexte
-  const currentNode = state.nodeId;
-  
-  // Si on est dans le choix électricité
-  if (currentNode === "elec_choice") {
-    if (text.includes("cap")) {
-      return { type: "flow", keyword: "cap_elec" };
+    function removeTyping() {
+      const t = messagesEl.querySelector('[data-typing="1"]');
+      if (t) t.remove();
     }
-    if (text.includes("bac") || text.includes("bacpro") || text.includes("bac pro") || text.includes("melec")) {
-      return { type: "flow", keyword: "bac_elec" };
-    }
-    if (text.includes("alternance") || text.includes("alt")) {
-      return { type: "flow", keyword: "alternance", context: "elec" };
-    }
-  }
-  
-  // Si on est dans le choix métallerie
-  if (currentNode === "metal_choice") {
-    if (text.includes("cap")) {
-      return { type: "flow", keyword: "cap_metal" };
-    }
-    if (text.includes("bac") || text.includes("bacpro") || text.includes("bac pro")) {
-      return { type: "flow", keyword: "bac_metal" };
-    }
-    if (text.includes("alternance") || text.includes("alt")) {
-      return { type: "flow", keyword: "alternance", context: "metal" };
-    }
-  }
-  
-  // Si on est dans le choix commerce
-  if (currentNode === "commerce_choice") {
-    if (text.includes("cap")) {
-      return { type: "flow", keyword: "cap_commerce" };
-    }
-    if (text.includes("2nde") || text.includes("mrc") || text.includes("seconde")) {
-      return { type: "flow", keyword: "seconde_mrc" };
-    }
-    if (text.includes("bac") || text.includes("bacpro") || text.includes("bac pro") || text.includes("vente")) {
-      return { type: "flow", keyword: "bac_commerce" };
-    }
-    if (text.includes("alternance") || text.includes("alt")) {
-      return { type: "flow", keyword: "alternance", context: "commerce" };
-    }
-  }
 
-  // === RECHERCHE DE MOTS-CLÉS PAR PRIORITÉ ===
-  
-  // 1. Mots-clés spécifiques avec contexte (CAP + domaine)
-  if (text.includes("cap") && text.includes("elec")) {
-    return { type: "flow", keyword: "cap_elec" };
-  }
-  if (text.includes("cap") && (text.includes("metal") || text.includes("métal"))) {
-    return { type: "flow", keyword: "cap_metal" };
-  }
-  if (text.includes("cap") && (text.includes("commerce") || text.includes("vente"))) {
-    return { type: "flow", keyword: "cap_commerce" };
-  }
-  
-  if ((text.includes("bac") || text.includes("bacpro")) && text.includes("elec")) {
-    return { type: "flow", keyword: "bac_elec" };
-  }
-  if ((text.includes("bac") || text.includes("bacpro")) && (text.includes("metal") || text.includes("métal"))) {
-    return { type: "flow", keyword: "bac_metal" };
-  }
-  if ((text.includes("bac") || text.includes("bacpro")) && (text.includes("commerce") || text.includes("vente"))) {
-    return { type: "flow", keyword: "bac_commerce" };
-  }
-  if ((text.includes("bac") || text.includes("bacpro")) && (text.includes("gestion") || text.includes("agora"))) {
-    return { type: "flow", keyword: "gestion" };
-  }
-  if ((text.includes("bac") || text.includes("bacpro")) && text.includes("accueil")) {
-    return { type: "flow", keyword: "accueil" };
-  }
+    /* =========================
+       7) Effet ChatGPT : mot par mot
+       ========================= */
+    function escapeHtml(str) {
+      return str
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
 
-  // 2. Domaines principaux
-  if (text.includes("electricite") || text.includes("elec") || text.includes("électricité") || text.includes("électricien")) {
-    return { type: "flow", keyword: "electricite" };
-  }
-  
-  if (text.includes("metallerie") || text.includes("metal") || text.includes("métallerie") || text.includes("serrurier") || text.includes("métal")) {
-    return { type: "flow", keyword: "metallerie" };
-  }
-  
-  if (text.includes("commerce") || text.includes("vente") || text.includes("magasin") || text.includes("rayon") || text.includes("vendeur")) {
-    return { type: "flow", keyword: "commerce" };
-  }
-  
-  if (text.includes("gestion") || text.includes("agora") || text.includes("gatll") || text.includes("administration") || text.includes("assistant")) {
-    return { type: "flow", keyword: "gestion" };
-  }
-  
-  if (text.includes("accueil") || text.includes("acceuil") || text.includes("hotesse") || text.includes("hôtesse")) {
-    return { type: "flow", keyword: "accueil" };
-  }
-  
-  if (text.includes("alternance") || text.includes("alterner") || text.includes("apprentissage") || text.includes("contrat")) {
-    return { type: "flow", keyword: "alternance" };
-  }
-  
-  // 3. CAP et Bac Pro sans contexte → demander le domaine
-  if (text.includes("cap") && !text.includes("bac")) {
-    return { 
-      type: "unknown", 
-      text: "🎓 CAP dans quel domaine ? On propose :\n• Électricité\n• Métallerie\n• Commerce" 
-    };
-  }
-  
-  if ((text.includes("bac") || text.includes("bacpro")) && !text.includes("cap")) {
-    return { 
-      type: "unknown", 
-      text: "📈 Bac Pro dans quel domaine ? On propose :\n• Électricité (MELEC)\n• Métallerie\n• Commerce/Vente\n• Gestion (AGOrA)\n• Accueil" 
-    };
-  }
-  
-  // Aucun mot-clé trouvé
-  return { 
-    type: "unknown", 
-    text: "🤔 Je n'ai pas bien compris. Tu peux écrire :\n• Électricité\n• Métallerie\n• Commerce\n• Gestion (AGOrA)\n• Accueil\n• Alternance\n\nOu directement : CAP électricien, Bac Pro commerce..." 
-  };
-}
-/* =========================
-   10) Quick replies (boutons)
-   ========================= */
-function setReplies(replies) {
-  quickRepliesEl.innerHTML = "";
+    function typewriterMessage(text, { speed = 60, onComplete } = {}) {
+      setStatus("Écrit…");
+      quickRepliesEl.style.display = "none";
 
-  (replies || []).forEach((r, idx) => {
-    const b = document.createElement("button");
-    b.className = "qr " + (idx === 0 ? "accent" : idx === 1 ? "good" : "");
-    b.textContent = r.label;
-    b.onclick = () => onUserAnswer(r);
-    quickRepliesEl.appendChild(b);
-  });
+      const row = document.createElement("div");
+      row.className = "row bot";
 
-  // Bouton "C'est quoi l'alternance ?" SEULEMENT après un résultat d'alternance
-  const nodeId = state.nodeId;
-  if (nodeId.startsWith('result_alt_')) {
-    const alt = document.createElement("button");
-    alt.className = "qr";
-    alt.textContent = "ℹ️ C'est quoi l'alternance ?";
-    alt.onclick = () => showAlternanceInfo();
-    quickRepliesEl.appendChild(alt);
-  }
+      const av = document.createElement("div");
+      av.className = "avatar";
+      av.textContent = "🤖";
 
-  // Bouton restart
-  /*const restart = document.createElement("button");
-  restart.className = "qr warn";
-  restart.textContent = "↺ Recommencer";
-  restart.onclick = restartFlow;
-  quickRepliesEl.appendChild(restart);*/
-}
+      const bubble = document.createElement("div");
+      bubble.className = "bubble";
+      bubble.textContent = "";
 
-/* =========================
-   11) Cartes résultats
-   ========================= */
-function renderResultCards(keys) {
-  const cards = keys
-    .map((k) => {
-      const p = PROGRAMS[k];
+      const meta = document.createElement("div");
+      meta.className = "meta";
+      meta.textContent = nowTime();
 
-      const jobs = (p.jobs || [])
-        .map((j) => `• ${escapeHtml(j)}`)
-        .join("<br>");
+      row.appendChild(av);
+      row.appendChild(bubble);
+      row.appendChild(meta);
+      messagesEl.appendChild(row);
+      scrollToBottom();
 
-      const learn = (p.learn || [])
-        .map((l) => `• ${escapeHtml(l)}`)
-        .join("<br>");
+      const safe = escapeHtml(text);
+      const parts = safe.split(/(\s+)/);
+      let i = 0;
 
-      return `
+      const timer = setInterval(() => {
+        bubble.innerHTML += parts[i] ?? "";
+        i++;
+        scrollToBottom();
+        if (i >= parts.length) {
+          clearInterval(timer);
+          setStatus("Prêt");
+          quickRepliesEl.style.display = "flex";
+          if (onComplete) onComplete();
+        }
+      }, speed);
+    }
+
+    function botSay(textOrHtml, { html = false, speed = 60, onComplete } = {}) {
+      if (html) {
+        setStatus("Répond…");
+        quickRepliesEl.style.display = "none";
+        addTyping();
+
+        const delay = 300 + Math.random() * 200;
+        window.setTimeout(() => {
+          removeTyping();
+          addMessage({ from: "bot", html: textOrHtml });
+          setStatus("Prêt");
+          quickRepliesEl.style.display = "flex";
+          if (onComplete) onComplete();
+        }, delay);
+        return;
+      }
+
+      quickRepliesEl.style.display = "none";
+      addTyping();
+
+      const delay = 200 + Math.random() * 150;
+      window.setTimeout(() => {
+        removeTyping();
+        typewriterMessage(textOrHtml, { speed, onComplete });
+      }, delay);
+    }
+
+    /* =========================
+       8) RÉPONSES ALÉATOIRES
+       ========================= */
+    function getRandomReply(keyword) {
+      const keywordData = KEYWORDS[keyword];
+      if (keywordData && keywordData.replies) {
+        const randomIndex = Math.floor(Math.random() * keywordData.replies.length);
+        return keywordData.replies[randomIndex];
+      }
+      return null;
+    }
+
+    /* =========================
+       9) GESTION DU TEXTE LIBRE (CORRIGÉ)
+       ========================= */
+    function handleUserInput(inputText) {
+      const text = inputText.toLowerCase().trim();
+
+      // Ignorer si vide
+      if (!text) return null;
+
+      // Vérifier les salutations
+      if (text.includes("salut") || text.includes("bonjour") || text.includes("hello") || text === "bjr" || text === "slt") {
+        return { type: "greeting", keyword: "salut" };
+      }
+
+      if (text.includes("merci") || text.includes("thanks") || text.includes("thank")) {
+        return { type: "reply", keyword: "merci" };
+      }
+
+      if (text.includes("au revoir") || text.includes("bye") || text.includes("ciao") || text.includes("a+") || text.includes("à plus")) {
+        return { type: "reply", keyword: "aurevoir" };
+      }
+
+      if (text.includes("aide") || text.includes("help") || text.includes("quoi") || text.includes("comment")) {
+        return { type: "reply", keyword: "aide" };
+      }
+
+      // === GESTION DU CONTEXTE ===
+      // Si on est dans un choix spécifique, priorité au contexte
+      const currentNode = state.nodeId;
+
+      // Si on est dans le choix électricité
+      if (currentNode === "elec_choice") {
+        if (text.includes("cap")) {
+          return { type: "flow", keyword: "cap_elec" };
+        }
+        if (text.includes("bac") || text.includes("bacpro") || text.includes("bac pro") || text.includes("melec")) {
+          return { type: "flow", keyword: "bac_elec" };
+        }
+        if (text.includes("alternance") || text.includes("alt")) {
+          return { type: "flow", keyword: "alternance", context: "elec" };
+        }
+      }
+
+      // Si on est dans le choix métallerie
+      if (currentNode === "metal_choice") {
+        if (text.includes("cap")) {
+          return { type: "flow", keyword: "cap_metal" };
+        }
+        if (text.includes("bac") || text.includes("bacpro") || text.includes("bac pro")) {
+          return { type: "flow", keyword: "bac_metal" };
+        }
+        if (text.includes("alternance") || text.includes("alt")) {
+          return { type: "flow", keyword: "alternance", context: "metal" };
+        }
+      }
+
+      // Si on est dans le choix commerce
+      if (currentNode === "commerce_choice") {
+        if (text.includes("cap")) {
+          return { type: "flow", keyword: "cap_commerce" };
+        }
+        if (text.includes("2nde") || text.includes("mrc") || text.includes("seconde")) {
+          return { type: "flow", keyword: "seconde_mrc" };
+        }
+        if (text.includes("bac") || text.includes("bacpro") || text.includes("bac pro") || text.includes("vente")) {
+          return { type: "flow", keyword: "bac_commerce" };
+        }
+        if (text.includes("alternance") || text.includes("alt")) {
+          return { type: "flow", keyword: "alternance", context: "commerce" };
+        }
+      }
+
+      // === RECHERCHE DE MOTS-CLÉS PAR PRIORITÉ ===
+
+      // 1. Mots-clés spécifiques avec contexte (CAP + domaine)
+      if (text.includes("cap") && text.includes("elec")) {
+        return { type: "flow", keyword: "cap_elec" };
+      }
+      if (text.includes("cap") && (text.includes("metal") || text.includes("métal"))) {
+        return { type: "flow", keyword: "cap_metal" };
+      }
+      if (text.includes("cap") && (text.includes("commerce") || text.includes("vente"))) {
+        return { type: "flow", keyword: "cap_commerce" };
+      }
+
+      if ((text.includes("bac") || text.includes("bacpro")) && text.includes("elec")) {
+        return { type: "flow", keyword: "bac_elec" };
+      }
+      if ((text.includes("bac") || text.includes("bacpro")) && (text.includes("metal") || text.includes("métal"))) {
+        return { type: "flow", keyword: "bac_metal" };
+      }
+      if ((text.includes("bac") || text.includes("bacpro")) && (text.includes("commerce") || text.includes("vente"))) {
+        return { type: "flow", keyword: "bac_commerce" };
+      }
+      if ((text.includes("bac") || text.includes("bacpro")) && (text.includes("gestion") || text.includes("agora"))) {
+        return { type: "flow", keyword: "gestion" };
+      }
+      if ((text.includes("bac") || text.includes("bacpro")) && text.includes("accueil")) {
+        return { type: "flow", keyword: "accueil" };
+      }
+
+      // 2. Domaines principaux
+      if (text.includes("electricite") || text.includes("elec") || text.includes("électricité") || text.includes("électricien")) {
+        return { type: "flow", keyword: "electricite" };
+      }
+
+      if (text.includes("metallerie") || text.includes("metal") || text.includes("métallerie") || text.includes("serrurier") || text.includes("métal")) {
+        return { type: "flow", keyword: "metallerie" };
+      }
+
+      if (text.includes("commerce") || text.includes("vente") || text.includes("magasin") || text.includes("rayon") || text.includes("vendeur")) {
+        return { type: "flow", keyword: "commerce" };
+      }
+
+      if (text.includes("gestion") || text.includes("agora") || text.includes("gatll") || text.includes("administration") || text.includes("assistant")) {
+        return { type: "flow", keyword: "gestion" };
+      }
+
+      if (text.includes("accueil") || text.includes("acceuil") || text.includes("hotesse") || text.includes("hôtesse")) {
+        return { type: "flow", keyword: "accueil" };
+      }
+
+      if (text.includes("alternance") || text.includes("alterner") || text.includes("apprentissage") || text.includes("contrat")) {
+        return { type: "flow", keyword: "alternance" };
+      }
+
+      // 3. CAP et Bac Pro sans contexte → demander le domaine
+      if (text.includes("cap") && !text.includes("bac")) {
+        return {
+          type: "unknown",
+          text: "🎓 CAP dans quel domaine ? On propose :\n• Électricité\n• Métallerie\n• Commerce"
+        };
+      }
+
+      if ((text.includes("bac") || text.includes("bacpro")) && !text.includes("cap")) {
+        return {
+          type: "unknown",
+          text: "📈 Bac Pro dans quel domaine ? On propose :\n• Électricité (MELEC)\n• Métallerie\n• Commerce/Vente\n• Gestion (AGOrA)\n• Accueil"
+        };
+      }
+
+      // Aucun mot-clé trouvé
+      return {
+        type: "unknown",
+        text: "🤔 Je n'ai pas bien compris. Tu peux écrire :\n• Électricité\n• Métallerie\n• Commerce\n• Gestion (AGOrA)\n• Accueil\n• Alternance\n\nOu directement : CAP électricien, Bac Pro commerce..."
+      };
+    }
+    /* =========================
+       10) Quick replies (boutons)
+       ========================= */
+    function setReplies(replies) {
+      quickRepliesEl.innerHTML = "";
+
+      (replies || []).forEach((r, idx) => {
+        const b = document.createElement("button");
+        b.className = "qr " + (idx === 0 ? "accent" : idx === 1 ? "good" : "");
+        b.textContent = r.label;
+        b.onclick = () => onUserAnswer(r);
+        quickRepliesEl.appendChild(b);
+      });
+
+      // Bouton "C'est quoi l'alternance ?" SEULEMENT après un résultat d'alternance
+      const nodeId = state.nodeId;
+      if (nodeId.startsWith('result_alt_')) {
+        const alt = document.createElement("button");
+        alt.className = "qr";
+        alt.textContent = "ℹ️ C'est quoi l'alternance ?";
+        alt.onclick = () => showAlternanceInfo();
+        quickRepliesEl.appendChild(alt);
+      }
+
+      // Bouton restart
+      /*const restart = document.createElement("button");
+      restart.className = "qr warn";
+      restart.textContent = "↺ Recommencer";
+      restart.onclick = restartFlow;
+      quickRepliesEl.appendChild(restart);*/
+    }
+
+    /* =========================
+       11) Cartes résultats
+       ========================= */
+    function renderResultCards(keys) {
+      const cards = keys
+        .map((k) => {
+          const p = PROGRAMS[k];
+
+          const jobs = (p.jobs || [])
+            .map((j) => `• ${escapeHtml(j)}`)
+            .join("<br>");
+
+          const learn = (p.learn || [])
+            .map((l) => `• ${escapeHtml(l)}`)
+            .join("<br>");
+
+          return `
       <div class="card">
         ${p.badge ? `<div class="badge">${escapeHtml(p.badge)}</div>` : ""}
         
@@ -1438,19 +1582,18 @@ function renderResultCards(keys) {
         
         <p>${escapeHtml(p.next)}</p>
         
-        ${
-          p.pageUrl
-            ? `<div class="actions">
+        ${p.pageUrl
+              ? `<div class="actions">
                 <a class="link" href="${p.pageUrl}" target="_blank" rel="noopener">📄 Page formation </a>
               </div>`
-            : ""
-        }
+              : ""
+            }
       </div>
     `;
-    })
-    .join("");
+        })
+        .join("");
 
-  return `
+      return `
     <div>
       <div style="margin-bottom:10px; font-weight:800;">Voici ce que je te propose 👇</div>
       <div class="cards">${cards}</div>
@@ -1459,160 +1602,160 @@ function renderResultCards(keys) {
       </div>
     </div>
   `;
-}
+    }
 
 
-/* =========================
-   12) Navigation (CORRIGÉ)
-   ========================= */
-function goTo(nodeId) {
-  state.nodeId = nodeId;
-  const node = FLOW[nodeId];
+    /* =========================
+       12) Navigation (CORRIGÉ)
+       ========================= */
+    function goTo(nodeId) {
+      state.nodeId = nodeId;
+      const node = FLOW[nodeId];
 
-  // Résultat ? -> Affiche les cartes de formation
-  if (node.result) {
-    botSay("Je réfléchis à la meilleure formation pour toi…", {
-      speed: 40,
-      onComplete: () => {
-        const html = renderResultCards(node.result);
-        botSay(html, { 
-          html: true,
+      // Résultat ? -> Affiche les cartes de formation
+      if (node.result) {
+        botSay("Je réfléchis à la meilleure formation pour toi…", {
+          speed: 40,
           onComplete: () => {
-            setReplies([
-              { label: "🔁 Refaire le test", value: "__restart__" },
-              //{ label: "🧭 Voir toutes les formations", value: "__all__" },
-            ]);
+            const html = renderResultCards(node.result);
+            botSay(html, {
+              html: true,
+              onComplete: () => {
+                setReplies([
+                  { label: "🔁 Refaire le test", value: "__restart__" },
+                  //{ label: "🧭 Voir toutes les formations", value: "__all__" },
+                ]);
+              }
+            });
           }
         });
+        return;
       }
-    });
-    return;
-  }
 
-  // Question normale - avec effet d'écriture
-  const botMessage = Array.isArray(node.bot) ? getRandomArrayItem(node.bot) : node.bot;
-  
-  if (node.replies && node.replies.length > 0) {
-    // S'il y a des boutons, on les affiche après l'effet d'écriture
-    botSay(botMessage, {
-      speed: 50,
-      onComplete: () => {
-        setReplies(node.replies);
-      }
-    });
-  } else {
-    // Pas de boutons (ex: start)
-    botSay(botMessage, {
-      speed: 50,
-      onComplete: () => {}
-    });
-  }
-}
+      // Question normale - avec effet d'écriture
+      const botMessage = Array.isArray(node.bot) ? getRandomArrayItem(node.bot) : node.bot;
 
-
-/* =========================
-   13) Gestion des réponses utilisateur (CORRIGÉ)
-   ========================= */
-function onUserAnswer(reply) {
-  quickRepliesEl.style.display = "none";
-  
-  // Actions spéciales boutons
-  if (reply.value === "__restart__") {
-    restartFlow();
-    return;
-  }
-  if (reply.value === "__all__") {
-    showAllPrograms();
-    return;
-  }
-  if (reply.value === "back") {
-    addMessage({ from: "user", text: "🔙 Retour" });
-    goTo("start");
-    return;
-  }
-
-  // Si c'est un bouton normal
-  if (reply.value && !reply.isText) {
-    addMessage({ from: "user", text: reply.label });
-    
-    const current = FLOW[state.nodeId];
-    state.history.push({ nodeId: state.nodeId, answer: reply.value });
-    
-    const nextId = typeof current.next === "function" ? current.next(reply.value) : current.next;
-    goTo(nextId);
-    return;
-  }
-  
-  // Si c'est du texte libre
-  if (reply.isText) {
-    addMessage({ from: "user", text: reply.label });
-    
-    const result = handleUserInput(reply.label);
-    
-    if (result.type === "greeting") {
-      const replyText = getRandomReply("salut");
-      botSay(replyText, { speed: 50, onComplete: () => goTo("start") });
-    }
-    else if (result.type === "reply") {
-      const replyText = getRandomReply(result.keyword);
-      botSay(replyText, { speed: 50, onComplete: () => {} });
-    }
-    else if (result.type === "flow") {
-      const replyText = getRandomReply(result.keyword);
-      
-      // Déterminer la prochaine étape
-      let nextNode = "start";
-      if (result.keyword === "electricite") nextNode = "elec_choice";
-      if (result.keyword === "metallerie") nextNode = "metal_choice";
-      if (result.keyword === "commerce") nextNode = "commerce_choice";
-      if (result.keyword === "gestion") nextNode = "result_bac_agora";
-      if (result.keyword === "accueil") nextNode = "result_bac_accueil";
-      if (result.keyword === "alternance") nextNode = "alternance_choice";
-      if (result.keyword === "cap_elec") nextNode = "result_cap_elec";
-      if (result.keyword === "cap_metal") nextNode = "result_cap_metallier";
-      if (result.keyword === "cap_commerce") nextNode = "result_cap_epc";
-      if (result.keyword === "bac_elec") nextNode = "result_bac_melec";
-      if (result.keyword === "bac_metal") nextNode = "result_bac_metallerie";
-      if (result.keyword === "bac_commerce") nextNode = "result_bac_commerce_vente";
-      if (result.keyword === "seconde_mrc") nextNode = "result_seconde_mrc";
-      
-      botSay(replyText, { speed: 50, onComplete: () => goTo(nextNode) });
-    }
-    else {
-      botSay(result.text, { speed: 50, onComplete: () => {} });
-    }
-  }
-}
-
-
-/* =========================
-   14) Actions spéciales
-   ========================= */
-function showAlternanceInfo() {
-  quickRepliesEl.style.display = "none";
-  addMessage({ from: "user", text: "ℹ️ C'est quoi l'alternance ?" });
-  botSay(ALTERNANCE_EXPLAIN, {
-    onComplete: () => {
-      // Après l'explication, remettre les boutons de résultat
-      const node = FLOW[state.nodeId];
-      if (node && node.result) {
-        setReplies([
-          { label: "🔁 Refaire le test", value: "__restart__" },
-          { label: "🧭 Voir toutes les formations", value: "__all__" },
-        ]);
+      if (node.replies && node.replies.length > 0) {
+        // S'il y a des boutons, on les affiche après l'effet d'écriture
+        botSay(botMessage, {
+          speed: 50,
+          onComplete: () => {
+            setReplies(node.replies);
+          }
+        });
+      } else {
+        // Pas de boutons (ex: start)
+        botSay(botMessage, {
+          speed: 50,
+          onComplete: () => { }
+        });
       }
     }
-  });
-}
 
-function showAllPrograms() {
-  quickRepliesEl.style.display = "none";
-  addMessage({ from: "user", text: "🧭 Voir toutes les formations" });
 
-  botSay("Voici toutes les formations proposées au lycée Aimé Césaire.", {
-    onComplete: () => {
-      const keys = Object.keys(PROGRAMS);
-      const html = `
+    /* =========================
+       13) Gestion des réponses utilisateur (CORRIGÉ)
+       ========================= */
+    function onUserAnswer(reply) {
+      quickRepliesEl.style.display = "none";
+
+      // Actions spéciales boutons
+      if (reply.value === "__restart__") {
+        restartFlow();
+        return;
+      }
+      if (reply.value === "__all__") {
+        showAllPrograms();
+        return;
+      }
+      if (reply.value === "back") {
+        addMessage({ from: "user", text: "🔙 Retour" });
+        goTo("start");
+        return;
+      }
+
+      // Si c'est un bouton normal
+      if (reply.value && !reply.isText) {
+        addMessage({ from: "user", text: reply.label });
+
+        const current = FLOW[state.nodeId];
+        state.history.push({ nodeId: state.nodeId, answer: reply.value });
+
+        const nextId = typeof current.next === "function" ? current.next(reply.value) : current.next;
+        goTo(nextId);
+        return;
+      }
+
+      // Si c'est du texte libre
+      if (reply.isText) {
+        addMessage({ from: "user", text: reply.label });
+
+        const result = handleUserInput(reply.label);
+
+        if (result.type === "greeting") {
+          const replyText = getRandomReply("salut");
+          botSay(replyText, { speed: 50, onComplete: () => goTo("start") });
+        }
+        else if (result.type === "reply") {
+          const replyText = getRandomReply(result.keyword);
+          botSay(replyText, { speed: 50, onComplete: () => { } });
+        }
+        else if (result.type === "flow") {
+          const replyText = getRandomReply(result.keyword);
+
+          // Déterminer la prochaine étape
+          let nextNode = "start";
+          if (result.keyword === "electricite") nextNode = "elec_choice";
+          if (result.keyword === "metallerie") nextNode = "metal_choice";
+          if (result.keyword === "commerce") nextNode = "commerce_choice";
+          if (result.keyword === "gestion") nextNode = "result_bac_agora";
+          if (result.keyword === "accueil") nextNode = "result_bac_accueil";
+          if (result.keyword === "alternance") nextNode = "alternance_choice";
+          if (result.keyword === "cap_elec") nextNode = "result_cap_elec";
+          if (result.keyword === "cap_metal") nextNode = "result_cap_metallier";
+          if (result.keyword === "cap_commerce") nextNode = "result_cap_epc";
+          if (result.keyword === "bac_elec") nextNode = "result_bac_melec";
+          if (result.keyword === "bac_metal") nextNode = "result_bac_metallerie";
+          if (result.keyword === "bac_commerce") nextNode = "result_bac_commerce_vente";
+          if (result.keyword === "seconde_mrc") nextNode = "result_seconde_mrc";
+
+          botSay(replyText, { speed: 50, onComplete: () => goTo(nextNode) });
+        }
+        else {
+          botSay(result.text, { speed: 50, onComplete: () => { } });
+        }
+      }
+    }
+
+
+    /* =========================
+       14) Actions spéciales
+       ========================= */
+    function showAlternanceInfo() {
+      quickRepliesEl.style.display = "none";
+      addMessage({ from: "user", text: "ℹ️ C'est quoi l'alternance ?" });
+      botSay(ALTERNANCE_EXPLAIN, {
+        onComplete: () => {
+          // Après l'explication, remettre les boutons de résultat
+          const node = FLOW[state.nodeId];
+          if (node && node.result) {
+            setReplies([
+              { label: "🔁 Refaire le test", value: "__restart__" },
+              { label: "🧭 Voir toutes les formations", value: "__all__" },
+            ]);
+          }
+        }
+      });
+    }
+
+    function showAllPrograms() {
+      quickRepliesEl.style.display = "none";
+      addMessage({ from: "user", text: "🧭 Voir toutes les formations" });
+
+      botSay("Voici toutes les formations proposées au lycée Aimé Césaire.", {
+        onComplete: () => {
+          const keys = Object.keys(PROGRAMS);
+          const html = `
         <div>
           <div style="margin-bottom:10px; font-weight:800;">Toutes les formations 👇</div>
           <div class="cards">
@@ -1635,191 +1778,192 @@ function showAllPrograms() {
         </div>
       `;
 
-      botSay(html, { 
-        html: true,
-        onComplete: () => {
-          setReplies([{ label: "🔁 Refaire le test", value: "__restart__" }]);
+          botSay(html, {
+            html: true,
+            onComplete: () => {
+              setReplies([{ label: "🔁 Refaire le test", value: "__restart__" }]);
+            }
+          });
         }
       });
     }
-  });
-}
 
 
-/* =========================
-   15) Restart + Intro (CORRIGÉ)
-   ========================= */
-function restartFlow() {
-  stopDemo();
-  messagesEl.innerHTML = "";
-  quickRepliesEl.style.display = "none";
-  state = { nodeId: "start", history: [] };
-  setStatus("Prêt");
-  
-  // Message d'intro aléatoire - AVEC EFFET D'ÉCRITURE
-  const startMessages = FLOW["start"].bot;
-  const randomMessage = Array.isArray(startMessages) 
-    ? startMessages[Math.floor(Math.random() * startMessages.length)]
-    : startMessages;
-  
-  // Utiliser botSay pour l'effet d'écriture
-  botSay(randomMessage, {
-    speed: 45,
-    onComplete: () => {
-      // PAS de boutons au démarrage
-      quickRepliesEl.innerHTML = "";
+    /* =========================
+       15) Restart + Intro (CORRIGÉ)
+       ========================= */
+    function restartFlow() {
+      stopDemo();
+      messagesEl.innerHTML = "";
+      quickRepliesEl.style.display = "none";
+      state = { nodeId: "start", history: [] };
+      setStatus("Prêt");
+
+      // Message d'intro aléatoire - AVEC EFFET D'ÉCRITURE
+      const startMessages = FLOW["start"].bot;
+      const randomMessage = Array.isArray(startMessages)
+        ? startMessages[Math.floor(Math.random() * startMessages.length)]
+        : startMessages;
+
+      // Utiliser botSay pour l'effet d'écriture
+      botSay(randomMessage, {
+        speed: 45,
+        onComplete: () => {
+          // PAS de boutons au démarrage
+          quickRepliesEl.innerHTML = "";
+        }
+      });
     }
-  });
-}
 
-function intro() {
-  quickRepliesEl.style.display = "none";
-  // Attendre un peu puis démarrer
-  setTimeout(() => {
-    restartFlow();
-  }, 300);
-}
-
-
-
-// Helper pour choisir un message aléatoire
-function getRandomArrayItem(arr) {
-  return arr[Math.floor(Math.random() * arr.length)];
-}
-
-/* =========================
-   16) INPUT TEXTE LIBRE (NOUVEAU)
-   ========================= */
-
-function addTextInput() {
-  // éviter doublon
-  if (document.querySelector(".text-input-container")) return;
-
-  // hôte fixe pour le composer
-  const host = document.getElementById("composerHost");
-  if (!host) return;
-
-  const container = document.createElement("div");
-  container.className = "text-input-container";
-  // ⚠️ plus besoin de style inline : tu as déjà le CSS .text-input-container
-  // (si tu veux garder un fallback, décommente ci-dessous)
-  /*
-  container.style.cssText = `
-    display:flex;
-    gap:10px;
-    padding: 8px 16px 12px 16px;
-    width:100%;
-    box-sizing:border-box;
-    position: sticky;
-    bottom: 0;
-    z-index: 300;
-    background: rgba(10,14,28,.75);
-    border-top: 1px solid rgba(255,255,255,.08);
-    backdrop-filter: blur(10px);
-  `;
-  */
-
-  const input = document.createElement("input");
-  input.type = "text";
-  input.placeholder = "Écris ta question ici... (électricité, commerce, CAP...)";
-  input.autocomplete = "off";
-  input.spellcheck = false;
-  input.setAttribute("aria-label", "Message");
-
-  const sendBtn = document.createElement("button");
-  sendBtn.type = "button";
-  sendBtn.textContent = "Envoyer";
-
-  function send() {
-    const v = input.value.trim();
-    if (!v) return;
-    onUserAnswer({ label: v, value: null, isText: true });
-    input.value = "";
-    input.focus();
-  }
-
-  sendBtn.onclick = send;
-
-  // ✅ Enter = envoyer (Shift+Enter = nouvelle ligne si tu passes l'input en textarea plus tard)
-  input.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      send();
+    function intro() {
+      quickRepliesEl.style.display = "none";
+      // Attendre un peu puis démarrer
+      setTimeout(() => {
+        restartFlow();
+      }, 300);
     }
-  });
 
-  container.appendChild(input);
-  container.appendChild(sendBtn);
 
-  // ✅ insertion stable tout en bas
-  host.appendChild(container);
-}
-/* =========================
-   17) Mode Démo
-   ========================= */
-function startDemo() {
-  stopDemo();
-  btnDemo.textContent = "⏸ Stop démo";
-  btnDemo.dataset.on = "1";
-  restartFlow();
 
-  const script = [
-    { wait: 1500, pickIndex: 0 }, // tech
-    { wait: 1500, pickIndex: 0 }, // CAP élec
-  ];
-
-  let i = 0;
-
-  function step() {
-    if (!btnDemo.dataset.on) return;
-
-    const node = FLOW[state.nodeId];
-    if (!node || !node.replies) return;
-
-    const idx = script[i]?.pickIndex ?? 0;
-    const r = node.replies[Math.min(idx, node.replies.length - 1)];
-    if (!r) return;
-
-    onUserAnswer(r);
-    i++;
-
-    if (i < script.length) {
-      demoTimer = setTimeout(step, script[i].wait);
+    // Helper pour choisir un message aléatoire
+    function getRandomArrayItem(arr) {
+      return arr[Math.floor(Math.random() * arr.length)];
     }
-  }
 
-  demoTimer = setTimeout(step, script[0].wait);
-}
+    /* =========================
+       16) INPUT TEXTE LIBRE (NOUVEAU)
+       ========================= */
 
-function stopDemo() {
-  if (demoTimer) clearTimeout(demoTimer);
-  demoTimer = null;
-  //btnDemo.textContent = "▶ Démo";
-  btnDemo.removeAttribute("data-on");
-}
+    function addTextInput() {
+      // éviter doublon
+      if (document.querySelector(".text-input-container")) return;
 
-/* =========================
-   18) Event Listeners
-   ========================= */
-btnRestart?.addEventListener("click", restartFlow);
-btnDemo?.addEventListener("click", () => {
-  if (btnDemo.dataset.on) stopDemo();
-  else startDemo();
-});
+      // hôte fixe pour le composer
+      const host = document.getElementById("composerHost");
+      if (!host) return;
 
-/* =========================
-   19) Lancement
-   ========================= */
-// Attendre que le DOM soit chargé
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", () => {
-    intro();
-    setTimeout(addTextInput, 200);
-  });
-} else {
-  intro();
-  setTimeout(addTextInput, 200);
-}
-</script>
+      const container = document.createElement("div");
+      container.className = "text-input-container";
+      // ⚠️ plus besoin de style inline : tu as déjà le CSS .text-input-container
+      // (si tu veux garder un fallback, décommente ci-dessous)
+      /*
+      container.style.cssText = `
+        display:flex;
+        gap:10px;
+        padding: 8px 16px 12px 16px;
+        width:100%;
+        box-sizing:border-box;
+        position: sticky;
+        bottom: 0;
+        z-index: 300;
+        background: rgba(10,14,28,.75);
+        border-top: 1px solid rgba(255,255,255,.08);
+        backdrop-filter: blur(10px);
+      `;
+      */
+
+      const input = document.createElement("input");
+      input.type = "text";
+      input.placeholder = "Écris ta question ici... (électricité, commerce, CAP...)";
+      input.autocomplete = "off";
+      input.spellcheck = false;
+      input.setAttribute("aria-label", "Message");
+
+      const sendBtn = document.createElement("button");
+      sendBtn.type = "button";
+      sendBtn.textContent = "Envoyer";
+
+      function send() {
+        const v = input.value.trim();
+        if (!v) return;
+        onUserAnswer({ label: v, value: null, isText: true });
+        input.value = "";
+        input.focus();
+      }
+
+      sendBtn.onclick = send;
+
+      // ✅ Enter = envoyer (Shift+Enter = nouvelle ligne si tu passes l'input en textarea plus tard)
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          send();
+        }
+      });
+
+      container.appendChild(input);
+      container.appendChild(sendBtn);
+
+      // ✅ insertion stable tout en bas
+      host.appendChild(container);
+    }
+    /* =========================
+       17) Mode Démo
+       ========================= */
+    function startDemo() {
+      stopDemo();
+      btnDemo.textContent = "⏸ Stop démo";
+      btnDemo.dataset.on = "1";
+      restartFlow();
+
+      const script = [
+        { wait: 1500, pickIndex: 0 }, // tech
+        { wait: 1500, pickIndex: 0 }, // CAP élec
+      ];
+
+      let i = 0;
+
+      function step() {
+        if (!btnDemo.dataset.on) return;
+
+        const node = FLOW[state.nodeId];
+        if (!node || !node.replies) return;
+
+        const idx = script[i]?.pickIndex ?? 0;
+        const r = node.replies[Math.min(idx, node.replies.length - 1)];
+        if (!r) return;
+
+        onUserAnswer(r);
+        i++;
+
+        if (i < script.length) {
+          demoTimer = setTimeout(step, script[i].wait);
+        }
+      }
+
+      demoTimer = setTimeout(step, script[0].wait);
+    }
+
+    function stopDemo() {
+      if (demoTimer) clearTimeout(demoTimer);
+      demoTimer = null;
+      //btnDemo.textContent = "▶ Démo";
+      btnDemo.removeAttribute("data-on");
+    }
+
+    /* =========================
+       18) Event Listeners
+       ========================= */
+    btnRestart?.addEventListener("click", restartFlow);
+    btnDemo?.addEventListener("click", () => {
+      if (btnDemo.dataset.on) stopDemo();
+      else startDemo();
+    });
+
+    /* =========================
+       19) Lancement
+       ========================= */
+    // Attendre que le DOM soit chargé
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", () => {
+        intro();
+        setTimeout(addTextInput, 200);
+      });
+    } else {
+      intro();
+      setTimeout(addTextInput, 200);
+    }
+  </script>
 </body>
+
 </html>
