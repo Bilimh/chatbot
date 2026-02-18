@@ -1,1387 +1,236 @@
 <!doctype html>
 <html lang="fr">
-
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Chatbot Orientation — Lycée Aimé Césaire</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>CésaireGPT — Accueil</title>
 
   <style>
-    :root {
-      --bg: #0b1020;
-      --panel: rgba(255, 255, 255, .06);
-      --panel2: rgba(255, 255, 255, .08);
-      --text: rgba(255, 255, 255, .92);
-      --muted: rgba(255, 255, 255, .65);
-      --accent: #7c3aed;
-      --accent2: #22c55e;
-      --danger: #ef4444;
-      --shadow: 0 18px 60px rgba(0, 0, 0, .45);
-      --radius: 18px;
+    :root{
+      --bg:#0b1020;
+      --panel:rgba(255,255,255,.06);
+      --text:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.65);
+      --accent:#7c3aed;
     }
 
-    * {
-      box-sizing: border-box
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto;
+      background:linear-gradient(180deg,#070a14,#0b1020);
+      color:var(--text);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      min-height:100vh;
+      padding:20px;
     }
 
-    html,
-    body {
-      height: 100%
+    .container{
+      max-width:600px;
+      width:100%;
+      text-align:center;
+      padding:30px 20px;
+      border-radius:20px;
+      background:var(--panel);
+      border:1px solid rgba(255,255,255,.1);
     }
 
-    body {
-      margin: 0;
-      color: var(--text);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      background:
-        radial-gradient(1200px 800px at 20% 10%, rgba(124, 58, 237, .35), transparent 60%),
-        radial-gradient(900px 600px at 90% 30%, rgba(34, 197, 94, .25), transparent 55%),
-        radial-gradient(800px 700px at 40% 90%, rgba(59, 130, 246, .20), transparent 55%),
-        linear-gradient(180deg, #070a14, #0b1020 60%, #070a14);
-      display: block;
-      /* important mobile */
-      padding: 0;
+    h1{
+      margin:0 0 10px 0;
+      font-size:22px;
     }
 
-    /* App full screen (mobile like ChatGPT) */
-    .app {
-      width: 100%;
-      height: 100dvh;
-      overflow: hidden;
-      display: grid;
-      grid-template-rows: 64px 1fr auto;
-      border: 0;
-      border-radius: 0;
-      box-shadow: none;
-      background: linear-gradient(180deg, rgba(255, 255, 255, .07), rgba(255, 255, 255, .04));
+    p{
+      margin:8px 0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.5;
     }
 
-    /* Header sticky */
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 200;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 16px;
-      border-bottom: 1px solid rgba(255, 255, 255, .10);
-      backdrop-filter: blur(10px);
-      background: rgba(10, 14, 28, .55);
+    .buttons{
+      margin-top:20px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
     }
 
-    .brand {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      min-width: 0;
+    .btn{
+      padding:12px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.15);
+      background:rgba(124,58,237,.2);
+      color:white;
+      text-decoration:none;
+      font-weight:bold;
+      cursor:pointer;
+      transition:.2s;
     }
 
-    .logo {
-      width: 40px;
-      height: 40px;
-      border-radius: 14px;
-      background:
-        radial-gradient(18px 18px at 30% 30%, rgba(255, 255, 255, .45), transparent 60%),
-        linear-gradient(135deg, rgba(124, 58, 237, .95), rgba(34, 197, 94, .8));
-      box-shadow: 0 10px 30px rgba(124, 58, 237, .22);
-      flex: 0 0 auto;
+    .btn:hover{
+      background:rgba(124,58,237,.35);
     }
 
-    .title {
-      display: flex;
-      flex-direction: column;
-      line-height: 1.1;
-      min-width: 0;
+    .btn.secondary{
+      background:rgba(255,255,255,.08);
     }
 
-    .title strong {
-      font-size: 14px;
-      letter-spacing: .2px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+/* MODALE */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.7);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+  backdrop-filter:blur(6px);
+}
 
-    .title span {
-      font-size: 12px;
-      color: var(--muted);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+.modal-content{
+  background:linear-gradient(180deg,#11182e,#0f1426);
+  padding:30px 25px;
+  border-radius:22px;
+  max-width:500px;
+  width:100%;
+  border:1px solid rgba(255,255,255,.1);
+  animation:fadeIn .3s ease;
+}
 
-    .header-actions {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
+@keyframes fadeIn{
+  from{opacity:0; transform:scale(.95);}
+  to{opacity:1; transform:scale(1);}
+}
 
-    .chip {
-      font-size: 12px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, .14);
-      background: rgba(255, 255, 255, .05);
-      color: var(--muted);
-    }
+.modal-content h2{
+  margin-top:0;
+  text-align:center;
+  font-size:20px;
+  margin-bottom:20px;
+}
 
-    /* Main scroll area */
-    main {
-      padding: 16px;
-      overflow-y: auto;
-      overflow-x: hidden;
-      scroll-behavior: smooth;
-      height: 100%;
-      /* espace pour quick replies + input sticky */
-      padding-bottom: 140px;
-    }
+.team-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:12px;
+}
 
-    /* Messages container */
-    .messages {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      width: 100%;
-      margin: 0;
-      max-width: none;
-    }
+.member{
+  padding:14px;
+  border-radius:14px;
+  background:rgba(124,58,237,.15);
+  border:1px solid rgba(124,58,237,.4);
+  font-weight:600;
+  font-size:15px;
+  text-align:center;
+  transition:.2s;
+}
 
-    .row {
-      display: flex;
-      gap: 10px;
-      align-items: flex-end;
-      width: 100%;
-      animation: fadeIn .25s ease;
-    }
+.member:hover{
+  background:rgba(124,58,237,.25);
+  transform:translateY(-2px);
+}
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(10px)
-      }
+.member span{
+  display:block;
+  font-size:12px;
+  color:rgba(255,255,255,.6);
+  font-weight:400;
+  margin-top:4px;
+}
 
-      to {
-        opacity: 1;
-        transform: translateY(0)
-      }
-    }
+.close{
+  margin-top:20px;
+  text-align:center;
+  cursor:pointer;
+  font-weight:bold;
+  color:rgba(255,255,255,.6);
+}
 
-    .row.bot {
-      justify-content: flex-start;
-    }
-
-    .row.user {
-      justify-content: flex-end;
-    }
-
-    /* Avatar hidden on mobile (optionnel) */
-    .avatar {
-      width: 34px;
-      height: 34px;
-      border-radius: 12px;
-      background: rgba(255, 255, 255, .08);
-      border: 1px solid rgba(255, 255, 255, .12);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      flex: 0 0 auto;
-    }
-
-    /* Bubble: full width on mobile */
-    .bubble {
-      width: 100%;
-      max-width: 100%;
-      padding: 12px 14px;
-      border-radius: var(--radius);
-      border: 1px solid rgba(255, 255, 255, .12);
-      background: rgba(255, 255, 255, .06);
-      box-shadow: 0 10px 26px rgba(0, 0, 0, .16);
-      line-height: 1.45;
-      font-size: 14px;
-      white-space: pre-wrap;
-      word-break: break-word;
-    }
-
-    .row.user .bubble {
-      background: linear-gradient(135deg, rgba(124, 58, 237, .30), rgba(124, 58, 237, .16));
-      border-color: rgba(124, 58, 237, .45);
-    }
-
-    .meta {
-      font-size: 11px;
-      color: rgba(255, 255, 255, .55);
-      margin: 0 6px;
-      white-space: nowrap;
-      display: none;
-    }
-
-    /* Cards */
-    .cards {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-      margin-top: 10px;
-    }
-
-    @media (min-width:640px) {
-      .cards {
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      }
-    }
-
-    .card {
-      border: 1px solid rgba(255, 255, 255, .12);
-      background: rgba(255, 255, 255, .05);
-      border-radius: 18px;
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      transition: transform .2s ease, border-color .2s ease;
-    }
-
-    .card:hover {
-      border-color: rgba(124, 58, 237, .4);
-      transform: translateY(-2px);
-    }
-
-    .card h3 {
-      margin: 0;
-      font-size: 15px;
-      letter-spacing: .2px;
-      font-weight: 700;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, .14);
-      background: rgba(255, 255, 255, .06);
-      width: fit-content;
-      color: var(--muted);
-    }
-
-    .card p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.45;
-    }
-
-    .card .actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 4px;
-    }
-
-    .link {
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 12px;
-      border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, .14);
-      background: rgba(255, 255, 255, .06);
-      color: var(--text);
-      font-weight: 600;
-      font-size: 12px;
-      transition: all .2s ease;
-    }
-
-    .link:hover {
-      background: rgba(255, 255, 255, .12);
-      border-color: rgba(255, 255, 255, .25);
-    }
-
-    /* Quick replies + composer host (bottom area) */
-    #composerHost {
-      position: sticky;
-      bottom: 0;
-      z-index: 250;
-      background: rgba(10, 14, 28, .75);
-      backdrop-filter: blur(10px);
-      border-top: 1px solid rgba(255, 255, 255, .10);
-    }
-
-    .quick-replies {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: center;
-      padding: 10px 14px 0 14px;
-      max-width: 980px;
-      margin: 0 auto;
-    }
-
-    .qr {
-      cursor: pointer;
-      border: 1px solid rgba(255, 255, 255, .14);
-      background: rgba(255, 255, 255, .06);
-      color: var(--text);
-      padding: 10px 14px;
-      border-radius: 999px;
-      font-weight: 600;
-      font-size: 13px;
-      transition: all .15s ease;
-      user-select: none;
-    }
-
-    .qr:hover {
-      background: rgba(255, 255, 255, .12);
-      border-color: rgba(255, 255, 255, .25);
-      transform: translateY(-1px);
-    }
-
-    .qr:active {
-      transform: translateY(1px);
-    }
-
-    .qr.accent {
-      border-color: rgba(124, 58, 237, .55);
-      background: rgba(124, 58, 237, .2);
-    }
-
-    .qr.good {
-      border-color: rgba(34, 197, 94, .55);
-      background: rgba(34, 197, 94, .14);
-    }
-
-    .qr.warn {
-      border-color: rgba(239, 68, 68, .55);
-      background: rgba(239, 68, 68, .12);
-    }
-
-    /* Composer (text input) */
-    .text-input-container {
-      display: flex;
-      gap: 10px;
-      padding: 10px 14px 14px 14px;
-      width: 100%;
-      max-width: 980px;
-      margin: 0 auto;
-      box-sizing: border-box;
-    }
-
-    .text-input-container input {
-      flex: 1;
-      padding: 12px 18px;
-      border-radius: 30px;
-      border: 1px solid rgba(255, 255, 255, .15);
-      background: rgba(255, 255, 255, .07);
-      color: white;
-      font-size: 14px;
-      outline: none;
-      transition: all .2s ease;
-    }
-
-    .text-input-container input:focus {
-      border-color: var(--accent);
-      background: rgba(255, 255, 255, .10);
-      box-shadow: 0 0 0 3px rgba(124, 58, 237, .2);
-    }
-
-    .text-input-container input::placeholder {
-      color: rgba(255, 255, 255, .5);
-    }
-
-    .text-input-container button {
-      padding: 12px 18px;
-      border-radius: 30px;
-      border: none;
-      background: linear-gradient(135deg, var(--accent), #9f67ff);
-      color: white;
-      font-weight: 600;
-      font-size: 14px;
-      cursor: pointer;
-      transition: all .2s ease;
-      white-space: nowrap;
-      box-shadow: 0 4px 12px rgba(124, 58, 237, .3);
-    }
-
-    .text-input-container button:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 8px 16px rgba(124, 58, 237, .4);
-    }
-
-    .text-input-container button:active {
-      transform: translateY(1px);
-    }
-
-    /* Typing indicator */
-    .typing {
-      display: inline-flex;
-      gap: 6px;
-      align-items: center;
-    }
-
-    .dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, .65);
-      animation: bounce 1s infinite ease-in-out;
-    }
-
-    .dot:nth-child(2) {
-      animation-delay: .15s;
-    }
-
-    .dot:nth-child(3) {
-      animation-delay: .30s;
-    }
-
-    @keyframes bounce {
-
-      0%,
-      80%,
-      100% {
-        transform: translateY(0);
-        opacity: .6;
-      }
-
-      40% {
-        transform: translateY(-6px);
-        opacity: 1;
-      }
-    }
-
-    /* Links in header title */
-    a {
-      text-decoration: none;
-      color: white;
-    }
-
-    /* Scrollbar */
-    ::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: rgba(255, 255, 255, .03);
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, .15);
-      border-radius: 10px;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-      background: rgba(255, 255, 255, .25);
-    }
-
-    /* Desktop refinements */
-    @media (min-width: 768px) {
-      .messages {
-        max-width: 820px;
-        margin: 0 auto;
-      }
-
-      .bubble {
-        width: auto;
-        max-width: 75%;
-      }
-
-      .row.user .bubble {
-        width: fit-content;
-        max-width: 80%;
-        margin-left: auto;
-        /* pousse à droite */
-      }
-    }
-
-    /* Small screens tweaks */
-    @media (max-width: 600px) {
-      .chip {
-        display: none;
-      }
-
-      main {
-        padding: 14px;
-        padding-bottom: 150px;
-      }
-
-      .text-input-container button {
-        padding: 12px 16px;
-      }
-
-      .text-input-container input {
-        font-size: 16px;
-      }
-
-      .row.user .bubble {
-        width: fit-content;
-        max-width: 80%;
-        margin-left: auto;
-        /* pousse à droite */
-      }
-    }
+.close:hover{
+  color:white;
+}
   </style>
 </head>
 
 <body>
-  <div class="app" role="application" aria-label="Chatbot orientation">
-    <header>
-      <div class="brand">
-        <div class="logo" aria-hidden="true"></div>
-        <div class="title">
-          <strong><a href="./index.html">CésaireGPT</a></strong>
-          <span>Découvrir les métiers et formations en 2 minutes</span>
+
+  <div class="container">
+    <h1>🤖 CésaireGPT</h1>
+
+    <p>
+      CésaireGPT t’aide à découvrir les formations du lycée Aimé Césaire.
+    </p>
+    
+    <p>
+      En quelques secondes, tu peux voir les métiers, la durée, et ce que tu vas apprendre.
+    </p>
+    
+    <p>
+      Projet réalisé par des élèves du lycée, dans le cadre du dispositif <strong>ACCORDS</strong>
+      
+    </p>
+
+    <div class="buttons">
+      <a href="/home.html" class="btn">🚀 Ouvrir le chatbot</a>
+      <button class="btn secondary" onclick="openModal()">👥 Voir l’équipe</button>
+    </div>
+  </div>
+
+  <div class="modal" id="teamModal">
+    <div class="modal-content">
+      <h2>👥 Équipe CésaireGPT</h2>
+  
+      <div class="team-grid">
+        <div class="member">
+          BANGOURA Mohamed
+          <span>CAP EPC</span>
+        </div>
+  
+        <div class="member">
+          ASSADI Merhan
+          <span>CAP EPC</span>
+        </div>
+  
+        <div class="member">
+          FERREIRA Adriel
+          <span>CAP EPC</span>
+        </div>
+  
+        <div class="member">
+        LWABOSHI MALABU Liza
+          <span>CAP EPC</span>
+        </div>
+        <div class="member">
+            EL OUALI Ryad
+              <span>2 MRC 2</span>
+        </div>
+        <div class="member">
+            DANEL Aurélien
+              <span>2 MRC 2</span>
         </div>
       </div>
-
-      <div class="header-actions">
-        <span class="chip" id="statusChip">Prêt</span>
-        <span id="btnDemo" type="button" title="Mode démo (auto)"></span>
-      </div>
-    </header>
-
-    <!-- ✅ Zone scroll UNIQUEMENT pour les messages -->
-    <main id="main">
-      <div class="messages" id="messages"></div>
-    </main>
-
-    <!-- ✅ Zone fixe en bas : quick replies + input -->
-    <div id="composerHost">
-      <div id="quickReplies" class="quick-replies"></div>
-      <!-- addTextInput() viendra ajouter .text-input-container ici -->
+  
+      <div class="close" onclick="closeModal()">Fermer</div>
     </div>
   </div>
   <script>
-    /* =========================
-       0) Sélecteurs DOM
-       ========================= */
-    const messagesEl = document.getElementById("messages");
-    const quickRepliesEl = document.getElementById("quickReplies");
-    const mainEl = document.getElementById("main");
-    const statusChip = document.getElementById("statusChip");
-    const btnRestart = document.getElementById("btnRestart");
-    const btnDemo = document.getElementById("btnDemo");
-  
-    /* =========================
-       1) CONTENU : formations
-       ========================= */
-    const PROGRAMS = {
-      // ===== Initiale =====
-      cap_elec: {
-        title: "CAP Électricien / Électricienne",
-        pitch: "Installer, entretenir et dépanner des systèmes électriques pour assurer l’énergie et la sécurité des bâtiments.",
-        duration: "2 ans",
-        learn: ["Lire un plan", "Poser des câbles", "Brancher", "Réparer une panne"],
-        jobs: ["Électricien(ne)", "Monteur(se) électricien(ne)", "Technicien(ne)"],
-        next: "Après : Bac Pro MELEC possible.",
-        pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/cap-electricien/",
-        mode: "initiale",
-        family: "électricité",
-      },
-  
-      bac_melec: {
-        title: "Bac Pro MELEC",
-        pitch: "Concevoir, installer et maintenir des systèmes électriques performants pour les bâtiments et les environnements connectés.",
-        duration: "3 ans après la 3e",
-        learn: ["Installer", "Raccorder", "Tester / régler", "Maintenance", "Connecté"],
-        jobs: [
-          "Technicien(ne) électricien(ne)",
-          "Électricien(ne) qualifié(e)",
-          "Installateur(trice) domotique",
-        ],
-        next: "Après : BTS possible.",
-        pageUrl:
-          "https://lp-aime-cesaire-lille.59.ac-lille.fr/bac-pro-metier-de-lelectricite-et-de-ses-environnements-connectes/",
-        mode: "initiale",
-        family: "électricité",
-      },
-  
-      cap_metallier: {
-        title: "CAP Serrurier / Métallier",
-        pitch: "Concevoir, fabriquer et poser des éléments métalliques pour les bâtiments et aménagements.",
-        duration: "2 ans",
-        learn: ["Lire un plan", "Découper", "Assembler / souder", "Poser"],
-        jobs: ["Métallier(ère)", "Serrurier(ère)", "Monteur(se)"],
-        next: "Après : Bac Pro Métallerie possible.",
-        pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/cap-serrurier-metallier/",
-        mode: "initiale",
-        family: "bâtiment",
-      },
-  
-      bac_metallerie: {
-        title: "Bac Pro Métallerie",
-        pitch: "Fabriquer, assembler et poser des structures métalliques pour le bâtiment (portes, garde-corps, escaliers…) en atelier et sur chantier.",
-        duration: "3 ans après la 3e",
-        learn: ["Préparer un plan", "Façonner", "Assembler / souder", "Installer", "Contrôler"],
-        jobs: ["Métallier(ère)", "Serrurier(ère)", "Charpentier(ère) métal"],
-        next: "Après : BTS possible.",
-        pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/bac-pro-ouvrages-du-batiment-metallerie/",
-        mode: "initiale",
-        family: "bâtiment",
-      },
-  
-      cap_epc: {
-        title: "CAP Équipier Polyvalent du Commerce",
-        pitch: "Accueillir les clients, participer aux ventes et mettre en valeur les produits en magasin.",
-        duration: "2 ans",
-        learn: ["Accueillir", "Vendre / conseiller", "Mettre en rayon", "Encaisser"],
-        jobs: ["Employé(e) de commerce", "Vendeur(se)", "Équipier(ère)"],
-        next: "Après : Bac Pro Commerce/Vente possible.",
-        pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/cap-equipier-polyvalent-du-commerce/",
-        mode: "initiale",
-        family: "commerce",
-      },
-  
-      seconde_mrc: {
-        title: "2nde Pro MRC",
-        pitch: "Découvrir et apprendre les compétences clés du contact client, de la communication et du conseil en vente.",
-        duration: "1 an",
-        learn: ["Accueillir", "Conseiller", "Communiquer", "Fidéliser"],
-        jobs: ["Conseiller(ère) clientèle", "Vendeur(se)", "Assistant(e) commercial(e)"],
-        next: "Après : 1re Accueil ou Commerce/Vente.",
-        pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/2nde-bac-pro-metiers-de-ma-relation-clientele-mrc/",
-        mode: "initiale",
-        family: "commerce",
-      },
-  
-      bac_agora: {
-        title: "2nde GATL → Bac Pro AGOrA",
-        pitch: "En 2nde, tu découvres la Gestion, l’Administration, le Transport et la Logistique (GATL). Ensuite, tu te spécialises en AGOrA (Assistance à la Gestion des Organisations et de leurs Activités).",
-        duration: "3 ans après la 3e",
-        learn: ["Découvrir GATL", "Gérer des dossiers", "Outils numériques", "Organisation"],
-        jobs: ["Assistant(e) administratif(ve)", "Agent de gestion", "Employé(e) logistique"],
-        next: "Après la 2nde GATL : AGOrA (au lycée A. Césaire).",
-        pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/bac-pro-gestion-administration-transport-logistique/",
-        mode: "initiale",
-        family: "gestion-administration",
-      },
-  
-      bac_accueil: {
-        title: "Bac Pro Métiers de l'Accueil",
-        badge: "🙂 Initiale — Accueil",
-        pitch: "Accueillir, informer, orienter et gérer des situations usagers/clients en face à face ou à distance.",
-        duration: "3 ans (entrée en 1re après 2nde MRC ou GATL)",
-        learn: ["Accueillir", "Téléphone / mail", "Orienter", "Gérer des situations"],
-        jobs: ["Agent d'accueil", "Chargé(e) d'accueil", "Hôte / Hôtesse"],
-        next: "Après : BTS ou insertion pro.",
-        pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/bac-pro-metiers-de-laccueil/",
-        mode: "initiale",
-        family: "tertiaire",
-      },
-  
-      bac_commerce: {
-        title: "Bac Pro Métiers du Commerce et de la Vente",
-        badge: "🛍️ Initiale — Commerce",
-        pitch: "Conseiller, vendre et développer la relation client en magasin ou en entreprise.",
-        duration: "3 ans après la 3e",
-        learn: ["Conseiller", "Vendre", "Mettre en rayon", "Gérer un rayon", "Objectifs"],
-        jobs: ["Vendeur(se)", "Conseiller(ère) clientèle", "Employé(e) commercial(e)"],
-        next: "Après : BTS MCO / NDRC ou insertion pro.",
-        pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/bac-pro-metiers-du-commerce-et-de-la-vente/",
-        mode: "initiale",
-        family: "commerce",
-      },
-  
-      // ===== Alternance =====
-      alt_commerce: {
-        title: "Commerce en alternance",
-        badge: "🔁 Alternance — Commerce",
-        pitch: "Suivre une formation commerciale en alternance entre l’école et l’entreprise pour apprendre en pratiquant.",
-        duration: "Selon contrat",
-        learn: ["Vendre en vrai", "Aider les clients", "Missions en magasin"],
-        jobs: ["Vendeur(se)", "Assistant(e) commercial(e)", "Conseiller(ère) clientèle"],
-        next: "CAP / Bac Pro possible selon entreprise.",
-        pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/metiers-du-commerce-en-alternance/",
-        mode: "alternance",
-        family: "commerce",
-      },
-  
-      alt_elec: {
-        title: "Électricité en alternance",
-        badge: "🔁 Alternance — Électricité",
-        pitch: "Apprendre le métier d’électricien en alternant cours au lycée et travail dans une entreprise.",
-        duration: "Selon contrat",
-        learn: ["Installer", "Câbler", "Dépanner", "Sécurité"],
-        jobs: ["Électricien(ne)", "Technicien(ne)", "Monteur(se)"],
-        next: "CAP / Bac Pro possible selon entreprise.",
-        pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/les-metiers-de-lelectricite/",
-        mode: "alternance",
-        family: "électricité",
-      },
-  
-      alt_metallerie: {
-        title: "Métallerie en alternance",
-        badge: "🔁 Alternance — Métallerie",
-        pitch: "Découvrir les métiers de la métallerie en alternant formation au lycée et missions en entreprise.",
-        duration: "Selon contrat",
-        learn: ["Découper", "Assembler", "Souder", "Poser"],
-        jobs: ["Métallier(ère)", "Serrurier(ère)", "Monteur(se)"],
-        next: "CAP / Bac Pro possible selon entreprise.",
-        pageUrl: "https://lp-aime-cesaire-lille.59.ac-lille.fr/les-metiers-de-la-metallerie/",
-        mode: "alternance",
-        family: "bâtiment",
-      },
-    };
-  
-    /* =========================
-       2) Texte "C'est quoi l'alternance ?"
-       ========================= */
-    const ALTERNANCE_EXPLAIN = [
-      "🔄 L'alternance, c'est apprendre un métier en travaillant.",
-      "",
-      "👉 Une partie du temps au lycée",
-      "👉 Une partie du temps en entreprise",
-      "",
-      "✅ Tu apprends sur le terrain",
-      "✅ Tu gagnes de l'expérience",
-      "✅ Tu peux être rémunéré(e) selon le contrat",
-    ].join("\n");
-  
-    /* =========================
-       3) Mots-clés (réponses)
-       ========================= */
-    const KEYWORDS = {
-      salut: {
-        replies: [
-          "Salut 👋 Bienvenue au lycée Aimé Césaire !",
-          "Bonjour ! Je suis là pour t'orienter 😊",
-          "Hey ! Prêt(e) à découvrir nos formations ?",
-          "Salut ! Je suis le chatbot d'orientation du lycée.",
-        ],
-        next: "start",
-        isGreeting: true,
-      },
-      merci: {
-        replies: ["Avec plaisir ! 👋", "De rien ! 😊", "Service ! 🚀", "👍 Bonne continuation !"],
-        next: null,
-      },
-      aurevoir: {
-        replies: ["À bientôt ! 👋", "Salut ! Bonne continuation 🚀", "Bye ! 😊", "Bonne journée !"],
-        next: null,
-      },
-      aide: {
-        replies: [
-          "🤖 Dis-moi un domaine : électricité, métallerie, commerce, gestion, accueil, alternance.",
-          "💡 Exemple : CAP commerce / Bac pro MELEC / alternance électricité.",
-        ],
-        next: "start",
-      },
-  
-      // Domaines
-      electricite: { replies: ["🔌 L'électricité, top ! CAP, Bac Pro MELEC ou alternance ?"], next: "elec_choice" },
-      metallerie: { replies: ["🧱 Métallerie : CAP, Bac Pro ou alternance ?"], next: "metal_choice" },
-      commerce: { replies: ["🛍️ Commerce : CAP, 2nde MRC, Bac Pro ou alternance ?"], next: "commerce_choice" },
-      gestion: { replies: ["📁 Gestion : 2nde GATL puis Bac Pro AGOrA."], next: "result_bac_agora" },
-      accueil: { replies: ["🙂 Accueil : Bac Pro Métiers de l’Accueil."], next: "result_bac_accueil" },
-      alternance: { replies: ["🔄 Alternance : électricité, métallerie ou commerce ?"], next: "alternance_choice" },
-  
-      // Ciblés
-      cap_elec: { replies: ["🎓 CAP Électricien : 2 ans."], next: "result_cap_elec" },
-      cap_metal: { replies: ["🎓 CAP Métallier : 2 ans."], next: "result_cap_metallier" },
-      cap_commerce: { replies: ["🎓 CAP Commerce : 2 ans."], next: "result_cap_epc" },
-      bac_elec: { replies: ["📈 Bac Pro MELEC : 3 ans."], next: "result_bac_melec" },
-      bac_metal: { replies: ["📈 Bac Pro Métallerie : 3 ans."], next: "result_bac_metallerie" },
-      bac_commerce: { replies: ["📈 Bac Pro Commerce/Vente : 3 ans."], next: "result_bac_commerce" },
-    };
-  
-    /* =========================
-       4) FLOW
-       ========================= */
-    const FLOW = {
-      start: {
-        bot: [
-          "Salut 👋 Je suis le chatbot d'orientation du lycée Aimé Césaire.\nConçu par des élèves, pour les futurs élèves.\n\nDis-moi ce qui t'intéresse : électricité, métallerie, commerce, gestion, accueil, alternance…",
-        ],
-        replies: [],
-      },
-  
-      elec_choice: {
-        bot: "🔌 Électricité : CAP, Bac Pro ou alternance ?",
-        replies: [
-          { label: "🎓 CAP Électricien", value: "cap_elec" },
-          { label: "📈 Bac Pro MELEC", value: "bac_melec" },
-          { label: "🔄 Alternance", value: "alt_elec" },
-        ],
-        next: (ans) => {
-          if (ans === "cap_elec") return "result_cap_elec";
-          if (ans === "bac_melec") return "result_bac_melec";
-          if (ans === "alt_elec") return "result_alt_elec";
-          return "start";
-        },
-      },
-  
-      metal_choice: {
-        bot: "🧱 Métallerie : CAP, Bac Pro ou alternance ?",
-        replies: [
-          { label: "🎓 CAP Métallier", value: "cap_metal" },
-          { label: "📈 Bac Pro Métallerie", value: "bac_metal" },
-          { label: "🔄 Alternance", value: "alt_metal" },
-        ],
-        next: (ans) => {
-          if (ans === "cap_metal") return "result_cap_metallier";
-          if (ans === "bac_metal") return "result_bac_metallerie";
-          if (ans === "alt_metal") return "result_alt_metallerie";
-          return "start";
-        },
-      },
-  
-      commerce_choice: {
-        bot: "🛍️ Commerce : quelle voie ?",
-        replies: [
-          { label: "🎓 CAP Équipier Polyvalent", value: "cap_commerce" },
-          { label: "🧭 2nde MRC (découverte)", value: "seconde_mrc" },
-          { label: "📈 Bac Pro Commerce/Vente", value: "bac_commerce" },
-          { label: "🔄 Alternance", value: "alt_commerce" },
-        ],
-        next: (ans) => {
-          if (ans === "cap_commerce") return "result_cap_epc";
-          if (ans === "seconde_mrc") return "result_seconde_mrc";
-          if (ans === "bac_commerce") return "result_bac_commerce";
-          if (ans === "alt_commerce") return "result_alt_commerce";
-          return "start";
-        },
-      },
-  
-      alternance_choice: {
-        bot: "🔄 Alternance : tu veux quel secteur ?",
-        replies: [
-          { label: "⚡ Électricité", value: "alt_elec" },
-          { label: "🧱 Métallerie", value: "alt_metal" },
-          { label: "🛍️ Commerce", value: "alt_commerce" },
-        ],
-        next: (ans) => {
-          if (ans === "alt_elec") return "result_alt_elec";
-          if (ans === "alt_metal") return "result_alt_metallerie";
-          if (ans === "alt_commerce") return "result_alt_commerce";
-          return "start";
-        },
-      },
-  
-      // ----- RÉSULTATS -----
-      result_cap_elec: { result: ["cap_elec"] },
-      result_bac_melec: { result: ["bac_melec"] },
-      result_cap_metallier: { result: ["cap_metallier"] },
-      result_bac_metallerie: { result: ["bac_metallerie"] },
-      result_cap_epc: { result: ["cap_epc"] },
-      result_seconde_mrc: { result: ["seconde_mrc"] },
-      result_bac_commerce: { result: ["bac_commerce"] },
-      result_bac_agora: { result: ["bac_agora"] },
-      result_bac_accueil: { result: ["bac_accueil"] },
-      result_alt_commerce: { result: ["alt_commerce"] },
-      result_alt_elec: { result: ["alt_elec"] },
-      result_alt_metallerie: { result: ["alt_metallerie"] },
-    };
-  
-    /* =========================
-       5) État
-       ========================= */
-    let state = { nodeId: "start", history: [], intent: null, altInfoShown: false };
-    let demoTimer = null;
-  
-    function nowTime() {
-      const d = new Date();
-      return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    function openModal(){
+      document.getElementById("teamModal").style.display="flex";
     }
-    function scrollToBottom() {
-      mainEl.scrollTop = mainEl.scrollHeight;
+
+    function closeModal(){
+      document.getElementById("teamModal").style.display="none";
     }
-    function setStatus(text) {
-      if (statusChip) statusChip.textContent = text;
-    }
-  
-    /* =========================
-       6) UI messages
-       ========================= */
-    function addMessage({ from, text, html }) {
-      const row = document.createElement("div");
-      row.className = "row " + (from === "bot" ? "bot" : "user");
-  
-      const bubble = document.createElement("div");
-      bubble.className = "bubble";
-      if (html) bubble.innerHTML = html;
-      else bubble.textContent = text;
-  
-      const meta = document.createElement("div");
-      meta.className = "meta";
-      meta.textContent = nowTime();
-  
-      if (from === "user") {
-        row.appendChild(meta);
-        row.appendChild(bubble);
-      } else {
-        row.appendChild(bubble);
-        row.appendChild(meta);
+
+    window.onclick=function(e){
+      const modal=document.getElementById("teamModal");
+      if(e.target===modal){
+        modal.style.display="none";
       }
-  
-      messagesEl.appendChild(row);
-      scrollToBottom();
-    }
-  
-    function addTyping() {
-      const row = document.createElement("div");
-      row.className = "row bot";
-      row.dataset.typing = "1";
-      const bubble = document.createElement("div");
-      bubble.className = "bubble";
-      bubble.innerHTML = `<span class="typing" aria-label="Le bot écrit"><span class="dot"></span><span class="dot"></span><span class="dot"></span></span>`;
-      row.appendChild(bubble);
-      messagesEl.appendChild(row);
-      scrollToBottom();
-    }
-    function removeTyping() {
-      const t = messagesEl.querySelector('[data-typing="1"]');
-      if (t) t.remove();
-    }
-  
-    /* =========================
-       7) Typewriter
-       ========================= */
-    function escapeHtml(str) {
-      return String(str)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-    }
-  
-    function typewriterMessage(text, { speed = 45, onComplete } = {}) {
-      setStatus("Écrit…");
-      quickRepliesEl.style.display = "none";
-  
-      const row = document.createElement("div");
-      row.className = "row bot";
-  
-      const bubble = document.createElement("div");
-      bubble.className = "bubble";
-      bubble.textContent = "";
-  
-      const meta = document.createElement("div");
-      meta.className = "meta";
-      meta.textContent = nowTime();
-  
-      row.appendChild(bubble);
-      row.appendChild(meta);
-      messagesEl.appendChild(row);
-      scrollToBottom();
-  
-      const safe = escapeHtml(text);
-      const parts = safe.split(/(\s+)/);
-      let i = 0;
-  
-      const timer = setInterval(() => {
-        bubble.innerHTML += parts[i] ?? "";
-        i++;
-        scrollToBottom();
-        if (i >= parts.length) {
-          clearInterval(timer);
-          setStatus("Prêt");
-          quickRepliesEl.style.display = "flex";
-          if (onComplete) onComplete();
-        }
-      }, speed);
-    }
-  
-    function botSay(textOrHtml, { html = false, speed = 45, onComplete } = {}) {
-      if (html) {
-        setStatus("Répond…");
-        quickRepliesEl.style.display = "none";
-        addTyping();
-        setTimeout(() => {
-          removeTyping();
-          addMessage({ from: "bot", html: textOrHtml });
-          setStatus("Prêt");
-          quickRepliesEl.style.display = "flex";
-          if (onComplete) onComplete();
-        }, 250);
-        return;
-      }
-  
-      quickRepliesEl.style.display = "none";
-      addTyping();
-      setTimeout(() => {
-        removeTyping();
-        typewriterMessage(textOrHtml, { speed, onComplete });
-      }, 220);
-    }
-  
-    function getRandomReply(keyword) {
-      const k = KEYWORDS[keyword];
-      if (!k || !k.replies || !k.replies.length) return null;
-      return k.replies[Math.floor(Math.random() * k.replies.length)];
-    }
-  
-    function getRandomArrayItem(arr) {
-      return arr[Math.floor(Math.random() * arr.length)];
-    }
-  
-    /* =========================
-       8) Texte libre (avec intent CAP/BAC)
-       ========================= */
-    function handleUserInput(inputText) {
-      const text = inputText.toLowerCase().trim();
-      if (!text) return null;
-  
-      // salutations / base
-      if (text.includes("salut") || text.includes("bonjour") || text.includes("hello") || text === "bjr" || text === "slt") {
-        return { type: "greeting", keyword: "salut" };
-      }
-      if (text.includes("merci") || text.includes("thanks") || text.includes("thank")) {
-        return { type: "reply", keyword: "merci" };
-      }
-      if (text.includes("au revoir") || text.includes("bye") || text.includes("ciao") || text.includes("a+") || text.includes("à plus")) {
-        return { type: "reply", keyword: "aurevoir" };
-      }
-      if (text.includes("aide") || text.includes("help")) {
-        return { type: "reply", keyword: "aide" };
-      }
-  
-      // intent cap/bac (si l'élève tape juste "cap" ou "bac")
-      if (text === "cap") {
-        state.intent = "cap";
-        return {
-          type: "unknown",
-          text: "🎓 CAP dans quel domaine ?\n• Électricité\n• Métallerie\n• Commerce",
-        };
-      }
-      if (text === "bac" || text === "bac pro" || text === "bacpro") {
-        state.intent = "bac";
-        return {
-          type: "unknown",
-          text: "📈 Bac Pro dans quel domaine ?\n• Électricité\n• Métallerie\n• Commerce/Vente\n• Gestion\n• Accueil",
-        };
-      }
-  
-      // si intent posée, et l'élève tape juste le domaine -> on va DIRECT
-      if (state.intent === "cap") {
-        if (text.includes("commerce") || text.includes("vente")) { state.intent = null; return { type: "flow", keyword: "cap_commerce" }; }
-        if (text.includes("electricite") || text.includes("elec") || text.includes("électricité")) { state.intent = null; return { type: "flow", keyword: "cap_elec" }; }
-        if (text.includes("metallerie") || text.includes("metal") || text.includes("métal") || text.includes("métallerie")) { state.intent = null; return { type: "flow", keyword: "cap_metal" }; }
-      }
-      if (state.intent === "bac") {
-        if (text.includes("commerce") || text.includes("vente")) { state.intent = null; return { type: "flow", keyword: "bac_commerce" }; }
-        if (text.includes("electricite") || text.includes("elec") || text.includes("électricité") || text.includes("melec")) { state.intent = null; return { type: "flow", keyword: "bac_elec" }; }
-        if (text.includes("metallerie") || text.includes("metal") || text.includes("métal") || text.includes("métallerie")) { state.intent = null; return { type: "flow", keyword: "bac_metal" }; }
-        if (text.includes("gestion") || text.includes("agora") || text.includes("gatl")) { state.intent = null; return { type: "flow", keyword: "gestion" }; }
-        if (text.includes("accueil")) { state.intent = null; return { type: "flow", keyword: "accueil" }; }
-      }
-  
-      // phrases directes (cap commerce / bac pro commerce etc.)
-      if (text.includes("cap") && (text.includes("commerce") || text.includes("vente"))) return { type: "flow", keyword: "cap_commerce" };
-      if (text.includes("cap") && (text.includes("elec") || text.includes("électricité") || text.includes("electricite"))) return { type: "flow", keyword: "cap_elec" };
-      if (text.includes("cap") && (text.includes("metal") || text.includes("métal") || text.includes("métallerie") || text.includes("metallerie"))) return { type: "flow", keyword: "cap_metal" };
-  
-      if ((text.includes("bac") || text.includes("bacpro") || text.includes("bac pro")) && (text.includes("commerce") || text.includes("vente"))) return { type: "flow", keyword: "bac_commerce" };
-      if ((text.includes("bac") || text.includes("bacpro") || text.includes("bac pro")) && (text.includes("elec") || text.includes("électricité") || text.includes("electricite") || text.includes("melec"))) return { type: "flow", keyword: "bac_elec" };
-      if ((text.includes("bac") || text.includes("bacpro") || text.includes("bac pro")) && (text.includes("metal") || text.includes("métal") || text.includes("métallerie") || text.includes("metallerie"))) return { type: "flow", keyword: "bac_metal" };
-      if ((text.includes("bac") || text.includes("bacpro") || text.includes("bac pro")) && (text.includes("accueil"))) return { type: "flow", keyword: "accueil" };
-      if ((text.includes("bac") || text.includes("bacpro") || text.includes("bac pro")) && (text.includes("gestion") || text.includes("agora") || text.includes("gatl"))) return { type: "flow", keyword: "gestion" };
-  
-      // domaines généraux
-      if (text.includes("electricite") || text.includes("elec") || text.includes("électricité")) return { type: "flow", keyword: "electricite" };
-      if (text.includes("metallerie") || text.includes("métallerie") || text.includes("metal") || text.includes("métal") || text.includes("serrurier")) return { type: "flow", keyword: "metallerie" };
-      if (text.includes("commerce") || text.includes("vente") || text.includes("magasin") || text.includes("rayon")) return { type: "flow", keyword: "commerce" };
-      if (text.includes("gestion") || text.includes("agora") || text.includes("gatl") || text.includes("administration")) return { type: "flow", keyword: "gestion" };
-      if (text.includes("accueil") || text.includes("hotesse") || text.includes("hôtesse")) return { type: "flow", keyword: "accueil" };
-      if (text.includes("alternance") || text.includes("apprentissage") || text.includes("contrat")) return { type: "flow", keyword: "alternance" };
-  
-      // fallback
-      return {
-        type: "unknown",
-        text: "🤔 Je n'ai pas bien compris.\nEssaie :\n• CAP commerce\n• Bac pro MELEC\n• Métallerie\n• Alternance",
-      };
-    }
-  
-    /* =========================
-       9) Quick replies
-       ========================= */
-    function setReplies(replies) {
-      quickRepliesEl.innerHTML = "";
-  
-      (replies || []).forEach((r, idx) => {
-        const b = document.createElement("button");
-        b.className = "qr " + (idx === 0 ? "accent" : idx === 1 ? "good" : "");
-        b.textContent = r.label;
-        b.onclick = () => onUserAnswer(r);
-        quickRepliesEl.appendChild(b);
-      });
-  
-      // bouton alternance : une seule fois après un résultat alternance
-      const nodeId = state.nodeId;
-      if (nodeId.startsWith("result_alt_") && !state.altInfoShown) {
-        const alt = document.createElement("button");
-        alt.className = "qr";
-        alt.textContent = "ℹ️ C'est quoi l'alternance ?";
-        alt.onclick = () => {
-          state.altInfoShown = true;
-          alt.remove();
-          showAlternanceInfo();
-        };
-        quickRepliesEl.appendChild(alt);
-      }
-    }
-  
-    /* =========================
-       10) Cartes résultats
-       ========================= */
-    function renderResultCards(keys) {
-      const cards = keys
-        .map((k) => {
-          const p = PROGRAMS[k];
-          if (!p) return "";
-  
-          const jobs = (p.jobs || []).map((j) => `• ${escapeHtml(j)}`).join("<br>");
-          const learn = (p.learn || []).map((l) => `• ${escapeHtml(l)}`).join("<br>");
-  
-          return `
-            <div class="card">
-              ${p.badge ? `<div class="badge">${escapeHtml(p.badge)}</div>` : ""}
-              <h3>${escapeHtml(p.title)}</h3>
-              <p>${escapeHtml(p.pitch)}</p>
-              ${p.duration ? `<p><strong>Durée :</strong> ${escapeHtml(p.duration)}</p>` : ""}
-              ${learn ? `<p><strong>Tu apprendras à :</strong><br>${learn}</p>` : ""}
-              <p><strong>Exemples de métiers :</strong><br>${jobs}</p>
-              <p>${escapeHtml(p.next || "")}</p>
-              ${
-                p.pageUrl
-                  ? `<div class="actions">
-                      <a class="link" href="${p.pageUrl}" target="_blank" rel="noopener">📄 Page formation</a>
-                    </div>`
-                  : ""
-              }
-            </div>
-          `;
-        })
-        .join("");
-  
-      return `
-        <div>
-          <div style="margin-bottom:10px; font-weight:800;">Voici ce que je te propose 👇</div>
-          <div class="cards">${cards}</div>
-        </div>
-      `;
-    }
-  
-    /* =========================
-       11) Navigation
-       ========================= */
-    function goTo(nodeId) {
-      state.nodeId = nodeId;
-      const node = FLOW[nodeId];
-      if (!node) return;
-  
-      // reset alternance explain button when leaving/entering results (simple)
-      if (!nodeId.startsWith("result_alt_")) state.altInfoShown = false;
-  
-      if (node.result) {
-        botSay("Je réfléchis à la meilleure formation pour toi…", {
-          speed: 40,
-          onComplete: () => {
-            const html = renderResultCards(node.result);
-            botSay(html, {
-              html: true,
-              onComplete: () => {
-                setReplies([{ label: "🔁 Refaire le test", value: "__restart__" }]);
-              },
-            });
-          },
-        });
-        return;
-      }
-  
-      const botMessage = Array.isArray(node.bot) ? getRandomArrayItem(node.bot) : node.bot;
-      botSay(botMessage, {
-        speed: 45,
-        onComplete: () => setReplies(node.replies || []),
-      });
-    }
-  
-    /* =========================
-       12) Réponses utilisateur
-       ========================= */
-    function onUserAnswer(reply) {
-      quickRepliesEl.style.display = "none";
-  
-      if (reply.value === "__restart__") {
-        restartFlow();
-        return;
-      }
-  
-      // bouton normal
-      if (reply.value && !reply.isText) {
-        addMessage({ from: "user", text: reply.label });
-  
-        const current = FLOW[state.nodeId];
-        const nextId = typeof current.next === "function" ? current.next(reply.value) : current.next;
-        goTo(nextId || "start");
-        return;
-      }
-  
-      // texte libre
-      if (reply.isText) {
-        addMessage({ from: "user", text: reply.label });
-  
-        const result = handleUserInput(reply.label);
-        if (!result) return;
-  
-        if (result.type === "greeting") {
-          const t = getRandomReply("salut");
-          botSay(t || "Salut !", { speed: 45, onComplete: () => goTo("start") });
-          return;
-        }
-  
-        if (result.type === "reply") {
-          const t = getRandomReply(result.keyword);
-          botSay(t || "OK !", { speed: 45 });
-          return;
-        }
-  
-        if (result.type === "flow") {
-          const t = getRandomReply(result.keyword) || "";
-          let nextNode = "start";
-  
-          if (result.keyword === "electricite") nextNode = "elec_choice";
-          if (result.keyword === "metallerie") nextNode = "metal_choice";
-          if (result.keyword === "commerce") nextNode = "commerce_choice";
-          if (result.keyword === "gestion") nextNode = "result_bac_agora";
-          if (result.keyword === "accueil") nextNode = "result_bac_accueil";
-          if (result.keyword === "alternance") nextNode = "alternance_choice";
-  
-          if (result.keyword === "cap_elec") nextNode = "result_cap_elec";
-          if (result.keyword === "cap_metal") nextNode = "result_cap_metallier";
-          if (result.keyword === "cap_commerce") nextNode = "result_cap_epc";
-  
-          if (result.keyword === "bac_elec") nextNode = "result_bac_melec";
-          if (result.keyword === "bac_metal") nextNode = "result_bac_metallerie";
-          if (result.keyword === "bac_commerce") nextNode = "result_bac_commerce";
-  
-          botSay(t || "OK 👍", { speed: 45, onComplete: () => goTo(nextNode) });
-          return;
-        }
-  
-        // unknown
-        botSay(result.text, { speed: 45 });
-      }
-    }
-  
-    /* =========================
-       13) Alternance info
-       ========================= */
-    function showAlternanceInfo() {
-      quickRepliesEl.style.display = "none";
-      addMessage({ from: "user", text: "ℹ️ C'est quoi l'alternance ?" });
-      botSay(ALTERNANCE_EXPLAIN, {
-        onComplete: () => setReplies([{ label: "🔁 Refaire le test", value: "__restart__" }]),
-      });
-    }
-  
-    /* =========================
-       14) Restart + Intro
-       ========================= */
-    function restartFlow() {
-      stopDemo();
-      messagesEl.innerHTML = "";
-      quickRepliesEl.style.display = "none";
-      state = { nodeId: "start", history: [], intent: null, altInfoShown: false };
-      setStatus("Prêt");
-  
-      const startMsg = getRandomArrayItem(FLOW.start.bot);
-      botSay(startMsg, {
-        speed: 45,
-        onComplete: () => (quickRepliesEl.innerHTML = ""),
-      });
-    }
-  
-    function intro() {
-      quickRepliesEl.style.display = "none";
-      setTimeout(restartFlow, 200);
-    }
-  
-    /* =========================
-       15) Input texte libre
-       ========================= */
-    function addTextInput() {
-      if (document.querySelector(".text-input-container")) return;
-  
-      const host = document.getElementById("composerHost");
-      if (!host) return;
-  
-      const container = document.createElement("div");
-      container.className = "text-input-container";
-  
-      const input = document.createElement("input");
-      input.type = "text";
-      input.placeholder = "Écris ici… (ex: CAP commerce, Bac pro MELEC)";
-      input.autocomplete = "off";
-      input.spellcheck = false;
-  
-      const sendBtn = document.createElement("button");
-      sendBtn.type = "button";
-      sendBtn.textContent = "Envoyer";
-  
-      function send() {
-        const v = input.value.trim();
-        if (!v) return;
-  
-        onUserAnswer({ label: v, value: null, isText: true });
-        input.value = "";
-  
-        setTimeout(() => input.blur(), 50); // ferme clavier mobile
-      }
-  
-      sendBtn.onclick = send;
-      input.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") {
-          e.preventDefault();
-          send();
-        }
-      });
-  
-      container.appendChild(input);
-      container.appendChild(sendBtn);
-      host.appendChild(container);
-    }
-  
-    /* =========================
-       16) Démo (optionnel)
-       ========================= */
-    function startDemo() {
-      stopDemo();
-      if (btnDemo) {
-        btnDemo.textContent = "⏸ Stop démo";
-        btnDemo.dataset.on = "1";
-      }
-      restartFlow();
-    }
-  
-    function stopDemo() {
-      if (demoTimer) clearTimeout(demoTimer);
-      demoTimer = null;
-      if (btnDemo) btnDemo.removeAttribute("data-on");
-    }
-  
-    btnRestart?.addEventListener("click", restartFlow);
-    btnDemo?.addEventListener("click", () => {
-      if (btnDemo.dataset.on) stopDemo();
-      else startDemo();
-    });
-  
-    /* =========================
-       17) Lancement
-       ========================= */
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", () => {
-        intro();
-        setTimeout(addTextInput, 150);
-      });
-    } else {
-      intro();
-      setTimeout(addTextInput, 150);
     }
   </script>
-</body>
 
+</body>
 </html>
